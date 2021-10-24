@@ -1,5 +1,5 @@
-import {Box, Button, Input, Paper, TextareaAutosize, TextField, Typography} from "@mui/material";
-
+import {Box, Button, Input, Paper, TextareaAutosize, TextField, Typography,Checkbox,FormControlLabel} from "@mui/material";
+import ControllableInputStates from "./ControllableInputStates";
 const CreateQuestion = () => {
     return (
         <div>
@@ -26,7 +26,6 @@ const CreateQuestion = () => {
             <Button size = 'small' variant="contained"  >Save question</Button>
             <Button  size = 'small'  color ="error" variant="contained">Remove question</Button>
             </Box>
-
             <Box
                 sx={{
                     display: 'flex',
@@ -40,7 +39,6 @@ const CreateQuestion = () => {
                     },
                 }}
             >
-
                 <Paper elevation="3">
                     <Box
                         sx={{
@@ -53,7 +51,7 @@ const CreateQuestion = () => {
                             },
                         }}
                     >
-                    <Typography variant="h5" paddingTop={2}>
+                    <Typography variant="h5" sx={{pt:2}}>
                         General information
                     </Typography>
                     <Typography variant="h7" >
@@ -83,19 +81,34 @@ const CreateQuestion = () => {
                                 Upload
                             </Button>
                         </label>
-
-                </Box>
+                    </Box>
                 </Paper>
                 <Paper elevation="3">
-                    <Typography variant="h4">
-                        This is test mdf
+                 <Typography variant="h5" sx={{pt:2}}>
+                        Answer
                     </Typography>
+                    <Typography variant="h7">
+                        Question type
+                    </Typography>
+                    <ControllableInputStates  />
+                    <Typography
+                    variant="body2"
+                    fontWeight='light' > Question message </Typography>
+                    <Paper elevation="2" sx={{mt:2}}>
+                    <Typography
+                    variant="h5"
+                    sx={{p:2}} >Variant#1</Typography>
+                   <Typography variant="h7" sx={{p:2}}>Name</Typography>
+                   <br />
+                   <TextField  size="small" fullWidth  sx={{mt:1 }} type='input' id="outlined-basic" label="Some variant"
+                                                                       variant="outlined"/>
+                    <Typography variant="body2" sx={{pl:2}} fontWeight='light' > Variant name </Typography>
+                   <FormControlLabel sx={{pb:2,pt:1,pl:1}} control={<Checkbox defaultChecked size="small"/>}  label="Right answer" />
+
+                    </Paper>
                 </Paper>
             </Box>
-
         </div>
-
-
     )
 }
 export default CreateQuestion;
