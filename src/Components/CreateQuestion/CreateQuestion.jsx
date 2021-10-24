@@ -6,10 +6,34 @@ const CreateQuestion = () => {
             <Box
                 sx={{
                     display: 'flex',
+                   flexWrap: 'wrap',
+                    flexDirection: 'column',
+                    width: 150,
+                    height: 30,
+                    /*justifyContent: "space-around",*/
+                    /*flexWrap: 'wrap',*/
+                    /*'& > :not(style)': {
+                        mt: 4,
+                        width: 450,
+                        height: 500,
+                        px: 3,
+                    },*/
+                }}
+            >
+            <Typography variant="h5"  sx={{width: 300 , mr:68}}>
+                Edit question
+            </Typography>
+            <Button size = 'small' variant="contained"  >Save question</Button>
+            <Button  size = 'small'  color ="error" variant="contained">Remove question</Button>
+            </Box>
+
+            <Box
+                sx={{
+                    display: 'flex',
                     justifyContent: "space-around",
                     flexWrap: 'wrap',
                     '& > :not(style)': {
-                        mt: 12,
+                        mt: 4,
                         width: 450,
                         height: 500,
                         px: 3,
@@ -20,7 +44,6 @@ const CreateQuestion = () => {
                 <Paper elevation="3">
                     <Box
                         sx={{
-
                             '& > :not(style)': {
                                 mt: 1,
                                 mb:1
@@ -56,7 +79,7 @@ const CreateQuestion = () => {
 
                         <label htmlFor="contained-button-file">
                             <Input accept="image/*" id="contained-button-file" multiple type="file" />
-                            <Button variant="contained" component="span">
+                            <Button type = "submit" variant="contained" size="small" component="span">
                                 Upload
                             </Button>
                         </label>
@@ -69,6 +92,7 @@ const CreateQuestion = () => {
                     </Typography>
                 </Paper>
             </Box>
+
         </div>
 
 
