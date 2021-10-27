@@ -1,6 +1,41 @@
-import {Box, Button, Input, Paper, TextareaAutosize, TextField, Typography,Checkbox,FormControlLabel} from "@mui/material";
+import {Box,Button,Input,Paper,TextareaAutosize,TextField,Typography,Checkbox,FormControlLabel} from "@mui/material";
 import ControllableInputStates from "./ControllableInputStates";
+import {useSelector,useDispatch} from "react-redux";
+import {addTitleQuestionCreator,addDescriptionQuestionCreator,addImageQuestionCreator} from "../Redux/editQuestionReducer" ;
+import savePhoto from "../Redux/editQuestionReducer";
+import {Card,CardMedia } from '@mui/material/';
+import {useState} from 'react';
+
 const CreateQuestion = () => {
+
+const [selectedImage, setSelectedImage] = useState();
+
+const dispatch = useDispatch();
+
+const title = useSelector(state => state.edQuestRed.questionAndAnswer.title);
+const description = useSelector(state => state.edQuestRed.questionAndAnswer.description);
+const image = useSelector(state => state.edQuestRed.questionAndAnswer.image);
+
+const addNewTitle = (titleText) => {
+dispatch(addTitleQuestionCreator(titleText))
+};
+const addNewDescription = (descriptionText) => {
+dispatch(addDescriptionQuestionCreator(descriptionText))
+};
+
+ const fileSelectedHandler = (event) => {
+ if (event.target.files && event.target.files.length > 0){
+  /*dispatch(addImageQuestionCreator(event.target.files[0]));*/
+   setSelectedImage(event.target.files[0]);
+}
+};
+
+const fileUploadHandler =(e) => {
+if (e.target.files.length) {
+            savePhoto(e.target.files[0]);
+        }
+};
+
     return (
         <div>
             <Box
@@ -39,7 +74,7 @@ const CreateQuestion = () => {
                     },
                 }}
             >
-                <Paper elevation="3">
+                <Paper elevation={3}>
                     <Box
                         sx={{
                             '& > :not(style)': {
@@ -57,12 +92,13 @@ const CreateQuestion = () => {
                     <Typography variant="h7" >
                         Title
                     </Typography>
-                    <TextField fullWidth size="small"  type='input' id="outlined-basic" label="Question title"
+                    <TextField fullWidth value={title}  onChange = { e => addNewTitle(e.target.value)} size="small" type='input' id="outlined-basic" label='Question title'
                                variant="outlined"/>
                     <Typography variant="h7">
                         Description
                     </Typography>
                         <TextareaAutosize
+                         value={description}  onChange = { e => addNewDescription(e.target.value)}
                             aria-label="minimum height"
                             minRows={10}
                             placeholder="Question message"
@@ -76,14 +112,16 @@ const CreateQuestion = () => {
                         </Typography>
 
                         <label htmlFor="contained-button-file">
-                            <Input accept="image/*" id="contained-button-file" multiple type="file" />
-                            <Button type = "submit" variant="contained" size="small" component="span">
+                            <Input accept="image/*" id="contained-button-file"  type="file"  onChange={fileSelectedHandler} />
+                            <Button onClick={fileUploadHandler} type = "submit" variant="contained" size="small" component="span">
                                 Upload
                             </Button>
                         </label>
                     </Box>
                 </Paper>
-                <Paper elevation="3">
+
+
+                <Paper elevation={3}>
                  <Typography variant="h5" sx={{pt:2}}>
                         Answer
                     </Typography>
@@ -94,7 +132,7 @@ const CreateQuestion = () => {
                     <Typography
                     variant="body2"
                     fontWeight='light' > Question message </Typography>
-                    <Paper elevation="2" sx={{mt:2}}>
+                    <Paper elevation={3} sx={{mt:2}}>
                     <Typography
                     variant="h5"
                     sx={{p:2}} >Variant#1</Typography>
@@ -104,6 +142,24 @@ const CreateQuestion = () => {
                                                                        variant="outlined"/>
                     <Typography variant="body2" sx={{pl:2}} fontWeight='light' > Variant name </Typography>
                    <FormControlLabel sx={{pb:2,pt:1,pl:1}} control={<Checkbox defaultChecked size="small"/>}  label="Right answer" />
+                   {/*<Card sx={{maxWidth: 345}}>
+                               <CardMedia
+                                   component="img"
+                                   height="140"
+                                   image={image}
+                                   alt="green iguana"
+                               />
+                           </Card>
+                           {selectedImage && (
+                                     <div >
+                                       <img
+                                         src={URL.createObjectURL(selectedImage)}
+                                         alt="Main image"
+                                       />
+
+                                     </div>
+                                   )}*/}
+
 
                     </Paper>
                 </Paper>
