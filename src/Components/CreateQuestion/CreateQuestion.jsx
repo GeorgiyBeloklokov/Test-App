@@ -142,7 +142,7 @@ if (e.target.files.length) {
                                                                        variant="outlined"/>
                     <Typography variant="body2" sx={{pl:2}} fontWeight='light' > Variant name </Typography>
                    <FormControlLabel sx={{pb:2,pt:1,pl:1}} control={<Checkbox defaultChecked size="small"/>}  label="Right answer" />
-                   {/*<Card sx={{maxWidth: 345}}>
+                   <Card sx={{maxWidth: 345}}>
                                <CardMedia
                                    component="img"
                                    height="140"
@@ -158,7 +158,7 @@ if (e.target.files.length) {
                                        />
 
                                      </div>
-                                   )}*/}
+                                   )}
 
 
                     </Paper>
