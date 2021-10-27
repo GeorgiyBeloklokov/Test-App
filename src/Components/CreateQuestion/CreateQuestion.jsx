@@ -5,13 +5,14 @@ import {addTitleQuestionCreator,addDescriptionQuestionCreator,addImageQuestionCr
 import savePhoto from "../Redux/editQuestionReducer";
 import {Card,CardMedia } from '@mui/material/';
 import {useState} from 'react';
+import ImageQuestion from "../QuestionPage/QuestionPage";
+
+
 
 const CreateQuestion = () => {
 
 const [selectedImage, setSelectedImage] = useState();
-
 const dispatch = useDispatch();
-
 const title = useSelector(state => state.edQuestRed.questionAndAnswer.title);
 const description = useSelector(state => state.edQuestRed.questionAndAnswer.description);
 const image = useSelector(state => state.edQuestRed.questionAndAnswer.image);
@@ -25,7 +26,6 @@ dispatch(addDescriptionQuestionCreator(descriptionText))
 
  const fileSelectedHandler = (event) => {
  if (event.target.files && event.target.files.length > 0){
-  /*dispatch(addImageQuestionCreator(event.target.files[0]));*/
    setSelectedImage(event.target.files[0]);
 }
 };
@@ -45,14 +45,7 @@ if (e.target.files.length) {
                     flexDirection: 'column',
                     width: 150,
                     height: 30,
-                    /*justifyContent: "space-around",*/
-                    /*flexWrap: 'wrap',*/
-                    /*'& > :not(style)': {
-                        mt: 4,
-                        width: 450,
-                        height: 500,
-                        px: 3,
-                    },*/
+
                 }}
             >
             <Typography variant="h5"  sx={{width: 300 , mr:68}}>
@@ -80,9 +73,6 @@ if (e.target.files.length) {
                             '& > :not(style)': {
                                 mt: 1,
                                 mb:1
-                                /*width: 450,
-                                height: 500,*/
-                                /*px: 2,*/
                             },
                         }}
                     >
@@ -142,23 +132,7 @@ if (e.target.files.length) {
                                                                        variant="outlined"/>
                     <Typography variant="body2" sx={{pl:2}} fontWeight='light' > Variant name </Typography>
                    <FormControlLabel sx={{pb:2,pt:1,pl:1}} control={<Checkbox defaultChecked size="small"/>}  label="Right answer" />
-                   <Card sx={{maxWidth: 345}}>
-                               <CardMedia
-                                   component="img"
-                                   height="140"
-                                   image={image}
-                                   alt="green iguana"
-                               />
-                           </Card>
-                           {selectedImage && (
-                                     <div >
-                                       <img
-                                         src={URL.createObjectURL(selectedImage)}
-                                         alt="Main image"
-                                       />
 
-                                     </div>
-                                   )}
 
 
                     </Paper>

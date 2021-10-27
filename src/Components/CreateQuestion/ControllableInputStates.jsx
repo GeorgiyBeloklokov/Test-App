@@ -1,12 +1,16 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import {typeAnswerFlagCreator} from "../Redux/editQuestionReducer";
+import {useDispatch} from "react-redux";
 
-const options = ['Option 1', 'Option 2'];
+const options = ['Text area for answer', 'Variants with some answers'];
 
 export default function ControllableInputStates() {
   const [value, setValue] = React.useState(options[0]);
   const [inputValue, setInputValue] = React.useState('');
+  const dispatch = useDispatch();
+
 
   return (
     <div>
@@ -17,10 +21,13 @@ export default function ControllableInputStates() {
         value={value}
         onChange={(event, newValue) => {
           setValue(newValue);
+          dispatch(typeAnswerFlagCreator());
         }}
         inputValue={inputValue}
         onInputChange={(event, newInputValue) => {
           setInputValue(newInputValue);
+
+
         }}
         id="controllable-states-demo"
         options={options}
