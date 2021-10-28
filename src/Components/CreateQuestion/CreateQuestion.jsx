@@ -1,11 +1,11 @@
 import {Box,Button,Input,Paper,TextareaAutosize,TextField,Typography,Checkbox,FormControlLabel} from "@mui/material";
 import ControllableInputStates from "./ControllableInputStates";
 import {useSelector,useDispatch} from "react-redux";
-import {addTitleQuestionCreator,addDescriptionQuestionCreator,addImageQuestionCreator} from "../Redux/editQuestionReducer" ;
+import {addTitleQuestionCreator,addDescriptionQuestionCreator,addVariantOneCreator,toggleChekBoxCreator} from "../Redux/editQuestionReducer" ;
 import savePhoto from "../Redux/editQuestionReducer";
-import {Card,CardMedia } from '@mui/material/';
 import {useState} from 'react';
 import ImageQuestion from "../QuestionPage/QuestionPage";
+
 
 
 const CreateQuestion = () => {
@@ -15,7 +15,7 @@ const dispatch = useDispatch();
 const title = useSelector(state => state.edQuestRed.questionAndAnswer.title);
 const description = useSelector(state => state.edQuestRed.questionAndAnswer.description);
 const image = useSelector(state => state.edQuestRed.questionAndAnswer.image);
-const variant = useSelector(state => state.edQuestRed.variantQuestion.variantAnswer);
+const variant = useSelector(state => state.edQuestRed.questionAndAnswer.variant);
 
 const addNewTitle = (titleText) => {
 dispatch(addTitleQuestionCreator(titleText))
@@ -23,10 +23,12 @@ dispatch(addTitleQuestionCreator(titleText))
 const addNewDescription = (descriptionText) => {
 dispatch(addDescriptionQuestionCreator(descriptionText))
 };
-const addVariantOneTitle = (variantTitleFlag) => {
-dispatch(addVariantOneCreator(variantTitleFlag))
+const addVariantOneTitle = (variantText) => {
+dispatch(addVariantOneCreator(variantText))
 };
-
+const toggleChekBox = (e) => {
+dispatch(toggleChekBoxCreator(e))
+};
  const fileSelectedHandler = (event) => {
  if (event.target.files && event.target.files.length > 0){
    setSelectedImage(event.target.files[0]);
@@ -48,7 +50,6 @@ if (e.target.files.length) {
                     flexDirection: 'column',
                     width: 150,
                     height: 30,
-
                 }}
             >
             <Typography variant="h5"  sx={{width: 300 , mr:68}}>
@@ -134,7 +135,7 @@ if (e.target.files.length) {
                    <TextField  size="small" fullWidth value={variant}  onChange = { e => addVariantOneTitle(e.target.value)}  sx={{mt:1 }} type='input' id="outlined-basic" label="Some variant"
                                                                        variant="outlined"/>
                     <Typography variant="body2" sx={{pl:2}} fontWeight='light' > Variant name </Typography>
-                   <FormControlLabel sx={{pb:2,pt:1,pl:1}} control={<Checkbox defaultChecked size="small"/>}  label="Right answer" />
+                   <FormControlLabel sx={{pb:2,pt:1,pl:1}} control={<Checkbox onChange = { e => toggleChekBox(e.target.value)}  defaultChecked size="small"/>}  label="Right answer" />
 
 
 
