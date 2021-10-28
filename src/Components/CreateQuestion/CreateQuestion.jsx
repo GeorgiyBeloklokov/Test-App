@@ -72,23 +72,15 @@ if (e.target.files.length) {
                 }}
             >
                 <Paper elevation={3}>
-                    <Box
-                        sx={{
-                            '& > :not(style)': {
-                                mt: 1,
-                                mb:1
-                            },
-                        }}
-                    >
-                    <Typography variant="h5" sx={{pt:2}}>
+                    <Typography variant="h5" sx={{mt:2, mb:2}}>
                         General information
                     </Typography>
                     <Typography variant="h7" >
                         Title
                     </Typography>
-                    <TextField fullWidth value={title}  onChange = { e => addNewTitle(e.target.value)} size="small" type='input' id="outlined-basic" label='Question title'
+                    <TextField fullWidth value={title} sx={{mb:2}} onChange = { e => addNewTitle(e.target.value)} size="small" type='input' id="outlined-basic" label='Question title'
                                variant="outlined"/>
-                    <Typography variant="h7">
+                    <Typography variant="h7" >
                         Description
                     </Typography>
                         <TextareaAutosize
@@ -96,9 +88,9 @@ if (e.target.files.length) {
                             aria-label="minimum height"
                             minRows={10}
                             placeholder="Question message"
-                            style={{ width: 443 }}
+                            style={{ width: '100%' }}
                         />
-                        <Typography variant="body2" fontWeight='light'  >
+                        <Typography variant="body2" fontWeight='light' sx={{mb:2}} >
                             Question message
                         </Typography>
                         <Typography variant="h7" component={"div"}>
@@ -111,12 +103,11 @@ if (e.target.files.length) {
                                 Upload
                             </Button>
                         </label>
-                    </Box>
                 </Paper>
 
 
                 <Paper elevation={3}>
-                 <Typography variant="h5" sx={{pt:2}}>
+                 <Typography variant="h5" sx={{mt:2}}>
                         Answer
                     </Typography>
                     <Typography variant="h7">
@@ -125,21 +116,28 @@ if (e.target.files.length) {
                     <ControllableInputStates  />
                     <Typography
                     variant="body2"
-                    fontWeight='light' > Question message </Typography>
+                    fontWeight='light' > Answer type </Typography>
                     <Paper elevation={3} sx={{mt:2}}>
                     <Typography
-                    variant="h5"
-                    sx={{p:2}} >Variant#1</Typography>
+                    variant="h5" sx={{p:2}}
+                    style={{display:'inline'}}
+                     >Variant#1</Typography>
+                        <Button sx={{ml:28}} type = "submit" variant="contained" size="small" component="span">
+                            x Remove
+                        </Button>
                    <Typography variant="h7" sx={{p:2}}>Name</Typography>
                    <br />
                    <TextField  size="small" fullWidth value={variant}  onChange = { e => addVariantOneTitle(e.target.value)}  sx={{mt:1 }} type='input' id="outlined-basic" label="Some variant"
                                                                        variant="outlined"/>
-                    <Typography variant="body2" sx={{pl:2}} fontWeight='light' > Variant name </Typography>
+                    <Typography variant="body2" sx={{ml:2}} fontWeight='light' > Variant name </Typography>
                    <FormControlLabel sx={{pb:2,pt:1,pl:1}} control={<Checkbox onChange = { e => toggleChekBox(e.target.value)}  defaultChecked size="small"/>}  label="Right answer" />
 
-
-
                     </Paper>
+
+                    <Button sx={{mt:4}} type = "submit" variant="contained" size="small" component="span">
+                        + Add new variant
+                    </Button>
+
                 </Paper>
             </Box>
         </div>
