@@ -8,7 +8,6 @@ import {useState} from 'react';
 import ImageQuestion from "../QuestionPage/QuestionPage";
 
 
-
 const CreateQuestion = () => {
 
 const [selectedImage, setSelectedImage] = useState();
@@ -16,12 +15,16 @@ const dispatch = useDispatch();
 const title = useSelector(state => state.edQuestRed.questionAndAnswer.title);
 const description = useSelector(state => state.edQuestRed.questionAndAnswer.description);
 const image = useSelector(state => state.edQuestRed.questionAndAnswer.image);
+const variant = useSelector(state => state.edQuestRed.variantQuestion.variantAnswer);
 
 const addNewTitle = (titleText) => {
 dispatch(addTitleQuestionCreator(titleText))
 };
 const addNewDescription = (descriptionText) => {
 dispatch(addDescriptionQuestionCreator(descriptionText))
+};
+const addVariantOneTitle = (variantTitleFlag) => {
+dispatch(addVariantOneCreator(variantTitleFlag))
 };
 
  const fileSelectedHandler = (event) => {
@@ -128,7 +131,7 @@ if (e.target.files.length) {
                     sx={{p:2}} >Variant#1</Typography>
                    <Typography variant="h7" sx={{p:2}}>Name</Typography>
                    <br />
-                   <TextField  size="small" fullWidth  sx={{mt:1 }} type='input' id="outlined-basic" label="Some variant"
+                   <TextField  size="small" fullWidth value={variant}  onChange = { e => addVariantOneTitle(e.target.value)}  sx={{mt:1 }} type='input' id="outlined-basic" label="Some variant"
                                                                        variant="outlined"/>
                     <Typography variant="body2" sx={{pl:2}} fontWeight='light' > Variant name </Typography>
                    <FormControlLabel sx={{pb:2,pt:1,pl:1}} control={<Checkbox defaultChecked size="small"/>}  label="Right answer" />
