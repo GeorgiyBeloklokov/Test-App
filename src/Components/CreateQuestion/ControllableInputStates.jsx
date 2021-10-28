@@ -4,7 +4,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import {typeAnswerFlagCreator} from "../Redux/editQuestionReducer";
 import {useDispatch} from "react-redux";
 
-const options = ['Text area for answer', 'Variants with some answers'];
+const options = ['Variants with some answers', 'Text area for answer'];
 
 export default function ControllableInputStates() {
   const [value, setValue] = React.useState(options[0]);

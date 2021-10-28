@@ -3,6 +3,8 @@ const ADD_DESCRIPTION_QUESTION = 'ADD_DESCRIPTION_QUESTION';
 const TYPE_ANSWER_FLAG = 'TYPE_ANSWER_FLAG';
 const VARIANT_TITLE = 'VARIANT_TITLE';
 const TOGGLE_CHECKBOX = 'TOGGLE_CHECKBOX';
+const ADD_VARIANT_TEXT = 'ADD_VARIANT_TEXT';
+const ADD_VARIANT = 'ADD_VARIANT';
 
 let defaultState = {
     questionAndAnswer:
@@ -17,28 +19,48 @@ let defaultState = {
             rightAnswer: false,
             textAnswer: '',
             typeAnswerFlag: true,
-            variant:null,
-            chekBoxFlag:true,
+            variantTitle: null,
+            chekBoxFlag: true,
+            variantTextArea:null,
         }
 };
 
 const editQuestionReducer = (state = defaultState, action) => {
     switch (action.type) {
         case ADD_TITLE_QUESTION:
-            return {...state, questionAndAnswer: {...state.questionAndAnswer, title: action.titleText }
+            return {
+                ...state, questionAndAnswer: {...state.questionAndAnswer, title: action.titleText}
             };
         case ADD_DESCRIPTION_QUESTION:
-            return {...state, questionAndAnswer: {...state.questionAndAnswer, description: action.descriptionText }
+            return {
+                ...state, questionAndAnswer: {...state.questionAndAnswer, description: action.descriptionText}
+            };
+        case ADD_VARIANT_TEXT:
+            return {
+                ...state, questionAndAnswer: {...state.questionAndAnswer, variantTextArea: action.variantTextArea}
             };
         case TYPE_ANSWER_FLAG:
-            return {...state, questionAndAnswer: {...state.questionAndAnswer, typeAnswerFlag: !state.questionAndAnswer.typeAnswerFlag }
+            return {
+                ...state,
+                questionAndAnswer: {...state.questionAndAnswer, typeAnswerFlag: !state.questionAndAnswer.typeAnswerFlag}
             };
         case VARIANT_TITLE:
-            return {...state, questionAndAnswer: {...state.questionAndAnswer, variant: action.variantText }
+            return {
+                ...state, questionAndAnswer: {...state.questionAndAnswer, variantTitle: action.variantTitle}
             };
-            case TOGGLE_CHECKBOX:
-            return {...state, questionAndAnswer: {...state.questionAndAnswer, chekBoxFlag: !state.questionAndAnswer.chekBoxFlag }
+        case TOGGLE_CHECKBOX:
+            return {
+                ...state,
+                questionAndAnswer: {...state.questionAndAnswer, chekBoxFlag: !state.questionAndAnswer.chekBoxFlag}
             };
+        case ADD_VARIANT:
+            let newsVariant = {
+                id: Date.now(),
+            };
+            let stateCopy = {...state};
+            stateCopy.questionAndAnswer = {...stateCopy.questionAndAnswer};
+            stateCopy.questionAndAnswer.variants.push(newsVariant);
+            return stateCopy;
 
         default:
             return state;
@@ -47,12 +69,13 @@ const editQuestionReducer = (state = defaultState, action) => {
     }
 };
 
-export const addTitleQuestionCreator = (titleText) => ({type:ADD_TITLE_QUESTION, titleText});
-export const addDescriptionQuestionCreator = (descriptionText) => ({type:ADD_DESCRIPTION_QUESTION, descriptionText});
-export const typeAnswerFlagCreator = (flag) => ({type:TYPE_ANSWER_FLAG, flag});
-export const addVariantOneCreator = (variantText) => ({type:VARIANT_TITLE, variantText});
-export const toggleChekBoxCreator = (flag) => ({type:TOGGLE_CHECKBOX, flag});
-
+export const addTitleQuestionCreator = (titleText) => ({type: ADD_TITLE_QUESTION, titleText});
+export const addDescriptionQuestionCreator = (descriptionText) => ({type: ADD_DESCRIPTION_QUESTION, descriptionText});
+export const typeAnswerFlagCreator = (flag) => ({type: TYPE_ANSWER_FLAG, flag});
+export const addVariantOneCreator = (variantTitle) => ({type: VARIANT_TITLE, variantTitle});
+export const addVariantTextCreator = (variantTextArea) => ({type: ADD_VARIANT_TEXT, variantTextArea});
+export const toggleChekBoxCreator = (flag) => ({type: TOGGLE_CHECKBOX, flag});
+export const addVariantCreator = () => ({type: ADD_VARIANT});
 
 
 export default editQuestionReducer;

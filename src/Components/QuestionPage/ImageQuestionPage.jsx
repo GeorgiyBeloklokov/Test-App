@@ -1,12 +1,7 @@
-import { useState } from "react";
-
-
-
-
+import {useState} from "react";
 
 const ImageQuestion = () => {
     const [selectedImage, setSelectedImage] = useState();
-
 
     const imageChange = (e) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -14,14 +9,13 @@ const ImageQuestion = () => {
         }
     };
 
-
     const removeSelectedImage = () => {
         setSelectedImage();
     };
 
     return (
         <>
-            <div >
+            <div>
                 <input
                     accept="image/*"
                     type="file"
@@ -29,13 +23,13 @@ const ImageQuestion = () => {
                 />
 
                 {selectedImage && (
-                    <div >
+                    <div>
                         <img
                             src={URL.createObjectURL(selectedImage)}
 
                             alt="Thumb"
                         />
-                        <button onClick={removeSelectedImage} >
+                        <button onClick={removeSelectedImage}>
                             Remove This Image
                         </button>
                     </div>
@@ -44,7 +38,6 @@ const ImageQuestion = () => {
         </>
     );
 };
-
 
 
 export default ImageQuestion;

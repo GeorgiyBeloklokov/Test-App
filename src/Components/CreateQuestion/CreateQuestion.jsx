@@ -1,62 +1,77 @@
-import {Box,Button,Input,Paper,TextareaAutosize,TextField,Typography,Checkbox,FormControlLabel} from "@mui/material";
+import {
+    Box,
+    Button,
+    Input,
+    Paper,
+    TextareaAutosize,
+    TextField,
+    Typography,
+    Checkbox,
+    FormControlLabel
+} from "@mui/material";
 import ControllableInputStates from "./ControllableInputStates";
-import {useSelector,useDispatch} from "react-redux";
-import {addTitleQuestionCreator,addDescriptionQuestionCreator,addVariantOneCreator,toggleChekBoxCreator} from "../Redux/editQuestionReducer" ;
+import {useSelector, useDispatch} from "react-redux";
+import {
+    addTitleQuestionCreator,
+    addDescriptionQuestionCreator,
+    addVariantOneCreator,
+    toggleChekBoxCreator, addVariantCreator
+} from "../Redux/editQuestionReducer" ;
 import savePhoto from "../Redux/editQuestionReducer";
 import {useState} from 'react';
-import ImageQuestion from "../QuestionPage/QuestionPage";
+import ImageQuestion from "../QuestionPage/ImageQuestionPage";
+import Variant from "./Variant";
 
 
 
 const CreateQuestion = () => {
 
-const [selectedImage, setSelectedImage] = useState();
-const dispatch = useDispatch();
-const title = useSelector(state => state.edQuestRed.questionAndAnswer.title);
-const description = useSelector(state => state.edQuestRed.questionAndAnswer.description);
-const image = useSelector(state => state.edQuestRed.questionAndAnswer.image);
-const variant = useSelector(state => state.edQuestRed.questionAndAnswer.variant);
+    const [selectedImage, setSelectedImage] = useState();
+    const dispatch = useDispatch();
 
-const addNewTitle = (titleText) => {
-dispatch(addTitleQuestionCreator(titleText))
-};
-const addNewDescription = (descriptionText) => {
-dispatch(addDescriptionQuestionCreator(descriptionText))
-};
-const addVariantOneTitle = (variantText) => {
-dispatch(addVariantOneCreator(variantText))
-};
-const toggleChekBox = (e) => {
-dispatch(toggleChekBoxCreator(e))
-};
- const fileSelectedHandler = (event) => {
- if (event.target.files && event.target.files.length > 0){
-   setSelectedImage(event.target.files[0]);
-}
-};
+    const title = useSelector(state => state.edQuestRed.questionAndAnswer.title);
+    const description = useSelector(state => state.edQuestRed.questionAndAnswer.description);
+    const image = useSelector(state => state.edQuestRed.questionAndAnswer.image);
 
-const fileUploadHandler =(e) => {
-if (e.target.files.length) {
+
+    const addNewTitle = (titleText) => {
+        dispatch(addTitleQuestionCreator(titleText))
+    };
+    const addNewDescription = (descriptionText) => {
+        dispatch(addDescriptionQuestionCreator(descriptionText))
+    };
+    const addVariant = (e) => {
+        dispatch(addVariantCreator(e))
+    };
+
+    const fileSelectedHandler = (event) => {
+        if (event.target.files && event.target.files.length > 0) {
+            setSelectedImage(event.target.files[0]);
+        }
+    };
+
+    const fileUploadHandler = (e) => {
+        if (e.target.files.length) {
             savePhoto(e.target.files[0]);
         }
-};
+    };
 
     return (
         <div>
             <Box
                 sx={{
                     display: 'flex',
-                   flexWrap: 'wrap',
+                    flexWrap: 'wrap',
                     flexDirection: 'column',
                     width: 150,
                     height: 30,
                 }}
             >
-            <Typography variant="h5"  sx={{width: 300 , mr:68}}>
-                Edit question
-            </Typography>
-            <Button size = 'small' variant="contained"  >Save question</Button>
-            <Button  size = 'small'  color ="error" variant="contained">Remove question</Button>
+                <Typography variant="h5" sx={{width: 300, mr: 68}}>
+                    Edit question
+                </Typography>
+                <Button size='small' variant="contained">Save question</Button>
+                <Button size='small' color="error" variant="contained">Remove question</Button>
             </Box>
             <Box
                 sx={{
@@ -72,69 +87,54 @@ if (e.target.files.length) {
                 }}
             >
                 <Paper elevation={3}>
-                    <Typography variant="h5" sx={{mt:2, mb:2}}>
+                    <Typography variant="h5" sx={{mt: 2, mb: 2}}>
                         General information
                     </Typography>
-                    <Typography variant="h7" >
+                    <Typography variant="h7">
                         Title
                     </Typography>
-                    <TextField fullWidth value={title} sx={{mb:2}} onChange = { e => addNewTitle(e.target.value)} size="small" type='input' id="outlined-basic" label='Question title'
+                    <TextField fullWidth value={title} sx={{mb: 2}} onChange={e => addNewTitle(e.target.value)}
+                               size="small" type='input' id="outlined-basic" label='Question title'
                                variant="outlined"/>
-                    <Typography variant="h7" >
+                    <Typography variant="h7">
                         Description
                     </Typography>
-                        <TextareaAutosize
-                         value={description}  onChange = { e => addNewDescription(e.target.value)}
-                            aria-label="minimum height"
-                            minRows={10}
-                            placeholder="Question message"
-                            style={{ width: '100%' }}
-                        />
-                        <Typography variant="body2" fontWeight='light' sx={{mb:2}} >
-                            Question message
-                        </Typography>
-                        <Typography variant="h7" component={"div"}>
-                            Image
-                        </Typography>
+                    <TextareaAutosize
+                        value={description} onChange={e => addNewDescription(e.target.value)}
+                        aria-label="minimum height"
+                        minRows={10}
+                        placeholder="Question message"
+                        style={{width: '100%'}}
+                    />
+                    <Typography variant="body2" fontWeight='light' sx={{mb: 2}}>
+                        Question message
+                    </Typography>
+                    <Typography variant="h7" component={"div"}>
+                        Image
+                    </Typography>
 
-                        <label htmlFor="contained-button-file">
-                            <Input accept="image/*" id="contained-button-file"  type="file"  onChange={fileSelectedHandler} />
-                            <Button onClick={fileUploadHandler} type = "submit" variant="contained" size="small" component="span">
-                                Upload
-                            </Button>
-                        </label>
+                    <label htmlFor="contained-button-file">
+                        <Input accept="image/*" id="contained-button-file" type="file" onChange={fileSelectedHandler}/>
+                        <Button onClick={fileUploadHandler} type="submit" variant="contained" size="small"
+                                component="span">
+                            Upload
+                        </Button>
+                    </label>
                 </Paper>
 
-
                 <Paper elevation={3}>
-                 <Typography variant="h5" sx={{mt:2}}>
+                    <Typography variant="h5" sx={{mt: 2}}>
                         Answer
                     </Typography>
                     <Typography variant="h7">
                         Question type
                     </Typography>
-                    <ControllableInputStates  />
+                    <ControllableInputStates/>
                     <Typography
-                    variant="body2"
-                    fontWeight='light' > Answer type </Typography>
-                    <Paper elevation={3} sx={{mt:2}}>
-                    <Typography
-                    variant="h5" sx={{p:2}}
-                    style={{display:'inline'}}
-                     >Variant#1</Typography>
-                        <Button sx={{ml:28}} type = "submit" variant="contained" size="small" component="span">
-                            x Remove
-                        </Button>
-                   <Typography variant="h7" sx={{p:2}}>Name</Typography>
-                   <br />
-                   <TextField  size="small" fullWidth value={variant}  onChange = { e => addVariantOneTitle(e.target.value)}  sx={{mt:1 }} type='input' id="outlined-basic" label="Some variant"
-                                                                       variant="outlined"/>
-                    <Typography variant="body2" sx={{ml:2}} fontWeight='light' > Variant name </Typography>
-                   <FormControlLabel sx={{pb:2,pt:1,pl:1}} control={<Checkbox onChange = { e => toggleChekBox(e.target.value)}  defaultChecked size="small"/>}  label="Right answer" />
-
-                    </Paper>
-
-                    <Button sx={{mt:4}} type = "submit" variant="contained" size="small" component="span">
+                        variant="body2"
+                        fontWeight='light'> Answer type </Typography>
+                    <Variant />
+                    <Button onClick={addVariant} sx={{mt: 4}} type="submit" variant="contained" size="small" component="span">
                         + Add new variant
                     </Button>
 
