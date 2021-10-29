@@ -56,6 +56,17 @@ const CreateQuestion = () => {
         }
     };
 
+    const newVariant = () => {
+            const newVar = {
+                id: Date.now(),
+                chekBoxFlag: true,
+                variantTitle: null,
+                variantTextArea: null,
+            }
+            dispatch()
+    }
+
+
     return (
         <div>
             <Box
@@ -133,7 +144,7 @@ const CreateQuestion = () => {
                     <Typography
                         variant="body2"
                         fontWeight='light'> Answer type </Typography>
-                    {/*<Variant />*/}
+                    <Variant />
                     {variants.map((item) => {
                         return (
                             <Variant key={item.id} variantTextArea={item.variantTextArea}

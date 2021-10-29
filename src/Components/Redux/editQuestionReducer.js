@@ -62,10 +62,16 @@ const editQuestionReducer = (state = defaultState, action) => {
                 variantItem: {...state.variantItem, chekBoxFlag: !state.variantItem.chekBoxFlag}
             };
         case ADD_VARIANT:
-            let stateCopy = {...state};
+            return ({
+                ...state,
+                questionAndAnswer: {...state.questionAndAnswer, variants: [...state.questionAndAnswer.variants, {...state.variantItem}]
+                }
+            })
+
+            /*let stateCopy = {...state};
             stateCopy.questionAndAnswer = {...stateCopy.questionAndAnswer};
             stateCopy.questionAndAnswer.variants.push({...state.variantItem});
-            return stateCopy;
+            return stateCopy;*/
 
         default:
             return state;

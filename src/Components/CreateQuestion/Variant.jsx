@@ -4,12 +4,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {addVariantOneCreator, addVariantTextCreator, toggleChekBoxCreator} from "../Redux/editQuestionReducer";
 
 
-const Variant = (key, variantTitle, variantTextArea) => {
+const Variant = (key,variantTextArea,variantTitle,item) => {
     const dispatch = useDispatch();
 
     /*const variantTextArea = useSelector(state => state.edQuestRed.variantItem.variantTextArea);
     const variantTitle = useSelector(state => state.edQuestRed.variantItem.variantTitle);*/
-
     const typeAnswerFlag = useSelector(state => state.edQuestRed.questionAndAnswer.typeAnswerFlag);
 
     const addVariantOneTitle = (variantTitle) => {
