@@ -23,7 +23,6 @@ import ImageQuestion from "../QuestionPage/ImageQuestionPage";
 import Variant from "./Variant";
 
 
-
 const CreateQuestion = () => {
 
     const [selectedImage, setSelectedImage] = useState();
@@ -32,6 +31,7 @@ const CreateQuestion = () => {
     const title = useSelector(state => state.edQuestRed.questionAndAnswer.title);
     const description = useSelector(state => state.edQuestRed.questionAndAnswer.description);
     const image = useSelector(state => state.edQuestRed.questionAndAnswer.image);
+    const variants = useSelector(state => state.edQuestRed.questionAndAnswer.variants);
 
 
     const addNewTitle = (titleText) => {
@@ -133,8 +133,16 @@ const CreateQuestion = () => {
                     <Typography
                         variant="body2"
                         fontWeight='light'> Answer type </Typography>
-                    <Variant />
-                    <Button onClick={addVariant} sx={{mt: 4}} type="submit" variant="contained" size="small" component="span">
+                    {/*<Variant />*/}
+                    {variants.map((item) => {
+                        return (
+                            <Variant key={item.id} variantTextArea={item.variantTextArea}
+                                     variantTitle={item.variantTitle} />
+                        )
+                    })}
+
+                    <Button onClick={addVariant} sx={{mt: 4}} type="submit" variant="contained" size="small"
+                            component="span">
                         + Add new variant
                     </Button>
 

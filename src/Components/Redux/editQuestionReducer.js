@@ -21,7 +21,15 @@ let defaultState = {
             typeAnswerFlag: true,
             variantTitle: null,
             chekBoxFlag: true,
-            variantTextArea:null,
+            variantTextArea: null,
+        },
+    variantItem:
+        {
+            id: Date.now(),
+            chekBoxFlag: true,
+            variantTitle: null,
+            variantTextArea: null,
+
         }
 };
 
@@ -37,7 +45,7 @@ const editQuestionReducer = (state = defaultState, action) => {
             };
         case ADD_VARIANT_TEXT:
             return {
-                ...state, questionAndAnswer: {...state.questionAndAnswer, variantTextArea: action.variantTextArea}
+                ...state, variantItem: {...state.variantItem, variantTextArea: action.variantTextArea}
             };
         case TYPE_ANSWER_FLAG:
             return {
@@ -46,20 +54,17 @@ const editQuestionReducer = (state = defaultState, action) => {
             };
         case VARIANT_TITLE:
             return {
-                ...state, questionAndAnswer: {...state.questionAndAnswer, variantTitle: action.variantTitle}
+                ...state, variantItem: {...state.variantItem, variantTitle: action.variantTitle}
             };
         case TOGGLE_CHECKBOX:
             return {
                 ...state,
-                questionAndAnswer: {...state.questionAndAnswer, chekBoxFlag: !state.questionAndAnswer.chekBoxFlag}
+                variantItem: {...state.variantItem, chekBoxFlag: !state.variantItem.chekBoxFlag}
             };
         case ADD_VARIANT:
-            let newsVariant = {
-                id: Date.now(),
-            };
             let stateCopy = {...state};
             stateCopy.questionAndAnswer = {...stateCopy.questionAndAnswer};
-            stateCopy.questionAndAnswer.variants.push(newsVariant);
+            stateCopy.questionAndAnswer.variants.push({...state.variantItem});
             return stateCopy;
 
         default:
