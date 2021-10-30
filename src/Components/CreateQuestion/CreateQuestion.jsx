@@ -1,37 +1,19 @@
-import {
-    Box,
-    Button,
-    Input,
-    Paper,
-    TextareaAutosize,
-    TextField,
-    Typography,
-    Checkbox,
-    FormControlLabel
-} from "@mui/material";
+import {Box, Button, Input, Paper, TextareaAutosize, TextField, Typography} from "@mui/material";
 import ControllableInputStates from "./ControllableInputStates";
-import {useSelector, useDispatch} from "react-redux";
-import {
-    addTitleQuestionCreator,
-    addDescriptionQuestionCreator,
-    addVariantOneCreator,
-    toggleChekBoxCreator, addVariantCreator
-} from "../Redux/editQuestionReducer" ;
-import savePhoto from "../Redux/editQuestionReducer";
-import {useState} from 'react';
-import ImageQuestion from "../QuestionPage/ImageQuestionPage";
+import {useDispatch, useSelector} from "react-redux";
+import {addDescriptionQuestionCreator, addTitleQuestionCreator, addVariantCreator} from "../Redux/editQuestionReducer";
 import Variant from "./Variant";
 
 
 const CreateQuestion = () => {
 
-    const [selectedImage, setSelectedImage] = useState();
+    /*const [selectedImage, setSelectedImage] = useState();*/
     const dispatch = useDispatch();
 
     const title = useSelector(state => state.edQuestRed.questionAndAnswer.title);
     const description = useSelector(state => state.edQuestRed.questionAndAnswer.description);
-    const image = useSelector(state => state.edQuestRed.questionAndAnswer.image);
-    const variants = useSelector(state => state.edQuestRed.questionAndAnswer.variants);
+    /*const image = useSelector(state => state.edQuestRed.questionAndAnswer.image);*/
+
 
 
     const addNewTitle = (titleText) => {
@@ -44,7 +26,7 @@ const CreateQuestion = () => {
         dispatch(addVariantCreator(e))
     };
 
-    const fileSelectedHandler = (event) => {
+    /*const fileSelectedHandler = (event) => {
         if (event.target.files && event.target.files.length > 0) {
             setSelectedImage(event.target.files[0]);
         }
@@ -54,9 +36,9 @@ const CreateQuestion = () => {
         if (e.target.files.length) {
             savePhoto(e.target.files[0]);
         }
-    };
+    };*/
 
-    const newVariant = () => {
+   /* const newVariant = () => {
             const newVar = {
                 id: Date.now(),
                 chekBoxFlag: true,
@@ -64,7 +46,7 @@ const CreateQuestion = () => {
                 variantTextArea: null,
             }
             dispatch()
-    }
+    }*/
 
 
     return (
@@ -125,8 +107,8 @@ const CreateQuestion = () => {
                     </Typography>
 
                     <label htmlFor="contained-button-file">
-                        <Input accept="image/*" id="contained-button-file" type="file" onChange={fileSelectedHandler}/>
-                        <Button onClick={fileUploadHandler} type="submit" variant="contained" size="small"
+                        <Input accept="image/*" id="contained-button-file" type="file" />
+                        <Button  type="submit" variant="contained" size="small"
                                 component="span">
                             Upload
                         </Button>
@@ -145,12 +127,12 @@ const CreateQuestion = () => {
                         variant="body2"
                         fontWeight='light'> Answer type </Typography>
                     <Variant />
-                    {variants.map((item) => {
+                    {/*{variants.map((item) => {
                         return (
-                            <Variant key={item.id} variantTextArea={item.variantTextArea}
+                            <Variant item={item}  variantTextArea={item.variantTextArea}
                                      variantTitle={item.variantTitle} />
                         )
-                    })}
+                    })}*/}
 
                     <Button onClick={addVariant} sx={{mt: 4}} type="submit" variant="contained" size="small"
                             component="span">
