@@ -71,14 +71,24 @@ const editQuestionReducer = (state = defaultState, action) => {
                 }
 
             };
-        /*return {
-            ...state, variantItem: {...state.variantItem, variantTitle: action.variantTitle}
-        };*/
+
         case TOGGLE_CHECKBOX:
             return {
+                ...state, questionAndAnswer: {
+                    ...state.questionAndAnswer, variants: [...state.questionAndAnswer.variants.map(item => {
+                        if (item.id === action.item.id) {
+                            return {...item, chekBoxFlag: action.flag}
+                        }
+                        return item;
+                    })]
+                }
+
+            };
+
+            /*return {
                 ...state,
                 variantItem: {...state.variantItem, chekBoxFlag: !state.variantItem.chekBoxFlag}
-            };
+            };*/
         case ADD_VARIANT:
             return ({
                 ...state,
@@ -116,7 +126,7 @@ export const addDescriptionQuestionCreator = (descriptionText) => ({type: ADD_DE
 export const typeAnswerFlagCreator = (flag) => ({type: TYPE_ANSWER_FLAG, flag});
 export const addVariantOneCreator = (variantTitle, item) => ({type: VARIANT_TITLE, variantTitle, item});
 export const addVariantTextCreator = (variantTextArea) => ({type: ADD_VARIANT_TEXT, variantTextArea});
-export const toggleChekBoxCreator = (flag) => ({type: TOGGLE_CHECKBOX, flag});
+export const toggleChekBoxCreator = (flag,item) => ({type: TOGGLE_CHECKBOX, flag,item});
 export const addVariantCreator = () => ({type: ADD_VARIANT});
 export const removeVarCreator = (item) => ({type: REMOVE_VARIANT, item});
 

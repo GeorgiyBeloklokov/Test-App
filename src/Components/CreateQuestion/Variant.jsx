@@ -23,8 +23,8 @@ const Variant = () => {
         dispatch(addVariantOneCreator(variantTitle,item))
     };
 
-    const toggleChekBox = (e) => {
-        dispatch(toggleChekBoxCreator(e))
+    const toggleChekBox = (e,item) => {
+        dispatch(toggleChekBoxCreator(e.target.checked,item))
     };
     const addVariantText = (TextArea) => {
         dispatch(addVariantTextCreator(TextArea))
@@ -55,7 +55,7 @@ const Variant = () => {
                                        variant="outlined"/>
                             <Typography variant="body2" sx={{ml: 2}} fontWeight='light'> Variant name </Typography>
                             <FormControlLabel sx={{pb: 2, pt: 1, pl: 1}}
-                                              control={<Checkbox onChange={e => toggleChekBox(e.target.value)}
+                                              control={<Checkbox onChange={(e)=> toggleChekBox(e,item)} inputProps={{ 'aria-label': 'controlled' }}
                                                                  defaultChecked size="small"/>} label="Right answer"/>
                         </Paper>
                         }
