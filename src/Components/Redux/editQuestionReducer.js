@@ -10,12 +10,18 @@ const REMOVE_VARIANT = 'REMOVE_VARIANT';
 let defaultState = {
     questionAndAnswer:
         {
-            /*id:Date.now(),*/
             title: null,
             description: null,
             image: [],
             typeofQuestion: false,
-            variants: [],
+            variants: [
+                {
+                    id: 1635621494706,
+                    chekBoxFlag: true,
+                    variantTitle: null,
+                    variantTextArea: null,
+                }
+            ],
             answer: '',
             rightAnswer: false,
             textAnswer: '',
@@ -26,7 +32,7 @@ let defaultState = {
         },
     variantItem:
         {
-            id:1635621494706,
+            id: 1635621494706,
             chekBoxFlag: true,
             variantTitle: null,
             variantTextArea: null,
@@ -55,8 +61,19 @@ const editQuestionReducer = (state = defaultState, action) => {
             };
         case VARIANT_TITLE:
             return {
-                ...state, variantItem: {...state.variantItem, variantTitle: action.variantTitle}
+                ...state, questionAndAnswer: {
+                    ...state.questionAndAnswer, variants: [...state.questionAndAnswer.variants.map(item => {
+                        if (item.id === action.item.id) {
+                            return {...item, variantTitle: action.variantTitle}
+                        }
+                        return item;
+                    })]
+                }
+
             };
+        /*return {
+            ...state, variantItem: {...state.variantItem, variantTitle: action.variantTitle}
+        };*/
         case TOGGLE_CHECKBOX:
             return {
                 ...state,
@@ -65,23 +82,27 @@ const editQuestionReducer = (state = defaultState, action) => {
         case ADD_VARIANT:
             return ({
                 ...state,
-                questionAndAnswer: {...state.questionAndAnswer, variants: [...state.questionAndAnswer.variants, {...state.variantItem,id:Date.now()}]
+                questionAndAnswer: {
+                    ...state.questionAndAnswer,
+                    variants: [...state.questionAndAnswer.variants, {...state.variantItem, id: Date.now()}]
                 }
             });
-            case REMOVE_VARIANT:
+        case REMOVE_VARIANT:
             return ({
                 ...state,
-                questionAndAnswer: {...state.questionAndAnswer, variants: state.questionAndAnswer.variants.filter(item => item.id !== action.item.id )
+                questionAndAnswer: {
+                    ...state.questionAndAnswer,
+                    variants: state.questionAndAnswer.variants.filter(item => item.id !== action.item.id)
                 }
             });
 
-            /*setState({ ...state, note: state.note.filter((tag) => tag !== delTag)
-            });*/
+        /*setState({ ...state, note: state.note.filter((tag) => tag !== delTag)
+        });*/
 
-            /*let stateCopy = {...state};
-            stateCopy.questionAndAnswer = {...stateCopy.questionAndAnswer};
-            stateCopy.questionAndAnswer.variants.push({...state.variantItem});
-            return stateCopy;*/
+        /*let stateCopy = {...state};
+        stateCopy.questionAndAnswer = {...stateCopy.questionAndAnswer};
+        stateCopy.questionAndAnswer.variants.push({...state.variantItem});
+        return stateCopy;*/
 
         default:
             return state;
@@ -93,11 +114,11 @@ const editQuestionReducer = (state = defaultState, action) => {
 export const addTitleQuestionCreator = (titleText) => ({type: ADD_TITLE_QUESTION, titleText});
 export const addDescriptionQuestionCreator = (descriptionText) => ({type: ADD_DESCRIPTION_QUESTION, descriptionText});
 export const typeAnswerFlagCreator = (flag) => ({type: TYPE_ANSWER_FLAG, flag});
-export const addVariantOneCreator = (variantTitle) => ({type: VARIANT_TITLE, variantTitle});
+export const addVariantOneCreator = (variantTitle, item) => ({type: VARIANT_TITLE, variantTitle, item});
 export const addVariantTextCreator = (variantTextArea) => ({type: ADD_VARIANT_TEXT, variantTextArea});
 export const toggleChekBoxCreator = (flag) => ({type: TOGGLE_CHECKBOX, flag});
 export const addVariantCreator = () => ({type: ADD_VARIANT});
-export const removeVarCreator = (item) => ({type: REMOVE_VARIANT,item});
+export const removeVarCreator = (item) => ({type: REMOVE_VARIANT, item});
 
 
 export default editQuestionReducer;

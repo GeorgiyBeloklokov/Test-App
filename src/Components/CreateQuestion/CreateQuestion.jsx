@@ -38,16 +38,6 @@ const CreateQuestion = () => {
         }
     };*/
 
-   /* const newVariant = () => {
-            const newVar = {
-                id: Date.now(),
-                chekBoxFlag: true,
-                variantTitle: null,
-                variantTextArea: null,
-            }
-            dispatch()
-    }*/
-
 
     return (
         <div>
@@ -127,13 +117,6 @@ const CreateQuestion = () => {
                         variant="body2"
                         fontWeight='light'> Answer type </Typography>
                     <Variant />
-                    {/*{variants.map((item) => {
-                        return (
-                            <Variant item={item}  variantTextArea={item.variantTextArea}
-                                     variantTitle={item.variantTitle} />
-                        )
-                    })}*/}
-
                     <Button onClick={addVariant} sx={{mt: 4}} type="submit" variant="contained" size="small"
                             component="span">
                         + Add new variant

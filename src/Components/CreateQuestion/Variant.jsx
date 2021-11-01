@@ -15,11 +15,12 @@ const Variant = () => {
     const variants = useSelector(state => state.edQuestRed.questionAndAnswer.variants);
 
     const variantTextArea = useSelector(state => state.edQuestRed.variantItem.variantTextArea);
-    const variantTitle = useSelector(state => state.edQuestRed.variantItem.variantTitle);
+   /* const variantTitle = useSelector(state => state.edQuestRed.variantItem.variantTitle);*/
     const typeAnswerFlag = useSelector(state => state.edQuestRed.questionAndAnswer.typeAnswerFlag);
 
-    const addVariantOneTitle = (variantTitle) => {
-        dispatch(addVariantOneCreator(variantTitle))
+    const addVariantOneTitle = (variantTitle,item) => {
+
+        dispatch(addVariantOneCreator(variantTitle,item))
     };
 
     const toggleChekBox = (e) => {
@@ -48,8 +49,8 @@ const Variant = () => {
                             </Button>
                             <Typography variant="h7" sx={{p: 2}}>Name</Typography>
                             <br/>
-                            <TextField size="small" fullWidth value={variantTitle}
-                                       onChange={e => addVariantOneTitle(e.target.value)} sx={{mt: 1}} type='input'
+                            <TextField size="small" fullWidth value={item.variantTitle}
+                                       onChange={e => addVariantOneTitle(e.target.value, item)} sx={{mt: 1}} type='input'
                                        id="outlined-basic" label="Some variant"
                                        variant="outlined"/>
                             <Typography variant="body2" sx={{ml: 2}} fontWeight='light'> Variant name </Typography>
