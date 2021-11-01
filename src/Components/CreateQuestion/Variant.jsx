@@ -13,20 +13,16 @@ import {
 const Variant = () => {
     const dispatch = useDispatch();
     const variants = useSelector(state => state.edQuestRed.questionAndAnswer.variants);
-
-    const variantTextArea = useSelector(state => state.edQuestRed.variantItem.variantTextArea);
-   /* const variantTitle = useSelector(state => state.edQuestRed.variantItem.variantTitle);*/
     const typeAnswerFlag = useSelector(state => state.edQuestRed.questionAndAnswer.typeAnswerFlag);
 
     const addVariantOneTitle = (e,item) => {
-        dispatch(addVariantOneCreator( item.chekBoxFlag,e.target.value,item))
+        dispatch(addVariantOneCreator( item.chekBoxFlag,e.target.value,item.variantTextArea,item))
     };
-
     const toggleChekBox = (e,item) => {
-        dispatch(addVariantOneCreator(e.target.checked,item.variantTitle,item))
+        dispatch(addVariantOneCreator(e.target.checked,item.variantTitle,item.variantTextArea,item))
     };
-    const addVariantText = (TextArea) => {
-        dispatch(addVariantTextCreator(TextArea))
+    const addVariantText = (e,item) => {
+        dispatch(addVariantOneCreator(item.chekBoxFlag,item.variantTitle, e.target.value,item))
     };
     const removeVar = (item) => {
         dispatch(removeVarCreator(item))
@@ -49,7 +45,7 @@ const Variant = () => {
                             <Typography variant="h7" sx={{p: 2}}>Name</Typography>
                             <br/>
                             <TextField size="small" fullWidth value={item.variantTitle}
-                                       onChange={e => addVariantOneTitle(e, item)} sx={{mt: 1}} type='input'
+                                       onChange={e => addVariantOneTitle(e,item)} sx={{mt: 1}} type='input'
                                        id="outlined-basic" label="Some variant"
                                        variant="outlined"/>
                             <Typography variant="body2" sx={{ml: 2}} fontWeight='light'> Variant name </Typography>
@@ -60,7 +56,7 @@ const Variant = () => {
                         }
                         {!typeAnswerFlag &&
                         <TextareaAutosize
-                            value={variantTextArea} onChange={e => addVariantText(e.target.value)}
+                            value={item.variantTextArea} onChange={e => addVariantText(e,item)}
                             aria-label="minimum height"
                             minRows={10}
                             placeholder="Question message"

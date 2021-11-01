@@ -50,10 +50,10 @@ const editQuestionReducer = (state = defaultState, action) => {
             return {
                 ...state, questionAndAnswer: {...state.questionAndAnswer, description: action.descriptionText}
             };
-        case ADD_VARIANT_TEXT:
+        /*case ADD_VARIANT_TEXT:
             return {
                 ...state, variantItem: {...state.variantItem, variantTextArea: action.variantTextArea}
-            };
+            };*/
         case TYPE_ANSWER_FLAG:
             return {
                 ...state,
@@ -61,11 +61,12 @@ const editQuestionReducer = (state = defaultState, action) => {
             };
         case VARIANT_TITLE:
         case TOGGLE_CHECKBOX:
+        case ADD_VARIANT_TEXT:
             return {
                 ...state, questionAndAnswer: {
                     ...state.questionAndAnswer, variants: [...state.questionAndAnswer.variants.map(item => {
                         if (item.id === action.item.id) {
-                            return {...item, variantTitle: action.variantTitle, chekBoxFlag: action.flag}
+                            return {...item, variantTitle: action.variantTitle, chekBoxFlag: action.flag,variantTextArea: action.variantTextArea}
                         }
                         return item;
                     })]
@@ -108,7 +109,7 @@ const editQuestionReducer = (state = defaultState, action) => {
 export const addTitleQuestionCreator = (titleText) => ({type: ADD_TITLE_QUESTION, titleText});
 export const addDescriptionQuestionCreator = (descriptionText) => ({type: ADD_DESCRIPTION_QUESTION, descriptionText});
 export const typeAnswerFlagCreator = (flag) => ({type: TYPE_ANSWER_FLAG, flag});
-export const addVariantOneCreator = (flag,variantTitle, item) => ({type: VARIANT_TITLE,flag:flag, variantTitle:variantTitle, item:item});
+export const addVariantOneCreator = (flag,variantTitle,variantTextArea,item) => ({type: VARIANT_TITLE,flag:flag, variantTitle:variantTitle, variantTextArea:variantTextArea, item:item});
 export const addVariantTextCreator = (variantTextArea) => ({type: ADD_VARIANT_TEXT, variantTextArea});
 export const toggleChekBoxCreator = (flag,item) => ({type: TOGGLE_CHECKBOX, flag,item});
 export const addVariantCreator = () => ({type: ADD_VARIANT});
