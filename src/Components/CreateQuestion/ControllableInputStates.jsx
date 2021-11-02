@@ -1,41 +1,38 @@
 import * as React from 'react';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import {typeAnswerFlagCreator} from "../Redux/editQuestionReducer";
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import {useDispatch} from "react-redux";
+import {addVariantContentCreator} from "../Redux/editQuestionReducer";
 
-const options = ['Variants with some answers', 'Text area for answer'];
+export default function BasicSelect(item) {
+    const [age, setAge] = React.useState(null);
+    const dispatch = useDispatch();
 
-export default function ControllableInputStates() {
-  const [value, setValue] = React.useState(options[0]);
-  const [inputValue, setInputValue] = React.useState('');
-  const dispatch = useDispatch();
+    const handleChange = (event) => {
+        setAge(event.target.value);
+        dispatch(addVariantContentCreator(item.item.chekBoxFlag, item.item.variantTitle, item.item.variantTextArea ,
+            event.target.value, item.item))
+    };
 
-
-  return (
-    <div>
-      {/* <div>{`value: ${value !== null ? `'${value}'` : 'null'}`}</div>
-      <div>{`inputValue: '${inputValue}'`}</div> */}
-      <br />
-      <Autocomplete
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-          dispatch(typeAnswerFlagCreator());
-        }}
-        inputValue={inputValue}
-        onInputChange={(event, newInputValue) => {
-          setInputValue(newInputValue);
-
-
-        }}
-        id="controllable-states-demo"
-        options={options}
-        fullWidth
-         size="small"
-        /* sx={{ width: 400 }} */
-        renderInput={(params) => <TextField {...params} label="Choice of one answer" />}
-      />
-    </div>
-  );
+    return (
+        <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Choice of one answer</InputLabel>
+                <Select
+                    size={'small'}
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={age}
+                    label="Choice of one answer"
+                    onChange={handleChange}
+                >
+                    <MenuItem value={true}>Variants with some answers</MenuItem>
+                    <MenuItem value={false}>Text area for answer</MenuItem>
+                </Select>
+            </FormControl>
+        </Box>
+    );
 }

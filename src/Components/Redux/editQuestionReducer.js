@@ -14,30 +14,20 @@ let defaultState = {
             description: null,
             image: [],
             typeofQuestion: false,
+            answer: '',
+            rightAnswer: false,
+            textAnswer: '',
             variants: [
                 {
                     id: 1635621494706,
                     chekBoxFlag: true,
                     variantTitle: null,
                     variantTextArea: null,
+                    typeAnswerFlag: true
                 }
             ],
-            answer: '',
-            rightAnswer: false,
-            textAnswer: '',
-            typeAnswerFlag: true,
-            variantTitle: null,
-            chekBoxFlag: true,
-            variantTextArea: null,
         },
-    variantItem:
-        {
-            id: 1635621494706,
-            chekBoxFlag: true,
-            variantTitle: null,
-            variantTextArea: null,
 
-        }
 };
 
 const editQuestionReducer = (state = defaultState, action) => {
@@ -50,23 +40,28 @@ const editQuestionReducer = (state = defaultState, action) => {
             return {
                 ...state, questionAndAnswer: {...state.questionAndAnswer, description: action.descriptionText}
             };
-        /*case ADD_VARIANT_TEXT:
-            return {
-                ...state, variantItem: {...state.variantItem, variantTextArea: action.variantTextArea}
-            };*/
-        case TYPE_ANSWER_FLAG:
+
+        /*case TYPE_ANSWER_FLAG:
             return {
                 ...state,
                 questionAndAnswer: {...state.questionAndAnswer, typeAnswerFlag: !state.questionAndAnswer.typeAnswerFlag}
-            };
+            };*/
+
         case VARIANT_TITLE:
         case TOGGLE_CHECKBOX:
         case ADD_VARIANT_TEXT:
+        case TYPE_ANSWER_FLAG:
             return {
                 ...state, questionAndAnswer: {
                     ...state.questionAndAnswer, variants: [...state.questionAndAnswer.variants.map(item => {
                         if (item.id === action.item.id) {
-                            return {...item, variantTitle: action.variantTitle, chekBoxFlag: action.flag,variantTextArea: action.variantTextArea}
+                            return {
+                                ...item,
+                                variantTitle: action.variantTitle,
+                                chekBoxFlag: action.flag,
+                                variantTextArea: action.variantTextArea,
+                                typeAnswerFlag: action.typeAnswerFlag
+                            }
                         }
                         return item;
                     })]
@@ -79,7 +74,7 @@ const editQuestionReducer = (state = defaultState, action) => {
                 ...state,
                 questionAndAnswer: {
                     ...state.questionAndAnswer,
-                    variants: [...state.questionAndAnswer.variants, {...state.variantItem, id: Date.now()}]
+                    variants: [...state.questionAndAnswer.variants, {...state.questionAndAnswer, id: Date.now()}]
                 }
             });
         case REMOVE_VARIANT:
@@ -91,14 +86,6 @@ const editQuestionReducer = (state = defaultState, action) => {
                 }
             });
 
-        /*setState({ ...state, note: state.note.filter((tag) => tag !== delTag)
-        });*/
-
-        /*let stateCopy = {...state};
-        stateCopy.questionAndAnswer = {...stateCopy.questionAndAnswer};
-        stateCopy.questionAndAnswer.variants.push({...state.variantItem});
-        return stateCopy;*/
-
         default:
             return state;
 
@@ -108,10 +95,15 @@ const editQuestionReducer = (state = defaultState, action) => {
 
 export const addTitleQuestionCreator = (titleText) => ({type: ADD_TITLE_QUESTION, titleText});
 export const addDescriptionQuestionCreator = (descriptionText) => ({type: ADD_DESCRIPTION_QUESTION, descriptionText});
-export const typeAnswerFlagCreator = (flag) => ({type: TYPE_ANSWER_FLAG, flag});
-export const addVariantOneCreator = (flag,variantTitle,variantTextArea,item) => ({type: VARIANT_TITLE,flag:flag, variantTitle:variantTitle, variantTextArea:variantTextArea, item:item});
-export const addVariantTextCreator = (variantTextArea) => ({type: ADD_VARIANT_TEXT, variantTextArea});
-export const toggleChekBoxCreator = (flag,item) => ({type: TOGGLE_CHECKBOX, flag,item});
+/*export const typeAnswerFlagCreator = (flag) => ({type: TYPE_ANSWER_FLAG, flag});*/
+export const addVariantContentCreator = (flag, variantTitle, variantTextArea, typeAnswerFlag, item) => ({
+    type: VARIANT_TITLE,
+    flag,
+    variantTitle,
+    variantTextArea,
+     typeAnswerFlag,
+     item
+});
 export const addVariantCreator = () => ({type: ADD_VARIANT});
 export const removeVarCreator = (item) => ({type: REMOVE_VARIANT, item});
 

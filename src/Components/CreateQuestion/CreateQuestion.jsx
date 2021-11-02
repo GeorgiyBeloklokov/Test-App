@@ -1,8 +1,9 @@
 import {Box, Button, Input, Paper, TextareaAutosize, TextField, Typography} from "@mui/material";
-import ControllableInputStates from "./ControllableInputStates";
 import {useDispatch, useSelector} from "react-redux";
 import {addDescriptionQuestionCreator, addTitleQuestionCreator, addVariantCreator} from "../Redux/editQuestionReducer";
 import Variant from "./Variant";
+import ControllableInputStates from "./ControllableInputStates";
+import React from "react";
 
 
 const CreateQuestion = () => {
@@ -63,13 +64,13 @@ const CreateQuestion = () => {
                     flexWrap: 'wrap',
                     '& > :not(style)': {
                         mt: 4,
-                        width: 450,
-                        height: 500,
+                        width: 500,
+                        height: 450,
                         px: 3,
                     },
                 }}
             >
-                <Paper elevation={3}>
+                <Paper elevation={3}   sx={{minHeight:450 }} >
                     <Typography variant="h5" sx={{mt: 2, mb: 2}}>
                         General information
                     </Typography>
@@ -112,7 +113,7 @@ const CreateQuestion = () => {
                     <Typography variant="h7">
                         Question type
                     </Typography>
-                    <ControllableInputStates/>
+
                     <Typography
                         variant="body2"
                         fontWeight='light'> Answer type </Typography>
