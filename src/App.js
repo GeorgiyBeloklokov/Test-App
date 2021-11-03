@@ -3,18 +3,21 @@ import SearchAppBar from "./Components/Header/SearchAppBar";
 import QuestionList from "./Components/QuestionList";
 import {Container} from "@mui/material";
 import CreateQuestion from "./Components/CreateQuestion/CreateQuestion";
+import BaseQuestion from "./Components/BaseQuestion/BaseQuestion";
+import {Route, Switch} from "react-router-dom";
 
 function App() {
     return (
         <div>
-        <SearchAppBar/>
-        <Container sx={{ mt: '1rem'  }} >
+            <SearchAppBar/>
+            <Switch>
+                <Container sx={{ mt: '1rem'  }} >
+                    <Route path='/questionlist' render ={() =>  <BaseQuestion/> }/>
+                    <Route path='/newquestion' render ={() =>  <CreateQuestion/> }/>
+                </Container>
+            </Switch>
 
-            {/*<QuestionList/>*/}
-            <CreateQuestion/>
-        </Container>
         </div>
-
     );
 }
 

@@ -8,6 +8,8 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import {Button, Stack} from "@mui/material";
+import {Link, NavLink} from "react-router-dom";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -65,26 +67,27 @@ export default function SearchAppBar() {
                     >
                         <MenuIcon />
                     </IconButton>
+
+
                     <Typography
-                        variant="h5"
+                        variant="h4"
                         noWrap
                         component="div"
-                        marginRight={70}
+                        marginRight={5}
                         sx={{ flexGrow: -1, display: { xs: 'none', sm: 'block' } }}
                     >
                         Test Application
                     </Typography>
+                        <Stack direction="row"  spacing={2}>
+                            {/*<NavLink color='secondary' style={{ textDecoration: 'none' }} to="/questionlist"> <Button color="success" >Question list</Button></NavLink>*/}
+                            <Button color="inherit" size={'small'} component={NavLink} to={'/questionlist'} >Question list</Button>
+                            <Button color="inherit" size={'small'} component={NavLink} to={'/newquestion'} >Create new question</Button>
+                            <Button color="inherit" size={'small'} component={NavLink} to={'/disabledbutton'} >Some disabled button</Button>
 
 
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-                    >
-                        MUI
-                    </Typography>
-                    <Search>
+                    </Stack>
+
+                    <Search  >
                         <SearchIconWrapper>
                             <SearchIcon />
                         </SearchIconWrapper>
