@@ -21,8 +21,8 @@ export default function ControlledRadioButtonsGroup() {
                 value={value}
                 onChange={handleChange}
             >
-                <FormControlLabel value="female" control={<Radio />} label="Female" />
-                <FormControlLabel value="male" control={<Radio />} label="Male" />
+                <FormControlLabel value="female" control={<Radio />} label="Some variant" />
+                <FormControlLabel value="male" control={<Radio />} label="Lorem ipsum" />
             </RadioGroup>
         </FormControl>
     );

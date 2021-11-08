@@ -1,19 +1,29 @@
-
 import React from 'react';
-import QuestionItem from "./QuestionItem";
+import {useSelector} from "react-redux";
+import QuestionCard from "./Question/QuestionCard";
+import {Container, Grid} from "@mui/material";
+
+
+const QuestionList = () => {
 
 
 
-const QuestionList = (props) => {
-    const { questions} = props;
+    const questions = useSelector(state => state.edQuestRed.questions);
 
     return (
-        <div className='goods-list col-md-8'>
-            <div className='row'>
+        <div >
+            <Grid container spacing={3} >
                 {questions.map((item) => (
-                    <QuestionItem key={item.id} {...item} />
+<>
+                    <QuestionCard key={item.id} /*{...item} *//>
+                    <QuestionCard key={item.id} /*{...item} *//>
+                    <QuestionCard key={item.id} /*{...item} *//>
+                    <QuestionCard key={item.id} /*{...item} *//>
+                    <QuestionCard key={item.id} /*{...item} *//>
+                    <QuestionCard key={item.id} /*{...item} *//>
+</>
                 ))}
-            </div>
+            </Grid>
         </div>
     );
 };

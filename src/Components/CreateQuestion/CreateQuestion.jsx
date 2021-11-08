@@ -1,9 +1,12 @@
 import {Box, Button, Input, Paper, TextareaAutosize, TextField, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
-import {addDescriptionQuestionCreator, addTitleQuestionCreator, addVariantCreator} from "../Redux/editQuestionReducer";
+import {
+    addQuestionCreator, addTitleAndDescriptionQuestionCreator,
+    addVariantCreator
+} from "../Redux/editQuestionReducer";
 import Variant from "./Variant";
-import ControllableInputStates from "./ControllableInputStates";
 import React from "react";
+
 
 
 const CreateQuestion = () => {
@@ -11,20 +14,24 @@ const CreateQuestion = () => {
     /*const [selectedImage, setSelectedImage] = useState();*/
     const dispatch = useDispatch();
 
-    const title = useSelector(state => state.edQuestRed.questionAndAnswer.title);
-    const description = useSelector(state => state.edQuestRed.questionAndAnswer.description);
+    const questions = useSelector(state => state.edQuestRed.questions);
+    const title = useSelector(state => state.edQuestRed.questions.title);
+    const description = useSelector(state => state.edQuestRed.questions.description);
     /*const image = useSelector(state => state.edQuestRed.questionAndAnswer.image);*/
 
 
 
-    const addNewTitle = (titleText) => {
-        dispatch(addTitleQuestionCreator(titleText))
+    const addNewTitle = (e,item) => {
+        dispatch(addTitleAndDescriptionQuestionCreator(e.target.value,item.description,item))
     };
-    const addNewDescription = (descriptionText) => {
-        dispatch(addDescriptionQuestionCreator(descriptionText))
+    const addNewDescription = (e,item) => {
+        dispatch(addTitleAndDescriptionQuestionCreator(item.title, e.target.value,item))
     };
     const addVariant = (e) => {
         dispatch(addVariantCreator(e))
+    };
+    const saveQuest = (e) => {
+        dispatch(addQuestionCreator(e))
     };
 
     /*const fileSelectedHandler = (event) => {
@@ -39,7 +46,7 @@ const CreateQuestion = () => {
         }
     };*/
 
-
+    const question = questions.map((item) => {
     return (
         <div>
             <Box
@@ -54,7 +61,10 @@ const CreateQuestion = () => {
                 <Typography variant="h5" sx={{width: 300, mr: 68}}>
                     Edit question
                 </Typography>
-                <Button size='small' variant="contained">Save question</Button>
+                <Button onClick={saveQuest}  type="submit" variant="contained" size="small"
+                        component="span">
+                    Save question
+                </Button>
                 <Button size='small' color="error" variant="contained">Remove question</Button>
             </Box>
             <Box
@@ -77,14 +87,14 @@ const CreateQuestion = () => {
                     <Typography variant="h7">
                         Title
                     </Typography>
-                    <TextField fullWidth value={title} sx={{mb: 2}} onChange={e => addNewTitle(e.target.value)}
+                    <TextField fullWidth value={title} sx={{mb: 2}} onChange={e => addNewTitle(e, item)}
                                size="small" type='input' id="outlined-basic" label='Question title'
                                variant="outlined"/>
                     <Typography variant="h7">
                         Description
                     </Typography>
                     <TextareaAutosize
-                        value={description} onChange={e => addNewDescription(e.target.value)}
+                        value={description} onChange={e => addNewDescription(e, item)}
                         aria-label="minimum height"
                         minRows={10}
                         placeholder="Question message"
@@ -127,5 +137,7 @@ const CreateQuestion = () => {
             </Box>
         </div>
     )
+    });
+    return <div>{question}</div>
 }
 export default CreateQuestion;
