@@ -60,21 +60,22 @@ const editQuestionReducer = (state = defaultState, action) => {
                 ...state, questions:
                     state.questions.map(q => {
                         if (q.id === action[0].id) {
-                            return   q.variants.map(v => {
-                                            if (v.id === action[0].variants[0].id) {
-                                                return {variants: [{
-                                                        ...v,
-                                                        variantTitle: action.variantTitle,
-                                                        chekBoxFlag: action.flag,
-                                                        variantTextArea: action.variantTextArea,
-                                                        typeAnswerFlag: action.typeAnswerFlag
-                                                    }]
-                                                }
-
-                                            }
-                                            return v;
+                            return q.variants.map(v => {
+                                    if (v.id === action[0].variants[0].id) {
+                                        return { ...q,
+                                            variants: [{
+                                                ...v,
+                                                variantTitle: action.variantTitle,
+                                                chekBoxFlag: action.flag,
+                                                variantTextArea: action.variantTextArea,
+                                                typeAnswerFlag: action.typeAnswerFlag
+                                            }]
                                         }
-                                    )
+
+                                    }
+                                    return v;
+                                }
+                            )
 
 
                         }
