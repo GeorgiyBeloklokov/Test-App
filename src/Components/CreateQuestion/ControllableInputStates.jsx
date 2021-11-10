@@ -13,7 +13,7 @@ export default function BasicSelect(item) {
 
     const handleChange = (event) => {
         setAge(event.target.value);
-        dispatch(addVariantContentCreator(item.item[0].variants[0].chekBoxFlag, item.item[0].variants[0].variantTitle, item.item[0].variants[0].variantTextArea ,
+        dispatch(addVariantContentCreator(item.item.variants[0].chekBoxFlag, item.item.variants[0].variantTitle, item.item.variants[0].variantTextArea ,
             event.target.value, item.item))
     };
 

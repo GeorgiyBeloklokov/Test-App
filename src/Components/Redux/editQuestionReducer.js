@@ -9,9 +9,7 @@ const ADD_QUESTION = 'ADD_QUESTION';
 
 let defaultState = {
 
-
     questions: [
-
         {
             id: 1635621494500,
             title: null,
@@ -34,11 +32,10 @@ let defaultState = {
 
 const editQuestionReducer = (state = defaultState, action) => {
     switch (action.type) {
-
         case ADD_TITLE_DESCRIPTION_QUESTION:
             return {
-                ...state, questions: [
-                    ...state.questions.map(item => {
+                ...state, questions:
+                    state.questions.map(item => {
                         if (item.id === action.item.id) {
                             return {
                                 ...item,
@@ -48,7 +45,7 @@ const editQuestionReducer = (state = defaultState, action) => {
                         }
                         return item;
                     })
-                ]
+
             };
 
         case VARIANT_TITLE:
@@ -57,79 +54,30 @@ const editQuestionReducer = (state = defaultState, action) => {
         case TYPE_ANSWER_FLAG:
 
             return {
-                ...state, questions:
-                    state.questions.map(q => {
-                        if (q.id === action[0].id) {
-                            return q.variants.map(v => {
-                                    if (v.id === action[0].variants[0].id) {
-                                        return { ...q,
-                                            variants: [{
-                                                ...v,
-                                                variantTitle: action.variantTitle,
-                                                chekBoxFlag: action.flag,
-                                                variantTextArea: action.variantTextArea,
-                                                typeAnswerFlag: action.typeAnswerFlag
-                                            }]
-                                        }
-
-                                    }
-                                    return v;
-                                }
-                            )
-
-
-                        }
-                        return q;
-                    })
-
-
-
-            };
-
-
-
-        /* // перебираем основной массив
-         questions.map(q => {
-             if (q.id === action.item.id) {
-                 // перебираем массив внутри выбранного объекта
-                 return q.variants.map(v => {
-                     if (v.if === какому-то нужному тебе значению) {
-                         return возвращаешь нужный объект с измененными как тебе нужно полями
-                     }
-                     return v;
-                 })
-             }
-             return q;
-         })*/
-
-        /* questions.map(q=>{
-             if(q.variants.find(v=>v.id)===q.id) return...
-         }*/
-
-        /*return {
-            ...state, questions: [
-                ...state.questions.map(q => {
+                ...state,
+                questions: state.questions.map((q) => {
                     if (q.id === action.id) {
-                        return q.variants.map(v => {
+                        return {
+                            ...q,
+                            variants: q.variants.map((v) => {
                                 if (v.id === action.variants[0].id) {
-                                    return {...q,
-                                        variantTitle: action.variants.variantTitle,
-                                        chekBoxFlag: action.variants.flag,
-                                        variantTextArea: action.variants.variantTextArea,
-                                        typeAnswerFlag: action.variants.typeAnswerFlag
-                                    }
+                                    return {
+                                        ...v,
+                                        variantTitle: action.variantTitle,
+                                        chekBoxFlag: action.flag,
+                                        variantTextArea: action.variantTextArea,
+                                        typeAnswerFlag: action.typeAnswerFlag
+                                    };
                                 }
-
-                            return v;
-                            }
-                        )
-
+                                return v;
+                            })
+                        };
                     }
                     return q;
                 })
+            };
 
-            ]
-        };*/
+
 
         case ADD_VARIANT:
             return ({
@@ -159,8 +107,6 @@ const editQuestionReducer = (state = defaultState, action) => {
 
         default:
             return state;
-
-
     }
 };
 
@@ -175,9 +121,9 @@ export const addVariantContentCreator = (flag, variantTitle, variantTextArea, ty
     type: VARIANT_TITLE,
     flag, variantTitle, variantTextArea, typeAnswerFlag, ...item
 });
+
 export const addVariantCreator = () => ({type: ADD_VARIANT});
 export const removeVarCreator = (item) => ({type: REMOVE_VARIANT, item});
 export const addQuestionCreator = () => ({type: ADD_QUESTION});
-
 
 export default editQuestionReducer;
