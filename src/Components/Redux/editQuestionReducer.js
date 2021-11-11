@@ -80,17 +80,31 @@ const editQuestionReducer = (state = defaultState, action) => {
 
 
         case ADD_VARIANT:
-            return ({
+            return {
                 ...state,
-                questions: {
-                    ...state.questions, variants: state.questions[0].variants.push( {...state.questions.variants, id: Date.now(), chekBoxFlag: true,
-                        variantTitle: null,
-                        variantTextArea: null,
-                        typeAnswerFlag: true,
-                        rightAnswer: false,})
+                questions: state.questions.map((q) =>{
+                    if (q.id === action.id) {
+                        return {
+                            ...q,
+                            variants:[
+                                ...state.questions[0].variants, {
+                                    id: Date.now(),
+                                    chekBoxFlag: true,
+                                    variantTitle: null,
+                                    variantTextArea: null,
+                                    typeAnswerFlag: true,
+                                    rightAnswer: false,
+                                }
+                            ]
 
-                }
-            });
+                        };
+                    }
+                    return q;
+                })
+
+                };
+
+
 
 
 
@@ -162,7 +176,7 @@ export const addVariantContentCreator = (flag, variantTitle, variantTextArea, ty
     flag, variantTitle, variantTextArea, typeAnswerFlag, ...item
 });
 
-export const addVariantCreator = () => ({type: ADD_VARIANT});
+export const addVariantCreator = (item) => ({type: ADD_VARIANT, ...item});
 export const removeVarCreator = (item) => ({type: REMOVE_VARIANT, item});
 export const addQuestionCreator = () => ({type: ADD_QUESTION});
 

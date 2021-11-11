@@ -24,7 +24,7 @@ const Variant = (data) => {
         dispatch(removeVarCreator(item))
     };
 
-    let variant = data.variants.map( (item) => {
+    let variant = data.data.map( (item) => {
 
             return (
                 <div key={item.id}>

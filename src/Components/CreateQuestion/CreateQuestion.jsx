@@ -27,8 +27,8 @@ const CreateQuestion = () => {
     const addNewDescription = (e,item) => {
         dispatch(addTitleAndDescriptionQuestionCreator(item.title, e.target.value,item))
     };
-    const addVariant = (e) => {
-        dispatch(addVariantCreator(e))
+    const addVariant = (item) => {
+        dispatch(addVariantCreator(item))
     };
     const saveQuest = (e) => {
         dispatch(addQuestionCreator(e))
@@ -46,7 +46,8 @@ const CreateQuestion = () => {
         }
     };*/
 
-    const question = questions.map((item) => {
+    let question = questions.map((item) => {
+
     return (
         <div>
             <Box
@@ -127,9 +128,9 @@ const CreateQuestion = () => {
                     <Typography
                         variant="body2"
                         fontWeight='light'> Answer type </Typography>
-                    <Variant variants={item.variants} />
+                    <Variant data={item.variants} />
 
-                    <Button onClick={addVariant} sx={{mt: 4}} type="submit" variant="contained" size="small"
+                    <Button onClick={() => addVariant( item)} sx={{mt: 4}} type="submit" variant="contained" size="small"
                             component="span">
                         + Add new variant
                     </Button>
