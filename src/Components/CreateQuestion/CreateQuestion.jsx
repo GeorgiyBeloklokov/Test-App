@@ -127,7 +127,8 @@ const CreateQuestion = () => {
                     <Typography
                         variant="body2"
                         fontWeight='light'> Answer type </Typography>
-                    <Variant />
+                    <Variant variants={item.variants} />
+
                     <Button onClick={addVariant} sx={{mt: 4}} type="submit" variant="contained" size="small"
                             component="span">
                         + Add new variant

@@ -82,25 +82,65 @@ const editQuestionReducer = (state = defaultState, action) => {
         case ADD_VARIANT:
             return ({
                 ...state,
-                questionAndAnswer: {
-                    ...state.questionAndAnswer,
-                    variants: [...state.questionAndAnswer.variants, {...state.questionAndAnswer, id: Date.now()}]
+                questions: {
+                    ...state.questions, variants: state.questions[0].variants.push( {...state.questions.variants, id: Date.now(), chekBoxFlag: true,
+                        variantTitle: null,
+                        variantTextArea: null,
+                        typeAnswerFlag: true,
+                        rightAnswer: false,})
+
                 }
             });
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*return {
+            ...state,
+            questions: state.questions.map((q) => {
+                if (q.id === action.id) {
+                    return {
+                        ...q,
+                        variants: [{...q.variants,
+                                id: Date.now(),
+                                variantTitle: action.variantTitle,
+                                chekBoxFlag: action.flag,
+                                variantTextArea: action.variantTextArea,
+                                typeAnswerFlag: action.typeAnswerFlag
+
+                    }]
+                    };
+                }
+                return q;
+            })
+        };*/
+
+
+
+
         case REMOVE_VARIANT:
             return ({
                 ...state,
-                questionAndAnswer: {
-                    ...state.questionAndAnswer,
-                    variants: state.questionAndAnswer.variants.filter(item => item.id !== action.item.id)
+                questions: {
+                    ...state.questions,
+                    variants: state.questions[0].variants.filter(item => item.id !== action.item.id)
                 }
             });
         case ADD_QUESTION:
             return ({
                 ...state,
                 questions: [{
-                    ...state.questionAndAnswer,
-                    variants: [...state.questionAndAnswer.variants],
+                    ...state.questions,
+                    variants: [...state.questions[0].variants],
                     id: Date.now()
                 }]
             });
@@ -116,7 +156,7 @@ export const addTitleAndDescriptionQuestionCreator = (titleText, descriptionText
     descriptionText,
     item
 });
-/*export const addDescriptionQuestionCreator = (,item) => ({type: ADD_DESCRIPTION_QUESTION, descriptionText,item});*/
+
 export const addVariantContentCreator = (flag, variantTitle, variantTextArea, typeAnswerFlag, item) => ({
     type: VARIANT_TITLE,
     flag, variantTitle, variantTextArea, typeAnswerFlag, ...item
