@@ -1,14 +1,15 @@
 import React from 'react';
 import {Button, Checkbox, FormControlLabel, Paper, TextareaAutosize, TextField, Typography} from "@mui/material";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {addVariantContentCreator, removeVarCreator} from "../Redux/editQuestionReducer";
 import ControllableInputStates from "./ControllableInputStates";
 import BasicSelect from "./ControllableInputStates";
 
 
-const Variant = () => {
+const Variant = (data) => {
+
     const dispatch = useDispatch();
-    const questions = useSelector(state => state.edQuestRed.questions);
+    /*const questions = useSelector(state => state.edQuestRed.questions);*/
 
     const addVariantTitle = (e, item) => {
         dispatch(addVariantContentCreator(item.variants[0].chekBoxFlag, e.target.value, item.variants[0].variantTextArea, item.variants[0].typeAnswerFlag, item))
@@ -23,11 +24,12 @@ const Variant = () => {
         dispatch(removeVarCreator(item))
     };
 
-    const variant = questions.map( item => {
-            return (
-                <div key={item.variants[0].id}>
+    let variant = data.variants.map( (item) => {
 
-                    {item.variants[0].typeAnswerFlag &&
+            return (
+                <div key={item.id}>
+
+                    {item.typeAnswerFlag &&
 
                     <Paper elevation={0} sx={{mt: 2}}>
 
@@ -36,14 +38,14 @@ const Variant = () => {
                             variant="h5" sx={{p: 2}}
                             style={{display: 'inline'}}
                         >Variant#1</Typography>
-                        <Button sx={{ml: 28}} onClick={() => removeVar(questions)} type="submit" variant="contained"
+                        <Button sx={{ml: 28}} onClick={() => removeVar(item)} type="submit" variant="contained"
                                 color="error" size="small"
                                 component="span">
                             x Remove
                         </Button>
                         <Typography variant="h7" sx={{p: 2}}>Name</Typography>
                         <br/>
-                        <TextField size="small" fullWidth value={item.variants[0].variantTitle}
+                        <TextField size="small" fullWidth value={item.variantTitle}
                                    onChange={e => addVariantTitle(e, item)} sx={{mt: 1}} type='input'
                                    id="outlined-basic" label="Some variant"
                                    variant="outlined"/>
@@ -54,7 +56,7 @@ const Variant = () => {
                                                              defaultChecked size="small"/>} label="Right answer"/>
                     </Paper>
                     }
-                    {!item.variants[0].typeAnswerFlag &&
+                    {!item.typeAnswerFlag &&
                     <Paper elevation={0} sx={{mt: 2}}>
                         <ControllableInputStates item={item}/>
                         <Typography
@@ -69,7 +71,7 @@ const Variant = () => {
                         <Typography variant="h7" sx={{p: 2}}>Name</Typography>
                         <br/>
                         <TextareaAutosize
-                            value={item.variants[0].variantTextArea} onChange={e => addVariantText(e, item)}
+                            value={item.variantTextArea} onChange={e => addVariantText(e, item)}
                             /*aria-label="minimum height"*/
                             minRows={10}
                             placeholder="Question message"
