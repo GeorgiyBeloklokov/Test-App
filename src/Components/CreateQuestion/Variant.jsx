@@ -2,14 +2,14 @@ import React from 'react';
 import {Button, Checkbox, FormControlLabel, Paper, TextareaAutosize, TextField, Typography} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {addVariantContentCreator, removeVarCreator} from "../Redux/editQuestionReducer";
-import ControllableInputStates from "./ControllableInputStates";
-import BasicSelect from "./ControllableInputStates";
+import ControllableInputStates from "./BasicSelect";
+import BasicSelect from "./BasicSelect";
 
 
 const Variant = (data) => {
 
     const dispatch = useDispatch();
-    /*const questions = useSelector(state => state.edQuestRed.questions);*/
+
 
     const addVariantTitle = (e, item) => {
         dispatch(addVariantContentCreator(item.variants[0].chekBoxFlag, e.target.value, item.variants[0].variantTextArea, item.variants[0].typeAnswerFlag, item))
@@ -24,7 +24,7 @@ const Variant = (data) => {
         dispatch(removeVarCreator(item))
     };
 
-    let variant = data.data.map( (item) => {
+    let variant = data.data.variants.map((item) => {
 
             return (
                 <div key={item.id}>
