@@ -45,8 +45,9 @@ const editQuestionReducer = (state = defaultState, action) => {
                         }
                         return item;
                     })
-
             };
+
+
 
         case VARIANT_TITLE:
         case TOGGLE_CHECKBOX:
@@ -60,11 +61,11 @@ const editQuestionReducer = (state = defaultState, action) => {
                         return {
                             ...q,
                             variants: q.variants.map((v) => {
-                                if (v.id === action.variants[0].id) {
+                                if (v.id === action.itemIdFlag) {
                                     return {
                                         ...v,
                                         variantTitle: action.variantTitle,
-                                        chekBoxFlag: action.flag,
+                                        chekBoxFlag: action.chekBoxFlag,
                                         variantTextArea: action.variantTextArea,
                                         typeAnswerFlag: action.typeAnswerFlag
                                     };
@@ -122,11 +123,24 @@ const editQuestionReducer = (state = defaultState, action) => {
         case ADD_QUESTION:
             return ({
                 ...state,
-                questions: [{
-                    ...state.questions,
-                    variants: [...state.questions[0].variants],
-                    id: Date.now()
-                }]
+                questions: [
+                    ...state.questions, {
+                        id: Date.now(),
+                        title: null,
+                        description: null,
+                        image: [],
+                        variants: [
+                            {
+                                id: Math.floor(Math.random() * 16356214947001),
+                                chekBoxFlag: true,
+                                variantTitle: null,
+                                variantTextArea: null,
+                                typeAnswerFlag: true,
+                                rightAnswer: false,
+                            }
+                        ],
+                    },
+                ]
             });
 
         default:
@@ -141,13 +155,13 @@ export const addTitleAndDescriptionQuestionCreator = (titleText, descriptionText
     item
 });
 
-export const addVariantContentCreator = (flag, variantTitle, variantTextArea, typeAnswerFlag, item) => ({
+export const addVariantContentCreator = (chekBoxFlag, variantTitle, variantTextArea, typeAnswerFlag, item,itemIdFlag) => ({
     type: VARIANT_TITLE,
-    flag, variantTitle, variantTextArea, typeAnswerFlag, ...item
+    chekBoxFlag, variantTitle, variantTextArea, typeAnswerFlag, ...item, itemIdFlag
 });
 
 export const addVariantCreator = (item) => ({type: ADD_VARIANT, ...item});
 export const removeVarCreator = (item) => ({type: REMOVE_VARIANT, ...item});
-export const addQuestionCreator = () => ({type: ADD_QUESTION});
+export const addQuestionCreator = (item) => ({type: ADD_QUESTION, ...item});
 
 export default editQuestionReducer;

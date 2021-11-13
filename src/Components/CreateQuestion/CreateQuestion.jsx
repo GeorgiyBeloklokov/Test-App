@@ -30,8 +30,8 @@ const CreateQuestion = () => {
     const addVariant = (item) => {
         dispatch(addVariantCreator(item))
     };
-    const saveQuest = (e) => {
-        dispatch(addQuestionCreator(e))
+    const saveQuest = (item) => {
+        dispatch(addQuestionCreator(item))
     };
 
     /*const fileSelectedHandler = (event) => {
@@ -62,7 +62,7 @@ const CreateQuestion = () => {
                 <Typography variant="h5" sx={{width: 300, mr: 68}}>
                     Edit question
                 </Typography>
-                <Button onClick={saveQuest}  type="submit" variant="contained" size="small"
+                <Button  onClick={() => saveQuest(item)}  type="submit" variant="contained" size="small"
                         component="span">
                     Save question
                 </Button>

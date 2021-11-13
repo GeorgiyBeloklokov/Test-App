@@ -4,17 +4,18 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {addVariantContentCreator} from "../Redux/editQuestionReducer";
 
 export default function BasicSelect(item) {
+
     const [age, setAge] = React.useState(null);
     const dispatch = useDispatch();
+    const data = useSelector(state => state.edQuestRed.questions);
 
     const handleChange = (event) => {
         setAge(event.target.value);
-        dispatch(addVariantContentCreator(item.item.variants[0].chekBoxFlag, item.item.variants[0].variantTitle, item.item.variants[0].variantTextArea ,
-            event.target.value, item.item))
+        dispatch(addVariantContentCreator(data[0].variants[0].chekBoxFlag, data[0].variants[0].variantTitle, data[0].variants[0].variantTextArea, event.target.value, data[0], item.item.id))
     };
 
     return (
