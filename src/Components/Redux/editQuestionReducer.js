@@ -6,6 +6,7 @@ const ADD_VARIANT_TEXT = 'ADD_VARIANT_TEXT';
 const ADD_VARIANT = 'ADD_VARIANT';
 const REMOVE_VARIANT = 'REMOVE_VARIANT';
 const ADD_QUESTION = 'ADD_QUESTION';
+const REMOVE_QUESTION = 'REMOVE_QUESTION';
 
 let defaultState = {
 
@@ -143,6 +144,13 @@ const editQuestionReducer = (state = defaultState, action) => {
                 ]
             });
 
+        case REMOVE_QUESTION:
+            return {
+                ...state,
+                questions: state.questions.filter(item => item.id !== action.id)
+
+            };
+
         default:
             return state;
     }
@@ -163,5 +171,6 @@ export const addVariantContentCreator = (chekBoxFlag, variantTitle, variantTextA
 export const addVariantCreator = (item) => ({type: ADD_VARIANT, ...item});
 export const removeVarCreator = (item) => ({type: REMOVE_VARIANT, ...item});
 export const addQuestionCreator = (item) => ({type: ADD_QUESTION, ...item});
+export const removeQuestionCreator = (item) => ({type: REMOVE_QUESTION, ...item});
 
 export default editQuestionReducer;

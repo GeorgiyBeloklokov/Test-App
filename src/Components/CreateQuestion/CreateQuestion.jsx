@@ -2,7 +2,7 @@ import {Box, Button, Input, Paper, TextareaAutosize, TextField, Typography} from
 import {useDispatch, useSelector} from "react-redux";
 import {
     addQuestionCreator, addTitleAndDescriptionQuestionCreator,
-    addVariantCreator
+    addVariantCreator, removeQuestionCreator
 } from "../Redux/editQuestionReducer";
 import Variant from "./Variant";
 import React from "react";
@@ -32,6 +32,9 @@ const CreateQuestion = () => {
     };
     const saveQuest = (item) => {
         dispatch(addQuestionCreator(item))
+    };
+    const removeQuest = (item) => {
+        dispatch(removeQuestionCreator(item))
     };
 
     /*const fileSelectedHandler = (event) => {
@@ -66,7 +69,7 @@ const CreateQuestion = () => {
                         component="span">
                     Save question
                 </Button>
-                <Button size='small' color="error" variant="contained">Remove question</Button>
+                <Button  onClick={() => removeQuest(item)}  size='small' color="error" variant="contained">Remove question</Button>
             </Box>
             <Box
                 sx={{

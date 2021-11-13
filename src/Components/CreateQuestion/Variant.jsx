@@ -19,8 +19,7 @@ const Variant = (data) => {
     const addVariantText = (e, data, item) => {
         dispatch(addVariantContentCreator(data.data.variants[0].chekBoxFlag, data.data.variants[0].variantTitle, e.target.value, data.data.variants[0].typeAnswerFlag, data.data, item.id))
     };
-    const removeVar = (item) => {
-        dispatch(removeVarCreator(item))
+    const removeVar = (item) => {  dispatch(removeVarCreator(item))
     };
 
     let variant = data.data.variants.map((item) => {
@@ -32,7 +31,7 @@ const Variant = (data) => {
 
                     <Paper elevation={0} sx={{mt: 2}}>
 
-                        <BasicSelect item={item} />
+                        <BasicSelect item={item}/>
                         <Typography
                             variant="h5" sx={{p: 2}}
                             style={{display: 'inline'}}
