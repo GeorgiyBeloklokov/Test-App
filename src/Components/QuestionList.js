@@ -8,19 +8,15 @@ const QuestionList = () => {
 
 
 
-    const questions = useSelector(state => state.edQuestRed.questions);
+    const questions = useSelector(state => state.questReducer.questions);
 
     return (
         <div >
             <Grid container spacing={3} >
                 {questions.map((item) => (
 <>
-                    <QuestionCard key={item.id} /*{...item} *//>
-                    <QuestionCard key={item.id} /*{...item} *//>
-                    <QuestionCard key={item.id} /*{...item} *//>
-                    <QuestionCard key={item.id} /*{...item} *//>
-                    <QuestionCard key={item.id} /*{...item} *//>
-                    <QuestionCard key={item.id} /*{...item} *//>
+                    <QuestionCard key={item.id} />
+
 </>
                 ))}
             </Grid>

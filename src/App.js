@@ -4,7 +4,7 @@ import QuestionList from "./Components/QuestionList";
 import {Container} from "@mui/material";
 import CreateQuestion from "./Components/CreateQuestion/CreateQuestion";
 import BaseQuestion from "./Components/BaseQuestion/BaseQuestion";
-import {Route, Switch} from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 import Question from "./Components/Question/Question";
 
 function App() {
@@ -15,7 +15,8 @@ function App() {
                 <Container sx={{ mt: '1rem'  }} >
                     <Route path='/questionlist' render ={() =>  <QuestionList/> }/>
                     <Route path='/newquestion' render ={() =>  <CreateQuestion/> }/>
-                    {/*<Route path='/' render ={() =>  <BaseQuestion/> }/>*/}
+                    <Route path='/basequestion' render ={() =>  <BaseQuestion/> }/>
+                    <Redirect to = '/questionlist' />
                 </Container>
             </Switch>
 

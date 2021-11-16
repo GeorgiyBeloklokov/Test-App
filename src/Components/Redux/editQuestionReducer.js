@@ -1,3 +1,4 @@
+/*
 const ADD_TITLE_DESCRIPTION_QUESTION = 'ADD_TITLE_DESCRIPTION_QUESTION';
 const TYPE_ANSWER_FLAG = 'TYPE_ANSWER_FLAG';
 const VARIANT_TITLE = 'VARIANT_TITLE';
@@ -174,3 +175,4 @@ export const addQuestionCreator = (item) => ({type: ADD_QUESTION, ...item});
 export const removeQuestionCreator = (item) => ({type: REMOVE_QUESTION, ...item});
 
 export default editQuestionReducer;
+*/

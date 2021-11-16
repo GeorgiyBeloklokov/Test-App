@@ -6,29 +6,33 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {Grid} from "@mui/material";
+import {useSelector} from "react-redux";
 
 export default function QuestionCard() {
+    const myImage = useSelector(state => state.questReducer.questions);
     return (
         <Grid item xs={12} sm={4} md={2}   >
-        <Card elevation={3} >
+            <Card elevation={3}  >
             <CardMedia
                 component="img"
-                height="140"
-                image="/static/images/cards/contemplative-reptile.jpg"
-                alt="green iguana"
+                height="130"
+                image="https://adrive.by/WebFiles/About/AboutImg4.jpg"
+                alt="Images Cap"
             />
             <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                    Lizard
+                <Typography gutterBottom variant="h6" component="div">
+                    Base Question
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    Lizards are a widespread group of squamate reptiles, with over 6,000
-                    species, ranging across all continents except Antarctica
+                <Typography variant="body4" color="text.secondary">
+                   First question
                 </Typography>
+
             </CardContent>
             <CardActions>
-                <Button size="small">Share</Button>
-                <Button size="small">Learn More</Button>
+                <Button    type="submit" variant="contained" size="small"
+                                    component="span">
+                Take test
+            </Button>
             </CardActions>
         </Card>
         </Grid>

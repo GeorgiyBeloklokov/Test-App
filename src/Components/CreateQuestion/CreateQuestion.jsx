@@ -1,12 +1,14 @@
 import {Box, Button, Input, Paper, TextareaAutosize, TextField, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
-import {
-    addQuestionCreator, addTitleAndDescriptionQuestionCreator,
-    addVariantCreator, removeQuestionCreator
-} from "../Redux/editQuestionReducer";
 import Variant from "./Variant";
 import React from "react";
-
+import {
+    addDescriptionQuestion,
+    addQuestion,
+    addTitleQuestion,
+    addVariant,
+    removeQuestion
+} from "../toolkitRedux/questionReducerSlice";
 
 
 const CreateQuestion = () => {
@@ -14,36 +16,39 @@ const CreateQuestion = () => {
     /*const [selectedImage, setSelectedImage] = useState();*/
     const dispatch = useDispatch();
 
-    const questions = useSelector(state => state.edQuestRed.questions);
-    const title = useSelector(state => state.edQuestRed.questions.title);
-    const description = useSelector(state => state.edQuestRed.questions.description);
+    const questions = useSelector(state => state.questReducer.questions);
+    const title = useSelector(state => state.questReducer.questions.title);
+    const description = useSelector(state => state.questReducer.questions.description);
     /*const image = useSelector(state => state.edQuestRed.questionAndAnswer.image);*/
 
 
 
-    const addNewTitle = (e,item) => {
-        dispatch(addTitleAndDescriptionQuestionCreator(e.target.value,item.description,item))
+    const addNewTitle = (data,questId) => {
+        dispatch(addTitleQuestion({data,questId}))
     };
-    const addNewDescription = (e,item) => {
-        dispatch(addTitleAndDescriptionQuestionCreator(item.title, e.target.value,item))
+
+    const addNewDescription = (data,questId) => {
+        dispatch(addDescriptionQuestion({data,questId}))
     };
-    const addVariant = (item) => {
-        dispatch(addVariantCreator(item))
+    const addVar = (item) => {
+        dispatch(addVariant(item))
     };
-    const saveQuest = (item) => {
-        dispatch(addQuestionCreator(item))
+    const saveQuest = (image,item) => {
+        dispatch(addQuestion({image,item}))
     };
     const removeQuest = (item) => {
-        dispatch(removeQuestionCreator(item))
+        dispatch(removeQuestion(item))
     };
 
-    /*const fileSelectedHandler = (event) => {
-        if (event.target.files && event.target.files.length > 0) {
-            setSelectedImage(event.target.files[0]);
-        }
-    };
 
-    const fileUploadHandler = (e) => {
+
+    /* const fileSelectedHandler = (e) => {
+         if (e.target.files && e.target.files.length > 0) {
+             setSelectedImage(e.target.files[0]);
+         }
+     };*/
+
+    /*const fileUploadHandler = (e) => {
         if (e.target.files.length) {
             savePhoto(e.target.files[0]);
         }
@@ -91,14 +96,14 @@ const CreateQuestion = () => {
                     <Typography variant="h7">
                         Title
                     </Typography>
-                    <TextField fullWidth value={title} sx={{mb: 2}} onChange={e => addNewTitle(e, item)}
+                    <TextField fullWidth value={title} sx={{mb: 2}} onChange={e => addNewTitle(e.target.value, item.id)}
                                size="small" type='input' id="outlined-basic" label='Question title'
                                variant="outlined"/>
                     <Typography variant="h7">
                         Description
                     </Typography>
                     <TextareaAutosize
-                        value={description} onChange={e => addNewDescription(e, item)}
+                        value={description} onChange={e => addNewDescription(e.target.value, item.id)}
                         aria-label="minimum height"
                         minRows={10}
                         placeholder="Question message"
@@ -112,11 +117,11 @@ const CreateQuestion = () => {
                     </Typography>
 
                     <label htmlFor="contained-button-file">
-                        <Input accept="image/*" id="contained-button-file" type="file" />
-                        <Button  type="submit" variant="contained" size="small"
-                                component="span">
+                        <Input accept="image/*" id="contained-button-file" type="file" onChange={e => saveQuest(e.target.files[0])}/>
+                        {/*<Button  type="submit" variant="contained" size="small"
+                                 component="label">
                             Upload
-                        </Button>
+                        </Button>*/}
                     </label>
                 </Paper>
 
@@ -131,9 +136,10 @@ const CreateQuestion = () => {
                     <Typography
                         variant="body2"
                         fontWeight='light'> Answer type </Typography>
+
                     <Variant data={item} />
 
-                    <Button onClick={() => addVariant( item)} sx={{mt: 4}} type="submit" variant="contained" size="small"
+                    <Button onClick={() => addVar( item)} sx={{mt: 4}} type="submit" variant="contained" size="small"
                             component="span">
                         + Add new variant
                     </Button>
