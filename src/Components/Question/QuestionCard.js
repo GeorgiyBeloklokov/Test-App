@@ -5,18 +5,18 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import {Grid} from "@mui/material";
-import {useSelector} from "react-redux";
 
-export default function QuestionCard() {
-    const myImage = useSelector(state => state.questReducer.questions);
+export default function QuestionCard({question}) {
+
     return (
-        <Grid item xs={12} sm={4} md={2}   >
+
             <Card elevation={3}  >
             <CardMedia
                 component="img"
                 height="130"
-                image="https://adrive.by/WebFiles/About/AboutImg4.jpg"
+                image= "https://adrive.by/WebFiles/About/AboutImg4.jpg"
+
+
                 alt="Images Cap"
             />
             <CardContent>
@@ -35,6 +35,7 @@ export default function QuestionCard() {
             </Button>
             </CardActions>
         </Card>
-        </Grid>
     );
 }
+
+

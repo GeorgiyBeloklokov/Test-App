@@ -7,31 +7,30 @@ import Select from '@mui/material/Select';
 import {useDispatch, useSelector} from "react-redux";
 import {toggleTypeAnswer} from "../toolkitRedux/questionReducerSlice";
 
-export default function BasicSelect(data, varId) {
+export default function BasicSelect({setToggleType}) {
 
 
 
-    const [age, setAge] = React.useState(null);
-    const dispatch = useDispatch();
+    const [type, setType] = React.useState(null);
+    /*const dispatch = useDispatch();*/
     /*const data = useSelector(state => state.questReducer.questions);*/
 
     const handleChange = (event) => {
-        setAge(event.target.value);
-        let typeAnswer = event.target.value;
-        /*let varId = item.item.id;
-        let questId = dat.id;*/
-        dispatch(toggleTypeAnswer( {typeAnswer, data}))
+        setType(event.target.value);
+        setToggleType(event.target.value);
+       /* let typeAnswer = event.target.value;
+        dispatch(toggleTypeAnswer( {typeAnswer, data}))*/
     };
 
     return (
-        <Box sx={{ minWidth: 120 }}>
+        <Box >
             <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Choice of one answer</InputLabel>
+                <InputLabel id="select-label">Choice of one answer</InputLabel>
                 <Select
                     size={'small'}
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={age}
+                    labelId="select-label"
+                    id="simple-select"
+                    value={type}
                     label="Choice of one answer"
                     onChange={handleChange}
                 >

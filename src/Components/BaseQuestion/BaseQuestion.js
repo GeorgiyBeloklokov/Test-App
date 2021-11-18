@@ -8,13 +8,12 @@ const BaseQuestion = () => {
         <div>
             <Paper>
                 <Container container  maxWidth={"lg"}>
-                    <Grid container sx={{display: 'flex', justifyContent: 'space-between'}}>
+                    <Grid container >
                         <Grid sx={{display: 'flex', justifyContent: 'space-between'}} item md={12}>
                             <Typography variant="h5">
                                 Base question
                             </Typography>
                             <Button size='small' variant="contained">Edit question</Button>
-
                         </Grid>
 
                         <Grid item sx={{mt: 4}} md={7}>
