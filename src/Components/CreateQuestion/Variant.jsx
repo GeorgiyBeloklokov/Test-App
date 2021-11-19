@@ -9,7 +9,6 @@ const Variant = (data) => {
     let dates = {...data.data};
 
     const dispatch = useDispatch();
-    const [toggleType, setToggleType] = React.useState(true);
 
     const addVariantTit = (title, questId, varId) => {
         dispatch(addVariantTitle({title, questId, varId}))
@@ -24,18 +23,15 @@ const Variant = (data) => {
         dispatch(removeVariant(varId))
     };
 
-
-
-
     let variant = dates.variants.map((item) => {
             return (
                 <div key={item.id}>
-                    <Grid xs={3} sm={10} md={12} lg={12} item>
-                        {toggleType &&
+                    <Grid xs={12} sm={12} md={12} lg={12} item>
+                        {item.typeAnswerFlag &&
 
                         <Paper elevation={2} sx={{mt: 2, p: 1}}>
 
-                            <BasicSelect setToggleType = {setToggleType}/>
+                            <BasicSelect questId={dates.id} varId={item.id}/>
                             <Typography
                                 sx={{mt: 2}}
                                 variant="body2"
@@ -69,7 +65,7 @@ const Variant = (data) => {
                                                   defaultChecked size="small"/>} label="Right answer"/>
                         </Paper>
                         }
-                        {!toggleType &&
+                        {!item.typeAnswerFlag &&
                         <Paper elevation={0} sx={{mt: 2}}>
                             <BasicSelect item={item}/>
                             <Typography

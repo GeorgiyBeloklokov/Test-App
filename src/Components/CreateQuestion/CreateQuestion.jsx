@@ -60,6 +60,7 @@ const CreateQuestion = () => {
                                 Edit question
                             </Typography>
                             <Button
+
                                 type="submit"
                                 variant="contained"
                                 size="small"
@@ -68,14 +69,15 @@ const CreateQuestion = () => {
                                 Save question
                             </Button>
                             <Button
+
                                 type="submit"
                                 size='small'
                                 color="error"
                                 component="span"
                                 variant="contained">Remove question</Button>
                         </Grid>
-                        <Grid container >
-                            <Grid xs={12} sm={12} md={12} lg={4}
+                        <Grid container sx={{mt:2, justifyContent:'space-between'}} >
+                            <Grid xs={12} sm={3.8} md={3.8} lg={3.8}
                                    item>
                                 <Paper sx={{p: 2}} elevation={3}>
                                     <Typography
@@ -129,8 +131,8 @@ const CreateQuestion = () => {
                                     </label>
                                 </Paper>
                             </Grid>
-                            <Grid xs={12} sm={12} md={12} lg={8}
-                                  sx={{pl:2}} item>
+                            <Grid xs={12} sm={8} md={8} lg={8}
+                                   item>
                                 <Paper sx={{p: 2}} elevation={3}>
                                     <Typography
                                         variant="h5"

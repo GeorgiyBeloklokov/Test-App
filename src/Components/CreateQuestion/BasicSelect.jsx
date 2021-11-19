@@ -7,19 +7,20 @@ import Select from '@mui/material/Select';
 import {useDispatch, useSelector} from "react-redux";
 import {toggleTypeAnswer} from "../toolkitRedux/questionReducerSlice";
 
-export default function BasicSelect({setToggleType}) {
+const  BasicSelect =(data, varId) => {
 
 
 
     const [type, setType] = React.useState(null);
-    /*const dispatch = useDispatch();*/
+    const dispatch = useDispatch();
     /*const data = useSelector(state => state.questReducer.questions);*/
+
 
     const handleChange = (event) => {
         setType(event.target.value);
-        setToggleType(event.target.value);
-       /* let typeAnswer = event.target.value;
-        dispatch(toggleTypeAnswer( {typeAnswer, data}))*/
+        let typeAnswer = event.target.value;
+
+        dispatch(toggleTypeAnswer( {typeAnswer, data}))
     };
 
     return (
@@ -41,3 +42,5 @@ export default function BasicSelect({setToggleType}) {
         </Box>
     );
 }
+
+export default BasicSelect ;
