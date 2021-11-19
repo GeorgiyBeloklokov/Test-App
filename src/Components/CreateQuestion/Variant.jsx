@@ -23,7 +23,8 @@ const Variant = (data) => {
         dispatch(removeVariant(varId))
     };
 
-    let variant = dates.variants.map((item) => {
+
+    let variant = dates.variants.map((item,index) => {
             return (
                 <div key={item.id}>
                     <Grid xs={12} sm={12} md={12} lg={12} item>
@@ -32,6 +33,7 @@ const Variant = (data) => {
                         <Paper elevation={2} sx={{mt: 2, p: 1}}>
 
                             <BasicSelect questId={dates.id} varId={item.id}/>
+
                             <Typography
                                 sx={{mt: 2}}
                                 variant="body2"
@@ -43,7 +45,7 @@ const Variant = (data) => {
                                 <Typography
                                     variant="h5" sx={{mt: 2,}}
                                     /*style={{display: 'inline'}}*/
-                                >Variant#1</Typography>
+                                >Variant#{index+1}</Typography>
                                 <Button onClick={() => removeVar(item.id)} type="submit" variant="contained"
                                         color="error" size="small"
                                         component="span">
@@ -67,7 +69,9 @@ const Variant = (data) => {
                         }
                         {!item.typeAnswerFlag &&
                         <Paper elevation={0} sx={{mt: 2}}>
-                            <BasicSelect item={item}/>
+
+                            <BasicSelect questId={dates.id} varId={item.id}/>
+
                             <Typography
                                 variant="h5" sx={{p: 2}}
                                 style={{display: 'inline'}}
