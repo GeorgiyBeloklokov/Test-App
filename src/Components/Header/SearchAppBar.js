@@ -73,8 +73,8 @@ export default function SearchAppBar() {
                         variant="h4"
                         noWrap
                         component="div"
-                        marginRight={5}
-                        sx={{ flexGrow: -1, display: { xs: 'none', sm: 'block' } }}
+
+                        sx={{mr:2, flexGrow: 0, display: { xs: 'none', sm: 'block' } }}
                     >
                         Test Application
                     </Typography>
@@ -87,7 +87,7 @@ export default function SearchAppBar() {
 
                     </Stack>
 
-                    <Search  >
+                    <Search sx={{ }} >
                         <SearchIconWrapper>
                             <SearchIcon />
                         </SearchIconWrapper>

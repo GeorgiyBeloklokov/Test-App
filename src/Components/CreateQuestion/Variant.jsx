@@ -5,6 +5,7 @@ import BasicSelect from "./BasicSelect";
 import {addVariantText, addVariantTitle, removeVariant, toggleVarCheckBox} from "../toolkitRedux/questionReducerSlice";
 
 
+
 const Variant = (data) => {
     let dates = {...data.data};
 
@@ -24,10 +25,12 @@ const Variant = (data) => {
     };
 
 
-    let variant = dates.variants.map((item,index) => {
+
             return (
-                <div key={item.id}>
-                    <Grid xs={12} sm={12} md={12} lg={12} item>
+                <div>
+                    {dates.variants.map((item, index) => (
+
+                    <Grid key={item.id} xs={12} sm={12} md={12} lg={12} item>
                         {item.typeAnswerFlag &&
 
                         <Paper elevation={2} sx={{mt: 2, p: 1}}>
@@ -41,56 +44,79 @@ const Variant = (data) => {
                                 Answer type
                             </Typography>
 
-                            <Grid sx={{display: 'flex', alignItems:'center', justifyContent: 'space-between'}}>
+                            <Grid sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                                 <Typography
-                                    variant="h5" sx={{mt: 2,}}
+                                    variant="h5"
+                                    sx={{mt: 2,}}
                                     /*style={{display: 'inline'}}*/
-                                >Variant#{index+1}</Typography>
-                                <Button onClick={() => removeVar(item.id)} type="submit" variant="contained"
-                                        color="error" size="small"
+                                >Variant#{index + 1}</Typography>
+                                <Button onClick={() => removeVar(item.id)}
+                                        type="submit"
+                                        variant="contained"
+                                        color="error"
+                                        size="small"
                                         component="span">
                                     x Remove
                                 </Button>
                             </Grid>
                             <Typography variant="h7" sx={{p: 2}}>Name</Typography>
                             <br/>
-                            <TextField size="small" fullWidth value={item.variantTitle}
-                                       onChange={e => addVariantTit(e.target.value, dates.id, item.id)} sx={{mt: 1}}
-                                       type='input'
-                                       id="outlined-basic" label="Some variant"
+                            <TextField size="small"
+                                       fullWidth value={item.variantTitle}
+                                onChange={e => addVariantTit(e.target.value, dates.id, item.id)}
+
+                                       sx={{mt: 1}}
+                                       type="input"
+                                       id="outlined-basic"
+                                       label="Some variant"
                                        variant="outlined"/>
-                            <Typography variant="body2" sx={{ml: 2}} fontWeight='light'> Variant name </Typography>
+                            <Typography variant="body2"
+                                        sx={{ml: 2}}
+                                        fontWeight='light'>
+                                Variant name
+                            </Typography>
                             <FormControlLabel sx={{pb: 2, pt: 1, pl: 1}}
                                               control={<Checkbox
                                                   onChange={(e) => toggleChekBox(e.target.checked, dates.id, item.id)}
                                                   inputProps={{'aria-label': 'controlled'}}
-                                                  defaultChecked size="small"/>} label="Right answer"/>
+                                                  defaultChecked size="small"/>}
+                                              label="Right answer"/>
                         </Paper>
                         }
                         {!item.typeAnswerFlag &&
-                        <Paper elevation={0} sx={{mt: 2}}>
+                        <Paper elevation={0}
+                               sx={{mt: 2}}>
 
-                            <BasicSelect questId={dates.id} varId={item.id}/>
+                            <BasicSelect questId={dates.id}
+                                         varId={item.id}/>
 
                             <Typography
-                                variant="h5" sx={{p: 2}}
-                                style={{display: 'inline'}}
-                            >Variant#1</Typography>
-                            <Button sx={{ml: 28}} onClick={() => removeVar(item.id)} type="submit" variant="contained"
-                                    color="error" size="small"
+                                variant="h5"
+                                sx={{p: 2}}
+                                style={{display: 'inline'}}>Variant#{index + 1}</Typography>
+                            <Button sx={{ml: 28}}
+                                    onClick={() => removeVar(item.id)}
+                                    type="submit"
+                                    variant="contained"
+                                    color="error"
+                                    size="small"
                                     component="span">
                                 x Remove
                             </Button>
-                            <Typography variant="h7" sx={{p: 2}}>Name</Typography>
+                            <Typography variant="h7"
+                                        sx={{p: 2}}>Name</Typography>
                             <br/>
                             <TextareaAutosize
-                                value={item.variantTextArea} onChange={e => addVarText(e.target.value, dates.id, item.id)}
+                                value={item.variantTextArea}
+                                onChange={e => addVarText(e.target.value, dates.id, item.id)}
+
                                 /*aria-label="minimum height"*/
                                 minRows={10}
                                 placeholder="Question message"
                                 style={{width: '99%'}}
                             />
-                            <Typography variant="body2" sx={{ml: 2}} fontWeight='light'> Variant name </Typography>
+                            <Typography variant="body2" sx={{ml: 2}}
+                                        fontWeight='light'> Variant name </Typography>
                             <FormControlLabel sx={{pb: 2, pt: 1, pl: 1}}
                                               control={<Checkbox onChange={(e) => toggleChekBox(e, data, item)}
                                                                  inputProps={{'aria-label': 'controlled'}}
@@ -99,12 +125,14 @@ const Variant = (data) => {
 
                         }
                     </Grid>
-                </div>
-            );
-        }
-    );
-    return <div>{variant}</div>
 
-}
+                    )
+                    )}
+                </div>
+
+                  )
+
+
+};
 
 export default Variant;

@@ -12,13 +12,9 @@ const questionReducerSlice = createSlice({
                 id: "000000000000000000000",
                 title: null,
                 description: null,
-                images: [
-                    {
-                        id: "222222222222222222222",
-                        image: null,
-
-                    }
-                ],
+                images:[{
+                    image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
+                }],
                 variants: [
                     {
                         id: "111111111111111111111",
@@ -41,14 +37,14 @@ const questionReducerSlice = createSlice({
             state.questions = [
                 ...state.questions, {
                     id: nanoid(),
-                    title: null,
-                    description: null,
-                    images: [
-                        {
-                            id: nanoid(),
-                            image: action.payload.image
-                        }
-                    ],
+                    title: action.payload.title,
+                    description: action.payload.textarea,
+                   images:[{
+                        ...state.questions.images,
+
+                       image:action.payload.image
+
+                   }],
                     variants: [
                         {
                             id: nanoid(),

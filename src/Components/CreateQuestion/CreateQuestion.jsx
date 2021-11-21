@@ -1,7 +1,7 @@
-import {Box, Button, Container, Grid, Input, Paper, TextareaAutosize, TextField, Typography} from "@mui/material";
+import {Button, CardMedia, Grid, Input, Paper, TextareaAutosize, TextField, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import Variant from "./Variant";
-import React from "react";
+import React, {useState} from "react";
 import {
     addDescriptionQuestion,
     addQuestion,
@@ -11,9 +11,11 @@ import {
 } from "../toolkitRedux/questionReducerSlice";
 import {useForm} from "react-hook-form";
 
+
+
 const CreateQuestion = () => {
 
-    /*const [selectedImage, setSelectedImage] = useState();*/
+
     const dispatch = useDispatch();
 
     const questions = useSelector(state => state.questReducer.questions);
@@ -41,15 +43,20 @@ const CreateQuestion = () => {
 
     const {register, handleSubmit} = useForm();
 
-    const onSubmit = data => console.log('Отправлено:', data);
+    const onSubmit = data => {
 
-    /* const onSubmit = data => */
+        let image = data.image[0];
+        let img  = URL.createObjectURL(image);
+        let dat = {...data, image:img};
+        dispatch(addQuestion(dat));
+    }
 
 
     return (
         <div>
             <Grid  >
                 {questions.map(item => (
+
                     <form onSubmit={handleSubmit(onSubmit)}>
 
                         <Grid key={item.id}
@@ -92,7 +99,7 @@ const CreateQuestion = () => {
                                         fullWidth /*value={title}*/
                                         sx={{mb: 2}}
                                         size="small"
-                                        {...register('Title')}
+                                        {...register('title')}
                                         type="input"
                                         id="outlined-basic"
                                         label='Question title'
@@ -104,10 +111,9 @@ const CreateQuestion = () => {
                                         /*value={description}*/
                                         aria-label="minimum height"
                                         minRows={10}
-                                        {...register('TextArea')}
+                                        {...register('textarea')}
                                         placeholder="Question message"
-                                        fullWidth
-                                        /*style={{width: '100%'}}*/
+                                        style={{width: '98%'}}
                                     />
                                     <Typography
                                         variant="body2"
@@ -126,9 +132,12 @@ const CreateQuestion = () => {
                                             accept="image/*"
                                             id="contained-button-file"
                                             type="file"
-                                            {...register('Image')}
+                                            multiple
+
+                                            {...register('image')}
                                         />
                                     </label>
+
                                 </Paper>
                             </Grid>
                             <Grid xs={12} sm={8} md={8} lg={8}
@@ -144,10 +153,10 @@ const CreateQuestion = () => {
                                         Question type
                                     </Typography>
 
-                                    <Variant data={item}/>
-
+                                    <Variant data={item} />
 
                                     <Button
+                                        sx={{mt:2}}
                                         type="submit"
                                         onClick={() => addVar(item)}
                                         variant="contained"
@@ -161,12 +170,11 @@ const CreateQuestion = () => {
 
 
                     </form>
+
                 ))}
             </Grid>
         </div>
     )
 
-    /*});*/
-    /*return <div>{question}</div>*/
 }
 export default CreateQuestion;

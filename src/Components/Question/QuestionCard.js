@@ -9,13 +9,19 @@ import {Grid} from "@mui/material";
 
 export default function QuestionCard({question}) {
 
+
+
+
     return (
-        <Grid>
+        <>
+        {question.images.map(item =>(
+        <Grid  key={question.id} sx={{display:"flex",  justifyContent:"space-between"}} xs={10} sm={6} md={3} lg={2} item>
             <Card elevation={3}>
                 <CardMedia
                     component="img"
-                    height="130"
-                    image="https://adrive.by/WebFiles/About/AboutImg4.jpg"
+                    height="150"
+
+                    image={item.image}
 
 
                     alt="Images Cap"
@@ -37,7 +43,11 @@ export default function QuestionCard({question}) {
                 </CardActions>
             </Card>
         </Grid>
-    );
+    )
+
+            )}
+        </>
+            )
 
 }
 

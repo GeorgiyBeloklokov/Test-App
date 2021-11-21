@@ -13,14 +13,14 @@ const QuestionList = () => {
         <div>
             <Grid container spacing={3}  >
                 {questions.map((question) => (
-                    <Grid  key={question.id} sx={{display:"flex", justifyContent:"space-between"}} xs={12} sm={12}  lg={12} item>
+                    <>
                         <QuestionCard question={question}/>
                         <QuestionCard question={question}/>
                         <QuestionCard question={question}/>
                         <QuestionCard question={question}/>
                         <QuestionCard question={question}/>
                         <QuestionCard question={question}/>
-                    </Grid>
+                    </>
                 ))}
             </Grid>
         </div>
