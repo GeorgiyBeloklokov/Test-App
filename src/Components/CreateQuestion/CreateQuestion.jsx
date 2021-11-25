@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import Variant from "./Variant";
 import React from "react";
 import {
-    addDescriptionQuestion,
+    addDescriptionQuestion, addImage,
     addQuestion,
     addTitleQuestion,
     addVariant,
@@ -32,7 +32,7 @@ const CreateQuestion = () => {
 
 
 
-    /*const onSubmit = data => {
+    /*const onSubmitImage = data => {
         let image = data.image[0];
         let img  = URL.createObjectURL(image);
         let dat = {...data, image:img};
@@ -40,12 +40,19 @@ const CreateQuestion = () => {
     }*/
 
 
+    const onSubmitImage =(data,questId) => {
+
+        let img  = URL.createObjectURL(data[0]);
+
+        dispatch(addImage({img,questId}));
+    };
+
+
     return (
         <div>
             <Grid>
                 {questions.map((item,index) => (
                     <>
-
                         <Grid key={item.id} sx={{display: 'flex'}} item >
                             <Typography
                                 variant="h5"
@@ -68,7 +75,6 @@ const CreateQuestion = () => {
                                 variant="contained">Remove question</Button>
                         </Grid>
                         <Grid container sx={{mt:2, justifyContent:'space-between'}} >
-
                             <Grid xs={12} sm={3.8} md={3.8} lg={3.8} item>
                                 <Paper sx={{p: 2}} elevation={3}>
                                     <Typography
@@ -79,7 +85,6 @@ const CreateQuestion = () => {
                                     <Typography variant="h7">
                                         Title
                                     </Typography>
-
                                      <TextField
                                             fullWidth
                                             value={item.title}
@@ -91,13 +96,11 @@ const CreateQuestion = () => {
                                             label='Question title'
                                             variant="outlined"
                                              />
-
                                     <Typography variant="h7">
                                         Description
                                     </Typography>
                                     <TextareaAutosize
                                         value={item.description}
-
                                         aria-label="minimum height"
                                         minRows={10}
                                         onChange={(e) => addQuestDescription(e.target.value, item)}
@@ -118,18 +121,16 @@ const CreateQuestion = () => {
                                     <label
                                         htmlFor="contained-button-file">
                                         <Input
+                                            onChange={(event)=>onSubmitImage(event.target.files,item.id)}
                                             accept="image/*"
                                             id="contained-button-file"
                                             type="file"
                                             multiple
-
-
                                         />
                                     </label>
-
                                 </Paper>
                             </Grid>
-                            <Grid xs={12} sm={8} md={8} lg={8}item>
+                            <Grid xs={12} sm={8} md={8} lg={8} item>
                                 <Paper sx={{p: 2}} elevation={3}>
                                     <Typography variant="h5">
                                         Answer
@@ -157,8 +158,6 @@ const CreateQuestion = () => {
                 ))}
             </Grid>
         </div>
-
     )
-
 }
 export default CreateQuestion;

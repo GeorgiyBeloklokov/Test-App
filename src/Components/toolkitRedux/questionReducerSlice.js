@@ -129,6 +129,20 @@ const questionReducerSlice = createSlice({
 
     reducers: {
 
+        addImage(state, action) {
+            state.questions = state.questions.map((q) => {
+                if (q.id === action.payload.questId) {
+                    return {
+                        ...q,
+                        images:[{
+                           image: action.payload.img
+                        }]
+                    };
+                }
+                return q;
+            })
+        },
+
 
         addQuestion(state, action) {
             state.questions = [
@@ -136,12 +150,9 @@ const questionReducerSlice = createSlice({
                     id: nanoid(),
                     title: action.payload.title,
                     description: action.payload.textarea,
-                   images:[{
-                        ...state.questions.images,
-
-                       image:action.payload.image
-
-                   }],
+                    images:[{
+                        image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
+                    }],
                     variants: [
                         {
                             id: nanoid(),
@@ -307,7 +318,7 @@ const questionReducerSlice = createSlice({
 export default questionReducerSlice.reducer
 
 export const {
-    addVariant, removeVariant, addVariantTitle, addVariantText, toggleTypeAnswer, toggleVarCheckBox, addQuestion,
+    addVariant, removeVariant, addImage, addVariantTitle, addVariantText, toggleTypeAnswer, toggleVarCheckBox, addQuestion,
     removeQuestion, addTitleQuestion, addDescriptionQuestion
 } = questionReducerSlice.actions
 

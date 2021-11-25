@@ -5,11 +5,9 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import {ThemeProvider, createTheme} from '@mui/material/styles';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {NavLink} from "react-router-dom";
 import {Grid} from "@mui/material";
-import BaseQuestion from "../BaseQuestion/BaseQuestion";
-import {useDispatch} from "react-redux";
 
 const theme = createTheme({
     components: {
@@ -34,12 +32,6 @@ const theme = createTheme({
 
 
 export default function QuestionCard({question}) {
-    const dispatch = useDispatch();
-
-    /* const showQuestion =(question) => {
-         dispatch(BaseQuestion(question))
-
-     }*/
 
 
     return (
@@ -64,12 +56,10 @@ export default function QuestionCard({question}) {
                                 </CardContent>
                                 <CardActions>
                                     <Button type="submit"
-                                        /*onClick={() =>showQuestion(question)}*/
                                             component={NavLink} to={{
                                         pathname: '/basequestion',
-                                        state: {
-                                            question
-                                        }}}
+                                        state: {question}
+                                            }}
                                             variant="contained"
                                             size="small"
                                     >
