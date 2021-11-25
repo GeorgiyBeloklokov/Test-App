@@ -13,7 +13,7 @@ const  BasicSelect =(data, varId) => {
 
     const [type, setType] = React.useState(null);
     const dispatch = useDispatch();
-    /*const data = useSelector(state => state.questReducer.questions);*/
+
 
 
     const handleChange = (event) => {
@@ -35,8 +35,8 @@ const  BasicSelect =(data, varId) => {
                     label="Choice of one answer"
                     onChange={handleChange}
                 >
-                    <MenuItem value={true}>Variants with some answers</MenuItem>
-                    <MenuItem value={false}>Text area for answer</MenuItem>
+                    <MenuItem value={true}>Answer with some variants</MenuItem>
+                    <MenuItem value={false}>Answer with one variant</MenuItem>
                 </Select>
             </FormControl>
         </Box>

@@ -14,15 +14,27 @@ const theme = createTheme({
         MuiTypography: {
             styleOverrides: {
                 root: {
-                    wordWrap: "break-word"
+                    wordWrap: "break-word",
+
                 },
             },
         },
         MuiCard: {
             styleOverrides: {
                 root: {
-                    width: "auto",
-                    margin: 10,
+                    width: "100%",
+                    height: "100%"
+
+
+
+                },
+            },
+        },
+        MuiCardMedia: {
+            styleOverrides: {
+                root: {
+                    width: "100%",
+                    height: "auto"
 
                 },
             },
@@ -42,6 +54,7 @@ export default function QuestionCard({question}) {
                               md={4} lg={2} item>
                             <Card elevation={3}>
                                 <CardMedia
+
                                     component="img"
                                     image={item.image}
                                     alt="Images Cap"
@@ -59,7 +72,7 @@ export default function QuestionCard({question}) {
                                             component={NavLink} to={{
                                         pathname: '/basequestion',
                                         state: {question}
-                                            }}
+                                    }}
                                             variant="contained"
                                             size="small"
                                     >

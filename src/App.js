@@ -5,10 +5,6 @@ import {Container} from "@mui/material";
 import CreateQuestion from "./Components/CreateQuestion/CreateQuestion";
 import BaseQuestion from "./Components/BaseQuestion/BaseQuestion";
 import {Redirect, Route, Switch} from "react-router-dom";
-import Question from "./Components/Question/Question";
-
-import{ThemeProvider,createTheme} from '@mui/material/styles';
-
 
 
 function App() {
@@ -19,7 +15,7 @@ function App() {
 
             <Switch>
 
-                <Container sx={{ mt: '3rem', maxWidth:'95%'  }} maxWidth={false} >
+                <Container sx={{ mt: '3rem', maxWidth:'95%'  }} maxWidth={false}  >
                     <Route path='/questionlist' render ={() =>  <QuestionList/> }/>
                     <Route path='/newquestion' render ={() =>  <CreateQuestion/> }/>
                     <Route path='/basequestion' render ={() =>  <BaseQuestion/> }/>

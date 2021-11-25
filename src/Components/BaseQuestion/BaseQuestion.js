@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, CardMedia, Divider, Grid, Paper, Typography} from "@mui/material";
+import {Button, CardMedia, Container, Divider, Grid, Paper, Typography} from "@mui/material";
 import ControlledRadioButtonsGroup from "./RadioButtonOne";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import {useLocation} from "react-router-dom";
@@ -10,7 +10,7 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     width: '100%',
-                    height: '100%'
+                    height: 'auto'
                 },
             },
 
@@ -31,7 +31,9 @@ const BaseQuestion = () => {
 
     return (
         <>
-            <ThemeProvider theme={theme}>
+
+           <ThemeProvider theme={theme}>
+
                 <Grid sx={{display: 'flex', justifyContent: 'space-between'}} item md={12}>
                     <Typography variant="h5">
                         {title}
@@ -64,14 +66,16 @@ const BaseQuestion = () => {
                         {images.map((item) => (
 
                             <CardMedia
+                                height="312"
                                 component="img"
                                 image={item.image}
                                 alt="Cap image"
                             />
-                        ))};
+                        ))}
                     </Grid>
                 </Grid>
             </ThemeProvider>
+
         </>
     )
 };

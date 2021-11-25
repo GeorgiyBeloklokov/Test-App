@@ -17,7 +17,7 @@ const QuestionList = () => {
     return (
         <div>
 
-            <Grid container spacing={2}  >
+            <Grid container spacing={3}  >
                 {questions.map((question) => (
                     <>
 
