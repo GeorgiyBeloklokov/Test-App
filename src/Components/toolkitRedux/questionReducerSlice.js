@@ -6,18 +6,115 @@ const questionReducerSlice = createSlice({
     name: "questReducer",
 
     initialState: {
-
+        passedQuest:[],
+        failedQuest:[],
         questions: [
             {
-                id: "000000000000000000000",
-                title: null,
-                description: null,
+                id: nanoid(),
+                mulVarQuest:null,
+                title: 'Base question',
+                description: 'First question',
                 images:[{
                     image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
                 }],
                 variants: [
                     {
-                        id: "111111111111111111111",
+                        id: nanoid(),
+                        chekBoxFlag: true,
+                        variantTitle: null,
+                        variantTextArea: null,
+                        typeAnswerFlag: true,
+                        rightAnswer: false,
+                    }
+                ],
+            },
+            {
+                id: nanoid(),
+                mulVarQuest:null,
+                title: 'Multiple var. question',
+                description: 'This question has several correct answers',
+                images:[{
+                    image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
+                }],
+                variants: [
+                    {
+                        id: nanoid(),
+                        chekBoxFlag: true,
+                        variantTitle: null,
+                        variantTextArea: null,
+                        typeAnswerFlag: true,
+                        rightAnswer: false,
+                    }
+                ],
+            },
+            {
+                id: nanoid(),
+                mulVarQuest:null,
+                title: 'Multiple var. question',
+                description: 'This question has several correct answers',
+                images:[{
+                    image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
+                }],
+                variants: [
+                    {
+                        id: nanoid(),
+                        chekBoxFlag: true,
+                        variantTitle: null,
+                        variantTextArea: null,
+                        typeAnswerFlag: true,
+                        rightAnswer: false,
+                    }
+                ],
+            },
+            {
+                id: nanoid(),
+                mulVarQuest:null,
+                title: 'Multiple var. question',
+                description: 'This question has several correct answers',
+                images:[{
+                    image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
+                }],
+                variants: [
+                    {
+                        id: nanoid(),
+                        chekBoxFlag: true,
+                        variantTitle: null,
+                        variantTextArea: null,
+                        typeAnswerFlag: true,
+                        rightAnswer: false,
+                    }
+                ],
+            },
+            {
+                id: nanoid(),
+                mulVarQuest:null,
+                title: 'Passed question',
+                description: 'Passed question example',
+                images:[{
+                    image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
+                }],
+                variants: [
+                    {
+                        id: nanoid(),
+                        chekBoxFlag: true,
+                        variantTitle: null,
+                        variantTextArea: null,
+                        typeAnswerFlag: true,
+                        rightAnswer: false,
+                    }
+                ],
+            },
+            {
+                id: nanoid(),
+                mulVarQuest:null,
+                title: 'Failed question',
+                description: 'Failed question example',
+                images:[{
+                    image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
+                }],
+                variants: [
+                    {
+                        id: nanoid(),
                         chekBoxFlag: true,
                         variantTitle: null,
                         variantTextArea: null,
@@ -67,7 +164,7 @@ const questionReducerSlice = createSlice({
         addTitleQuestion(state, action) {
             state.questions =
                 state.questions.map(item => {
-                    if (item.id === action.payload.questId) {
+                    if (item.id === action.payload.id) {
                         return {
                             ...item,
                             title: action.payload.data,
@@ -80,7 +177,7 @@ const questionReducerSlice = createSlice({
         addDescriptionQuestion(state, action) {
             state.questions =
                 state.questions.map(item => {
-                    if (item.id === action.payload.questId) {
+                    if (item.id === action.payload.id) {
                         return {
                             ...item,
                             description: action.payload.data

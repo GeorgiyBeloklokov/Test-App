@@ -1,7 +1,7 @@
-import {Button, CardMedia, Grid, Input, Paper, TextareaAutosize, TextField, Typography} from "@mui/material";
+import {Button, Grid, Input, Paper, TextareaAutosize, TextField, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import Variant from "./Variant";
-import React, {useState} from "react";
+import React from "react";
 import {
     addDescriptionQuestion,
     addQuestion,
@@ -9,74 +9,58 @@ import {
     addVariant,
     removeQuestion
 } from "../toolkitRedux/questionReducerSlice";
-import {useForm} from "react-hook-form";
-
 
 
 const CreateQuestion = () => {
 
-
     const dispatch = useDispatch();
-
     const questions = useSelector(state => state.questReducer.questions);
-    const title = useSelector(state => state.questReducer.questions.title);
-    const description = useSelector(state => state.questReducer.questions.description);
-    /*const image = useSelector(state => state.edQuestRed.questionAndAnswer.image);*/
 
-
-    const addNewTitle = (data, questId) => {
-        dispatch(addTitleQuestion({data, questId}))
-    };
-
-    const addNewDescription = (data, questId) => {
-        dispatch(addDescriptionQuestion({data, questId}))
-    };
     const addVar = (item) => {
         dispatch(addVariant(item))
-    };
-    const saveQuest = (image, item) => {
-        dispatch(addQuestion({image, item}))
     };
     const removeQuest = (item) => {
         dispatch(removeQuestion(item))
     };
+    const addQuestTitle = (data,item) => {
+        dispatch(addTitleQuestion({data,...item}))
+    };
 
-    const {register, handleSubmit} = useForm();
+    const addQuestDescription = (data,item) => {
+        dispatch(addDescriptionQuestion({data,...item}))
+    };
 
-    const onSubmit = data => {
 
+
+    /*const onSubmit = data => {
         let image = data.image[0];
         let img  = URL.createObjectURL(image);
         let dat = {...data, image:img};
         dispatch(addQuestion(dat));
-    }
+    }*/
 
 
     return (
         <div>
-            <Grid  >
-                {questions.map(item => (
+            <Grid>
+                {questions.map((item,index) => (
+                    <>
 
-                    <form onSubmit={handleSubmit(onSubmit)}>
-
-                        <Grid key={item.id}
-                              sx={{display: 'flex'}} item>
+                        <Grid key={item.id} sx={{display: 'flex'}} item >
                             <Typography
                                 variant="h5"
                                 sx={{flexGrow: 1}}>
-                                Edit question
+                                Edit question #{index + 1}
                             </Typography>
                             <Button
-
                                 type="submit"
                                 variant="contained"
                                 size="small"
-
                             >
                                 Save question
                             </Button>
                             <Button
-
+                                onClick={()=>removeQuest(item)}
                                 type="submit"
                                 size='small'
                                 color="error"
@@ -84,8 +68,8 @@ const CreateQuestion = () => {
                                 variant="contained">Remove question</Button>
                         </Grid>
                         <Grid container sx={{mt:2, justifyContent:'space-between'}} >
-                            <Grid xs={12} sm={3.8} md={3.8} lg={3.8}
-                                   item>
+
+                            <Grid xs={12} sm={3.8} md={3.8} lg={3.8} item>
                                 <Paper sx={{p: 2}} elevation={3}>
                                     <Typography
                                         variant="h5"
@@ -95,23 +79,28 @@ const CreateQuestion = () => {
                                     <Typography variant="h7">
                                         Title
                                     </Typography>
-                                    <TextField
-                                        fullWidth /*value={title}*/
-                                        sx={{mb: 2}}
-                                        size="small"
-                                        {...register('title')}
-                                        type="input"
-                                        id="outlined-basic"
-                                        label='Question title'
-                                        variant="outlined"/>
+
+                                     <TextField
+                                            fullWidth
+                                            value={item.title}
+                                            sx={{mb: 2}}
+                                            size="small"
+                                            type="input"
+                                            id="outlined-basic"
+                                            onChange={(e) => addQuestTitle(e.target.value, item)}
+                                            label='Question title'
+                                            variant="outlined"
+                                             />
+
                                     <Typography variant="h7">
                                         Description
                                     </Typography>
                                     <TextareaAutosize
-                                        /*value={description}*/
+                                        value={item.description}
+
                                         aria-label="minimum height"
                                         minRows={10}
-                                        {...register('textarea')}
+                                        onChange={(e) => addQuestDescription(e.target.value, item)}
                                         placeholder="Question message"
                                         style={{width: '98%'}}
                                     />
@@ -134,18 +123,15 @@ const CreateQuestion = () => {
                                             type="file"
                                             multiple
 
-                                            {...register('image')}
+
                                         />
                                     </label>
 
                                 </Paper>
                             </Grid>
-                            <Grid xs={12} sm={8} md={8} lg={8}
-                                   item>
+                            <Grid xs={12} sm={8} md={8} lg={8}item>
                                 <Paper sx={{p: 2}} elevation={3}>
-                                    <Typography
-                                        variant="h5"
-                                    >
+                                    <Typography variant="h5">
                                         Answer
                                     </Typography>
                                     <Typography
@@ -167,13 +153,11 @@ const CreateQuestion = () => {
                                 </Paper>
                             </Grid>
                         </Grid>
-
-
-                    </form>
-
+                    </>
                 ))}
             </Grid>
         </div>
+
     )
 
 }

@@ -7,17 +7,26 @@ import BaseQuestion from "./Components/BaseQuestion/BaseQuestion";
 import {Redirect, Route, Switch} from "react-router-dom";
 import Question from "./Components/Question/Question";
 
+import{ThemeProvider,createTheme} from '@mui/material/styles';
+
+
+
 function App() {
     return (
         <div>
+
             <SearchAppBar/>
+
             <Switch>
-                <Container sx={{ mt: '1rem'  }} >
+
+                <Container sx={{ mt: '3rem', maxWidth:'95%'  }} maxWidth={false} >
                     <Route path='/questionlist' render ={() =>  <QuestionList/> }/>
                     <Route path='/newquestion' render ={() =>  <CreateQuestion/> }/>
                     <Route path='/basequestion' render ={() =>  <BaseQuestion/> }/>
                     <Redirect to = '/questionlist' />
                 </Container>
+
+
             </Switch>
 
         </div>

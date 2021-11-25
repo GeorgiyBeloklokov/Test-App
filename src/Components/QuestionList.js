@@ -1,7 +1,12 @@
 import React from 'react';
 import {useSelector} from "react-redux";
 import QuestionCard from "./Question/QuestionCard";
-import {Container, Grid} from "@mui/material";
+import {Grid} from "@mui/material";
+
+
+
+
+
 
 
 const QuestionList = () => {
@@ -11,18 +16,17 @@ const QuestionList = () => {
 
     return (
         <div>
-            <Grid container spacing={3}  >
+
+            <Grid container spacing={2}  >
                 {questions.map((question) => (
                     <>
-                        <QuestionCard question={question}/>
-                        <QuestionCard question={question}/>
-                        <QuestionCard question={question}/>
-                        <QuestionCard question={question}/>
-                        <QuestionCard question={question}/>
-                        <QuestionCard question={question}/>
+
+                        <QuestionCard question={question} />
+
                     </>
                 ))}
             </Grid>
+
         </div>
     );
 };
