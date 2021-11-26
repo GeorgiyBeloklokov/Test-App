@@ -9,23 +9,20 @@ import {Redirect, Route, Switch} from "react-router-dom";
 
 function App() {
     return (
-        <div>
-
+        <>
             <SearchAppBar/>
+            <Container sx={{mt: '3rem', maxWidth: '95%'}} maxWidth={false}>
+                <Switch>
 
-            <Switch>
-
-                <Container sx={{ mt: '3rem', maxWidth:'95%'  }} maxWidth={false}  >
-                    <Route path='/questionlist' render ={() =>  <QuestionList/> }/>
-                    <Route path='/newquestion' render ={() =>  <CreateQuestion/> }/>
-                    <Route path='/basequestion' render ={() =>  <BaseQuestion/> }/>
-                    <Redirect to = '/questionlist' />
-                </Container>
+                    <Route path='/questionlist' render={() => <QuestionList/>}/>
+                    <Route path='/newquestion' render={() => <CreateQuestion/>}/>
+                    <Route path='/basequestion' render={() => <BaseQuestion/>}/>
+                    <Redirect to='/questionlist'/>
 
 
-            </Switch>
-
-        </div>
+                </Switch>
+            </Container>
+        </>
     );
 }
 

@@ -4,14 +4,14 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {toggleTypeAnswer} from "../toolkitRedux/questionReducerSlice";
 
 const  BasicSelect =(data, varId) => {
 
 
 
-    const [type, setType] = React.useState(null);
+    const [type, setType] = React.useState('');
     const dispatch = useDispatch();
 
 

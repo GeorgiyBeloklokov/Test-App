@@ -11,7 +11,7 @@ const questionReducerSlice = createSlice({
         questions: [
             {
                 id: nanoid(),
-                mulVarQuest:null,
+                mulVarQuest:'',
                 title: 'Base question',
                 description: 'First question',
                 images:[{
@@ -21,8 +21,8 @@ const questionReducerSlice = createSlice({
                     {
                         id: nanoid(),
                         chekBoxFlag: true,
-                        variantTitle: null,
-                        variantTextArea: null,
+                        variantTitle: '',
+                        variantTextArea: '',
                         typeAnswerFlag: true,
                         rightAnswer: false,
                     }
@@ -40,8 +40,8 @@ const questionReducerSlice = createSlice({
                     {
                         id: nanoid(),
                         chekBoxFlag: true,
-                        variantTitle: null,
-                        variantTextArea: null,
+                        variantTitle: '',
+                        variantTextArea: '',
                         typeAnswerFlag: true,
                         rightAnswer: false,
                     }
@@ -59,8 +59,8 @@ const questionReducerSlice = createSlice({
                     {
                         id: nanoid(),
                         chekBoxFlag: true,
-                        variantTitle: null,
-                        variantTextArea: null,
+                        variantTitle: '',
+                        variantTextArea: '',
                         typeAnswerFlag: true,
                         rightAnswer: false,
                     }
@@ -78,8 +78,8 @@ const questionReducerSlice = createSlice({
                     {
                         id: nanoid(),
                         chekBoxFlag: true,
-                        variantTitle: null,
-                        variantTextArea: null,
+                        variantTitle: '',
+                        variantTextArea: '',
                         typeAnswerFlag: true,
                         rightAnswer: false,
                     }
@@ -97,8 +97,8 @@ const questionReducerSlice = createSlice({
                     {
                         id: nanoid(),
                         chekBoxFlag: true,
-                        variantTitle: null,
-                        variantTextArea: null,
+                        variantTitle: '',
+                        variantTextArea: '',
                         typeAnswerFlag: true,
                         rightAnswer: false,
                     }
@@ -116,8 +116,8 @@ const questionReducerSlice = createSlice({
                     {
                         id: nanoid(),
                         chekBoxFlag: true,
-                        variantTitle: null,
-                        variantTextArea: null,
+                        variantTitle: '',
+                        variantTextArea: '',
                         typeAnswerFlag: true,
                         rightAnswer: false,
                     }

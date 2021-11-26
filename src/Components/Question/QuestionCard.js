@@ -9,22 +9,27 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {NavLink} from "react-router-dom";
 import {Grid} from "@mui/material";
 
+
 const theme = createTheme({
+
+
     components: {
-        MuiTypography: {
+        /*MuiTypography: {
             styleOverrides: {
                 root: {
-                    wordWrap: "break-word",
+                    textSize: 5,
+                    textOverflow: 'clip',
+
 
                 },
             },
-        },
+        },*/
+
         MuiCard: {
             styleOverrides: {
                 root: {
                     width: "100%",
-                    height: "100%"
-
+                    height: "auto",
 
 
                 },
@@ -34,11 +39,23 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     width: "100%",
-                    height: "auto"
+                    height: "auto",
+
 
                 },
             },
         },
+        /*MuiCardContent: {
+            styleOverrides: {
+                root: {
+
+                    height: "auto",
+
+
+                },
+            },
+        },*/
+
     },
 });
 
@@ -49,10 +66,10 @@ export default function QuestionCard({question}) {
     return (
         <>
             {question.images.map(item => (
-                    <ThemeProvider theme={theme}>
-                        <Grid key={question.id} sx={{display: "flex", justifyContent: "space-between"}} xs={12} sm={6}
-                              md={4} lg={2} item>
+                    <ThemeProvider key={question.id} theme={theme}>
+                        <Grid   item>
                             <Card elevation={3}>
+
                                 <CardMedia
 
                                     component="img"
@@ -63,22 +80,26 @@ export default function QuestionCard({question}) {
                                     <Typography gutterBottom variant="h6" component="div">
                                         {question.title}
                                     </Typography>
-                                    <Typography variant="body4" color="text.secondary">
-                                        {question.description}
-                                    </Typography>
+
+                                        <Typography variant="body4"  color="text.secondary">
+                                            {question.description}
+                                        </Typography>
+
+
+                                    <CardActions>
+                                        <Button type="submit"
+                                                component={NavLink} to={{
+                                            pathname: '/basequestion',
+                                            state: {question}
+                                        }}
+                                                variant="contained"
+                                                size="small"
+                                        >
+                                            Take test
+                                        </Button>
+
+                                    </CardActions>
                                 </CardContent>
-                                <CardActions>
-                                    <Button type="submit"
-                                            component={NavLink} to={{
-                                        pathname: '/basequestion',
-                                        state: {question}
-                                    }}
-                                            variant="contained"
-                                            size="small"
-                                    >
-                                        Take test
-                                    </Button>
-                                </CardActions>
                             </Card>
                         </Grid>
                     </ThemeProvider>

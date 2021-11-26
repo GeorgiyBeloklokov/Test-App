@@ -9,7 +9,7 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import {Button, Stack} from "@mui/material";
-import {Link, NavLink} from "react-router-dom";
+import { NavLink} from "react-router-dom";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -82,7 +82,7 @@ export default function SearchAppBar() {
                             {/*<NavLink color='secondary' style={{ textDecoration: 'none' }} to="/questionlist"> <Button color="success" >Question list</Button></NavLink>*/}
                             <Button color="inherit" size={'small'} component={NavLink} to={'/questionlist'} >Question list</Button>
                             <Button color="inherit" size={'small'} component={NavLink} to={'/newquestion'} >Create new question</Button>
-                            <Button color="inherit" size={'small'} component={NavLink} to={'/disabledbutton'} >Some disabled button</Button>
+                            <Button disabled color="inherit" size={'small'} component={NavLink} to={'/disabledbutton'} >Some disabled button</Button>
 
 
                     </Stack>

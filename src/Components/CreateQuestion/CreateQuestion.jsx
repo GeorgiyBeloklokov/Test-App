@@ -4,14 +4,16 @@ import Variant from "./Variant";
 import React from "react";
 import {
     addDescriptionQuestion, addImage,
-    addQuestion,
     addTitleQuestion,
     addVariant,
     removeQuestion
 } from "../toolkitRedux/questionReducerSlice";
-
+import {useLocation} from "react-router-dom";
+let renderCount = 0;
 
 const CreateQuestion = () => {
+    renderCount += 1;
+    console.log(`CreateQuestion rendered:`,renderCount);
 
     const dispatch = useDispatch();
     const questions = useSelector(state => state.questReducer.questions);
@@ -32,6 +34,7 @@ const CreateQuestion = () => {
 
 
 
+
     /*const onSubmitImage = data => {
         let image = data.image[0];
         let img  = URL.createObjectURL(image);
@@ -41,19 +44,23 @@ const CreateQuestion = () => {
 
 
     const onSubmitImage =(data,questId) => {
-
         let img  = URL.createObjectURL(data[0]);
-
         dispatch(addImage({img,questId}));
     };
+
+
+    const location = useLocation();
+    const question = (location.state.question);
+
+    console.log(question);
 
 
     return (
         <div>
             <Grid>
                 {questions.map((item,index) => (
-                    <>
-                        <Grid key={item.id} sx={{display: 'flex'}} item >
+<Grid key={item.id} >
+                        <Grid  sx={{display: 'flex'}} item >
                             <Typography
                                 variant="h5"
                                 sx={{flexGrow: 1}}>
@@ -154,7 +161,7 @@ const CreateQuestion = () => {
                                 </Paper>
                             </Grid>
                         </Grid>
-                    </>
+</Grid>
                 ))}
             </Grid>
         </div>

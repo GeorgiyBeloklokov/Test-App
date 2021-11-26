@@ -1,9 +1,10 @@
 import React from 'react';
-import {Button, CardMedia, Container, Divider, Grid, Paper, Typography} from "@mui/material";
+import {Button, CardMedia, Divider, Grid, Paper, Typography} from "@mui/material";
 import ControlledRadioButtonsGroup from "./RadioButtonOne";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
-import {useLocation} from "react-router-dom";
+import {NavLink, useLocation} from "react-router-dom";
 
+let renderCount = 0;
 const theme = createTheme({
     components: {
         MuiCardMedia: {
@@ -26,25 +27,37 @@ const theme = createTheme({
 });
 
 const BaseQuestion = () => {
-    const location = useLocation();
-    const {description, title, images} = (location.state.question);
+    renderCount += 1;
+    console.log(`BaseQuestion rendered:`,renderCount);
 
+    const location = useLocation();
+    const {question} = (location.state);
+
+    console.log(question);
     return (
         <>
-
            <ThemeProvider theme={theme}>
 
                 <Grid sx={{display: 'flex', justifyContent: 'space-between'}} item md={12}>
                     <Typography variant="h5">
-                        {title}
+                        {question.title}
                     </Typography>
-                    <Button size='small' variant="contained">Edit question</Button>
+                    <Button type="submit"
+                            component={NavLink} to={{
+                        pathname: '/newquestion',
+                        state: {question}
+                    }}
+                            variant="contained"
+                            size="small"
+                    >
+                        Edit question
+                    </Button>
                 </Grid>
                 <Grid item sx={{display: 'flex'}}>
                     <Grid item xs={12} sm={8} md={8} lg={8}>
                         <Grid item>
                             <Typography variant="h7">
-                                {description}
+                                {question.description}
                             </Typography>
                             <Paper sx={{display: 'flex', flexDirection: 'column'}} elevation={2}>
                                 <Typography sx={{mt: 2, p: 2}} variant="h5">
@@ -63,9 +76,10 @@ const BaseQuestion = () => {
                         </Grid>
                     </Grid>
                     <Grid xs={12} sm={4} md={4} lg={4} item>
-                        {images.map((item) => (
+                        {question.images.map((item) => (
 
                             <CardMedia
+                                key={item.image}
                                 height="312"
                                 component="img"
                                 image={item.image}
