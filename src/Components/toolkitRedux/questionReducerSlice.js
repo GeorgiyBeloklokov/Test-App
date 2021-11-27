@@ -12,7 +12,7 @@ const questionReducerSlice = createSlice({
             {
                 id: nanoid(),
                 mulVarQuest:'',
-                title: 'Base question',
+                title: 'Base question nn',
                 description: 'First question',
                 images:[{
                     image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
@@ -25,7 +25,7 @@ const questionReducerSlice = createSlice({
                         variantTextArea: '',
                         typeAnswerFlag: true,
                         rightAnswer: false,
-                    }
+                    },
                 ],
             },
             {

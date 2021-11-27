@@ -11,8 +11,6 @@ import {Grid} from "@mui/material";
 
 
 const theme = createTheme({
-
-
     components: {
         /*MuiTypography: {
             styleOverrides: {
@@ -60,8 +58,7 @@ const theme = createTheme({
 });
 
 
-export default function QuestionCard({question}) {
-
+export default function QuestionCard({question,index}) {
 
     return (
         <>
@@ -85,12 +82,11 @@ export default function QuestionCard({question}) {
                                             {question.description}
                                         </Typography>
 
-
                                     <CardActions>
                                         <Button type="submit"
                                                 component={NavLink} to={{
                                             pathname: '/basequestion',
-                                            state: {question}
+                                            state: {question,index}
                                         }}
                                                 variant="contained"
                                                 size="small"

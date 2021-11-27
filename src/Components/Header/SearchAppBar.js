@@ -54,6 +54,28 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchAppBar() {
+
+    const index = 0;
+    const question = {
+        id: Date.now(),
+        mulVarQuest:'',
+        title: 'Base question',
+        description: 'First question',
+        images:[{
+            image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
+        }],
+        variants: [
+            {
+                id: Date.now(),
+                chekBoxFlag: true,
+                variantTitle: '',
+                variantTextArea: '',
+                typeAnswerFlag: true,
+                rightAnswer: false,
+            }
+        ],
+    };
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -67,8 +89,6 @@ export default function SearchAppBar() {
                     >
                         <MenuIcon />
                     </IconButton>
-
-
                     <Typography
                         variant="h4"
                         noWrap
@@ -79,12 +99,19 @@ export default function SearchAppBar() {
                         Test Application
                     </Typography>
                         <Stack direction="row"  spacing={2}>
-                            {/*<NavLink color='secondary' style={{ textDecoration: 'none' }} to="/questionlist"> <Button color="success" >Question list</Button></NavLink>*/}
-                            <Button color="inherit" size={'small'} component={NavLink} to={'/questionlist'} >Question list</Button>
-                            <Button color="inherit" size={'small'} component={NavLink} to={'/newquestion'} >Create new question</Button>
-                            <Button disabled color="inherit" size={'small'} component={NavLink} to={'/disabledbutton'} >Some disabled button</Button>
-
-
+                            <Button color="inherit"
+                                    size={'small'}
+                                    component={NavLink}
+                                    to={'/questionlist'} >Question list</Button>
+                            <Button color="inherit"
+                                    size={'small'}
+                                    component={NavLink}
+                                    to={{pathname: '/newquestion', state: {question,index}
+                            }} >Create new question</Button>
+                            <Button disabled color="inherit"
+                                    size={'small'}
+                                    component={NavLink}
+                                    to={'/disabledbutton'} >Some disabled button</Button>
                     </Stack>
 
                     <Search sx={{ }} >

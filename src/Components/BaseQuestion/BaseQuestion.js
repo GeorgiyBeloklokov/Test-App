@@ -27,13 +27,14 @@ const theme = createTheme({
 });
 
 const BaseQuestion = () => {
+
     renderCount += 1;
     console.log(`BaseQuestion rendered:`,renderCount);
 
     const location = useLocation();
-    const {question} = (location.state);
+    const {question,index} = (location.state);
+    console.log(question,index);
 
-    console.log(question);
     return (
         <>
            <ThemeProvider theme={theme}>
@@ -45,7 +46,7 @@ const BaseQuestion = () => {
                     <Button type="submit"
                             component={NavLink} to={{
                         pathname: '/newquestion',
-                        state: {question}
+                        state: {question,index}
                     }}
                             variant="contained"
                             size="small"
