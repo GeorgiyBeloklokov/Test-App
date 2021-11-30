@@ -12,7 +12,7 @@ const questionReducerSlice = createSlice({
             {
                 id: nanoid(),
                 mulVarQuest:'',
-                title: 'Base question nn',
+                title: 'Base question ',
                 description: 'First question',
                 images:[{
                     image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
@@ -40,7 +40,7 @@ const questionReducerSlice = createSlice({
                     {
                         id: nanoid(),
                         chekBoxFlag: true,
-                        variantTitle: '',
+                        variantTitle: 'from 2 quest, var 1',
                         variantTextArea: '',
                         typeAnswerFlag: true,
                         rightAnswer: false,
@@ -144,12 +144,13 @@ const questionReducerSlice = createSlice({
         },
 
 
-        addQuestion(state, action) {
+        addQuestion(state) {
             state.questions = [
                 ...state.questions, {
                     id: nanoid(),
-                    title: action.payload.title,
-                    description: action.payload.textarea,
+                    mulVarQuest:'',
+                    title: '',
+                    description: '',
                     images:[{
                         image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
                     }],
@@ -172,31 +173,20 @@ const questionReducerSlice = createSlice({
         },
 
 
-        addTitleQuestion(state, action) {
+        addTitleDescriptionQuestion(state, action) {
             state.questions =
                 state.questions.map(item => {
-                    if (item.id === action.payload.id) {
+                    if (item.id === action.payload.item) {
                         return {
                             ...item,
-                            title: action.payload.data,
+                                title:   action.payload.questTitle || action.payload.questTitle === ""  ? action.payload.questTitle : item.title ,
+                                description:  action.payload.questDesc ?? item.description
                         }
                     }
                     return item;
                 })
         },
 
-        addDescriptionQuestion(state, action) {
-            state.questions =
-                state.questions.map(item => {
-                    if (item.id === action.payload.id) {
-                        return {
-                            ...item,
-                            description: action.payload.data
-                        }
-                    }
-                    return item;
-                })
-        },
 
         addVariant(state, action) {
             state.questions = state.questions.map((q) => {
@@ -204,15 +194,16 @@ const questionReducerSlice = createSlice({
                     return {
                         ...q,
                         variants: [
-                            ...state.questions[0].variants, {
+                            ...q.variants, {
                                 id: nanoid(),
                                 chekBoxFlag: true,
                                 variantTitle: null,
                                 variantTextArea: null,
                                 typeAnswerFlag: true,
                                 rightAnswer: false,
-                            }]
-                    };
+                            }
+                        ]
+                    }
                 }
                 return q;
             })
@@ -222,8 +213,8 @@ const questionReducerSlice = createSlice({
             state.questions = state.questions.map((q) => {
                 return {
                     ...q,
-                    variants: q.variants.filter(item => item.id !== action.payload)
-                }
+                    variants: q.variants.filter(item => item.id !== action.payload.varId)
+                };
             })
         },
 
@@ -318,7 +309,7 @@ const questionReducerSlice = createSlice({
 export default questionReducerSlice.reducer
 
 export const {
-    addVariant, removeVariant, addImage, addVariantTitle, addVariantText, toggleTypeAnswer, toggleVarCheckBox, addQuestion,
+    addVariant, removeVariant, addImage, addTitleDescriptionQuestion,addVariantTitle, addVariantText, toggleTypeAnswer, toggleVarCheckBox, addQuestion,
     removeQuestion, addTitleQuestion, addDescriptionQuestion
 } = questionReducerSlice.actions
 

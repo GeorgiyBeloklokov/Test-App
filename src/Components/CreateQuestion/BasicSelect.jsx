@@ -7,7 +7,7 @@ import Select from '@mui/material/Select';
 import {useDispatch} from "react-redux";
 import {toggleTypeAnswer} from "../toolkitRedux/questionReducerSlice";
 
-const  BasicSelect =(data, varId) => {
+const  BasicSelect =() => {
 
 
 
@@ -20,7 +20,7 @@ const  BasicSelect =(data, varId) => {
         setType(event.target.value);
         let typeAnswer = event.target.value;
 
-        dispatch(toggleTypeAnswer( {typeAnswer, data}))
+        dispatch(toggleTypeAnswer( {typeAnswer}))
     };
 
     return (

@@ -3,6 +3,7 @@ import {Button, CardMedia, Divider, Grid, Paper, Typography} from "@mui/material
 import ControlledRadioButtonsGroup from "./RadioButtonOne";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import {NavLink, useLocation} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 let renderCount = 0;
 const theme = createTheme({
@@ -27,13 +28,17 @@ const theme = createTheme({
 });
 
 const BaseQuestion = () => {
+    const questions = useSelector(state => state.questReducer.questions);
 
     renderCount += 1;
     console.log(`BaseQuestion rendered:`,renderCount);
 
     const location = useLocation();
-    const {question,index} = (location.state);
-    console.log(question,index);
+    const {index} = (location.state);
+    console.log(index);
+
+
+    const {title,description,images} = questions[index];
 
     return (
         <>
@@ -41,12 +46,12 @@ const BaseQuestion = () => {
 
                 <Grid sx={{display: 'flex', justifyContent: 'space-between'}} item md={12}>
                     <Typography variant="h5">
-                        {question.title}
+                        {title}
                     </Typography>
                     <Button type="submit"
                             component={NavLink} to={{
                         pathname: '/newquestion',
-                        state: {question,index}
+                        state: {index}
                     }}
                             variant="contained"
                             size="small"
@@ -58,7 +63,7 @@ const BaseQuestion = () => {
                     <Grid item xs={12} sm={8} md={8} lg={8}>
                         <Grid item>
                             <Typography variant="h7">
-                                {question.description}
+                                {description}
                             </Typography>
                             <Paper sx={{display: 'flex', flexDirection: 'column'}} elevation={2}>
                                 <Typography sx={{mt: 2, p: 2}} variant="h5">
@@ -77,7 +82,7 @@ const BaseQuestion = () => {
                         </Grid>
                     </Grid>
                     <Grid xs={12} sm={4} md={4} lg={4} item>
-                        {question.images.map((item) => (
+                        {images.map((item) => (
 
                             <CardMedia
                                 key={item.image}
