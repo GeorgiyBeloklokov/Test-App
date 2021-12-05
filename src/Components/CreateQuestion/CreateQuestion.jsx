@@ -1,7 +1,7 @@
 import {Button, Grid, Input, Paper, TextareaAutosize, TextField, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import Variant from "./Variant";
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {
     addImage,
     addQuestion,
@@ -10,14 +10,14 @@ import {
     removeQuestion,
     removeVariant
 } from "../toolkitRedux/questionReducerSlice";
-import {NavLink, useHistory, useLocation, withRouter} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 import BasicSelect from "./BasicSelect";
 import ModalSendQuest from "./ModalSendQuest";
 
 let renderCount = 0;
 
 const CreateQuestion = () => {
-    renderCount += 1;
+    renderCount ++;
     console.log(`CreateQuestion rendered:`, renderCount);
 
     const dispatch = useDispatch();
@@ -40,7 +40,7 @@ const CreateQuestion = () => {
                 history.push('/questionslist');
             },490);
         }
-    }, 1700);
+    }, 1900);
 
     const addNewQuestion = () => {
         setOpen(true);
@@ -83,7 +83,12 @@ const CreateQuestion = () => {
             <Grid>
                 <Grid key={id}>
                     <div>
-                        <ModalSendQuest open={open} handleOpen={handleOpen} handleClose={handleClose} />
+                        <ModalSendQuest children1 = {"Our question saved ! "}
+                                        children2={"Let`s go to Question List ..."}
+                                        open={open}
+                                        handleOpen={handleOpen}
+                                        handleClose={handleClose} />
+
                     </div>
                     <Grid sx={{display: 'flex'}} item>
                         <Typography

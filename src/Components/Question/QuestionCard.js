@@ -86,7 +86,7 @@ export default function QuestionCard({question,index}) {
                                         <Button type="submit"
                                                 component={NavLink} to={{
                                             pathname: '/basequestion',
-                                            state: {index}
+                                            state: {index,question}
                                         }}
                                                 variant="contained"
                                                 size="small"

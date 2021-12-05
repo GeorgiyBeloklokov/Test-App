@@ -18,7 +18,7 @@ const style = {
     p: 4,
 };
 
-export default function ModalSendQuest(data) {
+export default function ModalSendQuest({children1,children2, ...props}) {
 
     return (
         <div>
@@ -26,21 +26,21 @@ export default function ModalSendQuest(data) {
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
-                open={data.open}
-                onClose={data.handleClose}
+                open={props.open}
+                onClose={props.handleClose}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
                 BackdropProps={{
                     timeout: 500,
                 }}
             >
-                <Fade in={data.open}>
+                <Fade in={props.open}>
                     <Box sx={style}  >
                         <Typography sx={{textAlign:"center"}} id="transition-modal-title" variant="h6" component="h2">
-                            Our question saved !
+                            {children1}
                         </Typography>
                         <Typography  id="transition-modal-description" sx={{ mt: 2, textAlign:"center" }}>
-                            Let's go to the Questions List page...
+                            {children2}
                         </Typography>
                     </Box>
                 </Fade>

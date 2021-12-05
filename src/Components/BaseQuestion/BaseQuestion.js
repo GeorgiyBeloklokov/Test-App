@@ -1,9 +1,10 @@
 import React from 'react';
 import {Button, CardMedia, Divider, Grid, Paper, Typography} from "@mui/material";
-import ControlledRadioButtonsGroup from "./RadioButtonOne";
+import ControlledRadioButtonsGroup from "./SelectVariants";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import {NavLink, useLocation} from "react-router-dom";
 import {useSelector} from "react-redux";
+import SelectVariants from "./SelectVariants";
 
 let renderCount = 0;
 const theme = createTheme({
@@ -34,11 +35,11 @@ const BaseQuestion = () => {
     console.log(`BaseQuestion rendered:`,renderCount);
 
     const location = useLocation();
-    const {index} = (location.state);
-    console.log(index);
+    const {index,question} = (location.state);
+    /*console.log(index,question);*/
 
 
-    const {title,description,images} = questions[index];
+    const {title,description,images,variants,id} = questions[index];
 
     return (
         <>
@@ -73,11 +74,8 @@ const BaseQuestion = () => {
                                     Choose one variant
                                 </Typography>
                                 <Divider sx={{mt: 2, mb: 2}} variant="middle"/>
-                                <ControlledRadioButtonsGroup/>
-                                <Button type="submit" variant="contained" size="small"
-                                        component="span">
-                                    Submit answer
-                                </Button>
+                                <SelectVariants  variants={variants} questId={id} />
+
                             </Paper>
                         </Grid>
                     </Grid>

@@ -72,7 +72,7 @@ const Variant = (data) => {
                                 onChange={(event) => toggleChekBox(event.target.checked, questId, item.id)}
                                 label="Right answer"
                                 inputProps={{'aria-label': 'controlled'}}
-                                defaultChecked size="small"/>
+                                 size="small"/>
                         </Paper>
                     </Grid>
                 )
