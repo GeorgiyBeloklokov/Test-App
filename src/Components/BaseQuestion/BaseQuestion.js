@@ -5,6 +5,7 @@ import {createTheme, ThemeProvider} from "@mui/material/styles";
 import {NavLink, useLocation} from "react-router-dom";
 import {useSelector} from "react-redux";
 import SelectVariants from "./SelectVariants";
+import ReactConfetti from "react-confetti";
 
 let renderCount = 0;
 const theme = createTheme({

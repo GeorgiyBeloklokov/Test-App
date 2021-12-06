@@ -8,8 +8,11 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import {Button, Stack} from "@mui/material";
+import {Button, Grid, Stack} from "@mui/material";
 import { NavLink} from "react-router-dom";
+import {useState} from "react";
+import SearchPopper from "./SearchPopper";
+
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -53,8 +56,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function SearchAppBar() {
 
+
+export default function SearchAppBar() {
     const index = 0;
     const question = {
         id: Date.now(),
@@ -75,6 +79,30 @@ export default function SearchAppBar() {
             }
         ],
     };
+
+
+
+    //Search filter
+    let base = [];
+    const searchHandler = (e) => {
+        base.push(e.target.value);
+        let examples = ["Some question", "some question", "somequestion", "question", "Somequestion"];
+        let openPopper = examples.some(el => base.includes(el) );
+        if(openPopper){
+            setOpen(true);
+        }
+
+    };
+//
+
+//SearchPopper control
+    const [open, setOpen] = useState(false);
+    const handleClose = () => setOpen(false); // be in Search > onBlur
+    const id = open ? 'transition-popper' : undefined;
+
+
+
+//
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -114,15 +142,23 @@ export default function SearchAppBar() {
                                     to={'/disabledbutton'} >Some disabled button</Button>
                     </Stack>
 
-                    <Search sx={{ }} >
+                    <Search  >
                         <SearchIconWrapper>
                             <SearchIcon />
                         </SearchIconWrapper>
                         <StyledInputBase
                             placeholder="Search…"
+                           onChange = {searchHandler}
+                            onBlur={handleClose}
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
+                    <Grid container>
+                        <Grid item>
+                            <SearchPopper  id={id} open={open}   />
+                        </Grid>
+
+                    </Grid>
                 </Toolbar>
             </AppBar >
         </Box >

@@ -5,6 +5,8 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import ReactConfetti from "react-confetti";
+
 
 const style = {
     position: 'absolute',
@@ -12,16 +14,18 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
-    bgcolor: 'background.paper',
+    backgroundColor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
 };
 
-export default function ModalSendQuest({children1,children2, ...props}) {
+
+export default function ModalSendQuest({children1,children2,children3,children4, ...props}) {
 
     return (
         <div>
+
             {/*<Button onClick={data.handleOpen}>Open modal</Button>*/}
             <Modal
                 aria-labelledby="transition-modal-title"
@@ -36,10 +40,11 @@ export default function ModalSendQuest({children1,children2, ...props}) {
             >
                 <Fade in={props.open}>
                     <Box sx={style}  >
-                        <Typography sx={{textAlign:"center"}} id="transition-modal-title" variant="h6" component="h2">
+                        {children4}
+                        <Typography sx={{textAlign:"center"}} style={children3}    id="transition-modal-title" variant="h6" component="h2">
                             {children1}
                         </Typography>
-                        <Typography  id="transition-modal-description" sx={{ mt: 2, textAlign:"center" }}>
+                        <Typography  id="transition-modal-description" style={children3} sx={{ mt: 2, textAlign:"center" }}>
                             {children2}
                         </Typography>
                     </Box>

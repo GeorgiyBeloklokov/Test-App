@@ -7,6 +7,8 @@ import {addUserAnswer} from "../toolkitRedux/questionReducerSlice";
 import {useState} from "react";
 import ModalSendQuest from "../CreateQuestion/ModalSendQuest";
 import {useHistory} from "react-router-dom";
+import {green} from "@mui/material/colors";
+import ReactConfetti from "react-confetti";
 
 /*console.log(data);
 dispatch(addUserAnswer({...data,questId}));*/
@@ -21,7 +23,6 @@ export default function SelectVariants(bigData) {
 
     const [open2, setOpen2] = useState(false);
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const history = useHistory();
 
@@ -30,12 +31,12 @@ export default function SelectVariants(bigData) {
             setOpen(false);
             setTimeout(()=>{
                 history.push('/questionslist');
-            },490);
+            },450);
         }
         if (open2) {
             setOpen2(false);
         }
-    }, 3500);
+    }, 3000);
 
 
 
@@ -58,16 +59,18 @@ export default function SelectVariants(bigData) {
             <div>
                 <ModalSendQuest children1 = {"Correct answer "}
                                 children2={"You have chosen correct answer to the question, Let`go to Questions List..."}
+                                children4={open && <ReactConfetti/>}
                                 open={open}
-                                handleOpen={handleOpen}
+
                                 handleClose={handleClose} />
 
             </div>
             <div>
-                <ModalSendQuest children1 = {"Wrong answer "}
-                                children2={"try to resolve the issue again or choose another question"}
+                <ModalSendQuest children1 = {"Wrong answer"}
+                                children2={"Try to resolve the issue again or choose another question"}
+                                children3={{color:'red'}}
                                 open={open2}
-                                handleOpen={handleOpen}
+
                                 handleClose={handleClose} />
 
             </div>
