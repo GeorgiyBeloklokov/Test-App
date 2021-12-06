@@ -10,7 +10,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import {Button, Grid, Stack} from "@mui/material";
 import { NavLink} from "react-router-dom";
-import {useState} from "react";
+import {useRef, useState} from "react";
 import SearchPopper from "./SearchPopper";
 
 
@@ -86,28 +86,32 @@ export default function SearchAppBar() {
     let base = [];
     const searchHandler = (e) => {
         base.push(e.target.value);
-        let examples = ["Some question", "some question", "somequestion", "question", "Somequestion"];
+        let examples = ["Some question", "some question", "somequestion", "question", "Question", "Somequestion"];
         let openPopper = examples.some(el => base.includes(el) );
         if(openPopper){
             setOpen(true);
+            setAnchorEl(e.currentTarget);
         }
 
     };
 //
 
 //SearchPopper control
+
     const [open, setOpen] = useState(false);
-    const handleClose = () => setOpen(false); // be in Search > onBlur
-    const id = open ? 'transition-popper' : undefined;
+    const [anchorEl, setAnchorEl] = useState(null);
+    const handleClose = () => setOpen(false);// be in Search > onBlur
 
 
+    const canBeOpen = open && Boolean(anchorEl);
+    const id = canBeOpen ? 'transition-popper' : undefined;
 
 //
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-                <Toolbar>
+            <AppBar  position="static">
+                <Toolbar  >
                     <IconButton
                         size="large"
                         edge="start"
@@ -153,11 +157,9 @@ export default function SearchAppBar() {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
-                    <Grid container>
-                        <Grid item>
-                            <SearchPopper  id={id} open={open}   />
-                        </Grid>
 
+                    <Grid item>
+                            <SearchPopper anchorEl={anchorEl}  id={id} open={open}   />
                     </Grid>
                 </Toolbar>
             </AppBar >

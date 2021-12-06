@@ -10,7 +10,7 @@ export default function SearchPopper(props) {
     return (
         <div>
 
-            <Popper id={props.id} open={props.open} transition>
+            <Popper anchorEl={props.anchorEl} id={props.id} open={props.open} transition>
                 {({TransitionProps}) => (
                     <Fade {...TransitionProps} timeout={350}>
                         <Box sx={{mt: 5, border:1,   p: 1, bgcolor: 'background.paper'}}>
