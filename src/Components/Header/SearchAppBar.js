@@ -9,7 +9,7 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import {Button, Grid, Stack} from "@mui/material";
-import { NavLink} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import SearchPopper from "./SearchPopper";
 
 
@@ -57,7 +57,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 
- const  SearchAppBar = () => {
+const  SearchAppBar = () => {
     const index = 0;
     const question = {
         id: Date.now(),
@@ -107,6 +107,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 //
 
+    let navigation = useNavigate();
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar  position="static">
@@ -129,20 +131,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
                     >
                         Test Application
                     </Typography>
-                        <Stack direction="row"  spacing={2}>
-                            <Button color="inherit"
-                                    size={'small'}
-                                    component={NavLink}
-                                    to={'/questionlist'} >Question list</Button>
-                            <Button color="inherit"
-                                    size={'small'}
-                                    component={NavLink}
-                                    to={{pathname: '/newquestion', state: {question,index}
-                            }} >Create new question</Button>
-                            <Button disabled color="inherit"
-                                    size={'small'}
-                                    component={NavLink}
-                                    to={'/disabledbutton'} >Some disabled button</Button>
+                    <Stack direction="row"  spacing={2}>
+                        <Button color="inherit"
+                                size={'small'}
+                                component={Link}
+                                to={'/questionlist'} >Question list</Button>
+                        <Button color="inherit"
+                                size={'small'}
+                                component={Link}
+                                to={'/newquestion'} >Create new question</Button>
+                        <Button disabled color="inherit"
+                                size={'small'}
+                                component={Link}
+                                to={'/disabledbutton'} >Some disabled button</Button>
                     </Stack>
 
                     <Search  >
@@ -151,14 +152,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
                         </SearchIconWrapper>
                         <StyledInputBase
                             placeholder="Search…"
-                           onChange = {searchHandler}
+                            onChange = {searchHandler}
                             onBlur={handleClose}
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
 
                     <Grid item>
-                            <SearchPopper anchorEl={anchorEl}  id={id} open={open}   />
+                        <SearchPopper anchorEl={anchorEl}  id={id} open={open}   />
                     </Grid>
                 </Toolbar>
             </AppBar >

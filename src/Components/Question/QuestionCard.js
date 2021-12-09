@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {NavLink, useHistory} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import {Grid} from "@mui/material";
 
 
@@ -58,9 +58,9 @@ const theme = createTheme({
 });
 
 
- const QuestionCard = ({question,index}) => {
+const QuestionCard = ({question,index}) => {
 
-    const router = useHistory();
+    let navigate = useNavigate();
 
     return (
         <div>
@@ -79,18 +79,18 @@ const theme = createTheme({
                                         {question.title}
                                     </Typography>
 
-                                        <Typography variant="body4"  color="text.secondary">
-                                            {question.description}
-                                        </Typography>
+                                    <Typography variant="body4"  color="text.secondary">
+                                        {question.description}
+                                    </Typography>
 
                                     <CardActions>
                                         <Button type="submit"
-                                                onClick={() => router.push(`/basequestion/${index}`) }
+                                                onClick={() => navigate(`/basequestion/${index}`) }
 
-                                                /*component={NavLink} to={{
-                                            pathname: '/basequestion',
-                                            state: {index,question}
-                                        }}*/
+                                            /*component={NavLink} to={{
+                                        pathname: '/basequestion',
+                                        state: {index,question}
+                                    }}*/
                                                 variant="contained"
                                                 size="small"
                                         >

@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, CardMedia, Divider, Grid, Paper, Typography} from "@mui/material";
 import SelectVariants from "./SelectVariants";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
-import { useHistory, useParams} from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 
 let renderCount = 0;
@@ -29,11 +29,13 @@ const theme = createTheme({
 });
 
 const BaseQuestion = () => {
+
     // Render component control
     renderCount += 1;
     console.log(`BaseQuestion rendered:`, renderCount);
+
     // Go to page for edit question
-    const router = useHistory();
+    const navigate = useNavigate();
 
     // Get question id from URL
     const params = useParams();
@@ -42,6 +44,7 @@ const BaseQuestion = () => {
     /*const question = useSelector(state => state.questReducer.questions.find(item => item.id === params.id));*/
     const question = useSelector(state => state.questReducer.questions[params.index]);
     console.log('test selector questions + params', question);
+
 //Destructure question for print
     const {title, description, images, variants, id} = question;
 
@@ -54,7 +57,7 @@ const BaseQuestion = () => {
                         {title}
                     </Typography>
                     <Button type="submit"
-                        onClick={()=>router.push(`/newquestion/${params.index}`)}
+                            onClick={()=>navigate(`/newquestion/${params.index}`)}
                             variant="contained"
                             size="small"
                     >
@@ -82,7 +85,8 @@ const BaseQuestion = () => {
                     <Grid xs={12} sm={4} md={4} lg={4} item>
                         {images.map((item) => (
                             <CardMedia
-                                key={item.image}                                height="312"
+                                key={item.image}
+                                height="312"
                                 component="img"
                                 image={item.image}
                                 alt="Cap image"

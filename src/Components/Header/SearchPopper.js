@@ -74,7 +74,7 @@ export default function SearchPopper(props) {
                                             Passed
                                         </Typography>
                                         <Typography id="modal-modal-description" sx={{p: 0.5, mt: 2}}
-                                                    >
+                                        >
                                             Failed
                                         </Typography>
                                     </Grid>
@@ -121,13 +121,13 @@ export default function SearchPopper(props) {
                                     </Grid>
                                     <Grid sx={{display:"flex", justifyContent: "space-between" }} item>
                                         <Typography  id="modal-modal-title"
-                                                    variant="caption"
-                                                    >
+                                                     variant="caption"
+                                        >
                                             Show more...
                                         </Typography>
                                         <Typography sx={{backgroundColor: "lightgray"}} id="modal-modal-title"
                                                     variant="body2"
-                                                    >
+                                        >
                                             ~ 200 results
                                         </Typography>
                                     </Grid>
@@ -148,7 +148,7 @@ export default function SearchPopper(props) {
                                             Passed
                                         </Typography>
                                         <Typography id="modal-modal-description" sx={{p: 0.5, mt: 2}}
-                                                    >
+                                        >
                                             Failed
                                         </Typography>
 
