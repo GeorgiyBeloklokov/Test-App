@@ -1,11 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import ReactConfetti from "react-confetti";
 
 
 const style = {
@@ -25,8 +23,6 @@ export default function ModalSendQuest({children1,children2,children3,children4,
 
     return (
         <div>
-
-            {/*<Button onClick={data.handleOpen}>Open modal</Button>*/}
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -52,4 +48,4 @@ export default function ModalSendQuest({children1,children2,children3,children4,
             </Modal>
         </div>
     );
-}
+};

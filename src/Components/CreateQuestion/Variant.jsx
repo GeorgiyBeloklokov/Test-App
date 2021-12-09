@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Checkbox, FormControlLabel, Grid, Paper, TextField, Typography} from "@mui/material";
+import {Button, Checkbox, Grid, Paper, TextField, Typography} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {addVariantText, addVariantTitle, toggleVarCheckBox} from "../toolkitRedux/questionReducerSlice";
 
@@ -78,7 +78,7 @@ const Variant = (data) => {
                 )
             )}
         </div>
-    )
+    );
 };
 
 export default Variant;

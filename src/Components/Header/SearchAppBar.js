@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState} from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -10,7 +10,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import {Button, Grid, Stack} from "@mui/material";
 import { NavLink} from "react-router-dom";
-import {useRef, useState} from "react";
 import SearchPopper from "./SearchPopper";
 
 
@@ -58,7 +57,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 
-export default function SearchAppBar() {
+ const  SearchAppBar = () => {
     const index = 0;
     const question = {
         id: Date.now(),
@@ -100,7 +99,7 @@ export default function SearchAppBar() {
 
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
-    const handleClose = () => setOpen(false);// be in Search > onBlur
+    const handleClose = () => setOpen(false); // be in Search > onBlur
 
 
     const canBeOpen = open && Boolean(anchorEl);
@@ -111,7 +110,7 @@ export default function SearchAppBar() {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar  position="static">
-                <Toolbar  >
+                <Toolbar sx={{justifyContent:"space-between"}} >
                     <IconButton
                         size="large"
                         edge="start"
@@ -164,5 +163,6 @@ export default function SearchAppBar() {
                 </Toolbar>
             </AppBar >
         </Box >
-    );
-}
+    )
+};
+export default SearchAppBar;

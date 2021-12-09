@@ -1,20 +1,14 @@
-import * as React from 'react';
-import CheckBoxAnswer from "./CheckBoxAnswer";
-import {Button, Grid} from "@mui/material";
-import {useForm, FormProvider} from "react-hook-form";
+
+import React, {useState} from 'react';
+import {useForm} from "react-hook-form";
 import {useDispatch} from "react-redux";
-import {addUserAnswer} from "../toolkitRedux/questionReducerSlice";
-import {useState} from "react";
+import {confettiToggle} from "../toolkitRedux/questionReducerSlice";
 import ModalSendQuest from "../CreateQuestion/ModalSendQuest";
 import {useHistory} from "react-router-dom";
-import {green} from "@mui/material/colors";
-import ReactConfetti from "react-confetti";
-
-/*console.log(data);
-dispatch(addUserAnswer({...data,questId}));*/
 
 
-export default function SelectVariants(bigData) {
+
+ const SelectVariants = (bigData) => {
     const dispatch = useDispatch();
     let questId = (bigData.questId);
     let variants = bigData.variants;
@@ -23,6 +17,7 @@ export default function SelectVariants(bigData) {
 
     const [open2, setOpen2] = useState(false);
     const [open, setOpen] = useState(false);
+    dispatch(confettiToggle({open}));
     const handleClose = () => setOpen(false);
     const history = useHistory();
 
@@ -36,7 +31,7 @@ export default function SelectVariants(bigData) {
         if (open2) {
             setOpen2(false);
         }
-    }, 3000);
+    }, 3900);
 
 
 
@@ -54,12 +49,15 @@ export default function SelectVariants(bigData) {
     };
 
 
+
+
     return (
-        <div>
+        <div >
+
             <div>
                 <ModalSendQuest children1 = {"Correct answer "}
                                 children2={"You have chosen correct answer to the question, Let`go to Questions List..."}
-                                children4={open && <ReactConfetti/>}
+
                                 open={open}
 
                                 handleClose={handleClose} />
@@ -74,7 +72,7 @@ export default function SelectVariants(bigData) {
                                 handleClose={handleClose} />
 
             </div>
-            <FormProvider {...methods}>
+            {/*<FormProvider {...methods}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     {bigData.variants.map((variant) => (
                         <Grid key={variant.id} item>
@@ -88,9 +86,11 @@ export default function SelectVariants(bigData) {
                         Submit answer
                     </Button>
                 </form>
-            </FormProvider>
+            </FormProvider>*/}
 
 
         </div>
-    )
+    );
 };
+
+export default SelectVariants;

@@ -6,10 +6,10 @@ const rootReducer = combineReducers( {
 
     questReducer: questionReducerSlice
 
-})
+});
 
 
  export const store = configureStore ({
     reducer: rootReducer
 
- })
+ });

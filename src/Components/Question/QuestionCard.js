@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {NavLink} from "react-router-dom";
+import {NavLink, useHistory} from "react-router-dom";
 import {Grid} from "@mui/material";
 
 
@@ -58,17 +58,18 @@ const theme = createTheme({
 });
 
 
-export default function QuestionCard({question,index}) {
+ const QuestionCard = ({question,index}) => {
+
+    const router = useHistory();
 
     return (
-        <>
+        <div>
             {question.images.map(item => (
                     <ThemeProvider key={question.id} theme={theme}>
                         <Grid   item>
                             <Card elevation={3}>
 
                                 <CardMedia
-
                                     component="img"
                                     image={item.image}
                                     alt="Images Cap"
@@ -84,10 +85,12 @@ export default function QuestionCard({question,index}) {
 
                                     <CardActions>
                                         <Button type="submit"
-                                                component={NavLink} to={{
+                                                onClick={() => router.push(`/basequestion/${index}`) }
+
+                                                /*component={NavLink} to={{
                                             pathname: '/basequestion',
                                             state: {index,question}
-                                        }}
+                                        }}*/
                                                 variant="contained"
                                                 size="small"
                                         >
@@ -101,8 +104,8 @@ export default function QuestionCard({question,index}) {
                     </ThemeProvider>
                 )
             )}
-        </>
-    )
-}
+        </div>
+    );
+};
 
-
+export default QuestionCard;

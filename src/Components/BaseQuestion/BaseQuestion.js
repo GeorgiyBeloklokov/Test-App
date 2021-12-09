@@ -1,13 +1,12 @@
 import React from 'react';
 import {Button, CardMedia, Divider, Grid, Paper, Typography} from "@mui/material";
-import ControlledRadioButtonsGroup from "./SelectVariants";
-import {createTheme, ThemeProvider} from "@mui/material/styles";
-import {NavLink, useLocation} from "react-router-dom";
-import {useSelector} from "react-redux";
 import SelectVariants from "./SelectVariants";
-import ReactConfetti from "react-confetti";
+import {createTheme, ThemeProvider} from "@mui/material/styles";
+import { useHistory, useParams} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 let renderCount = 0;
+
 const theme = createTheme({
     components: {
         MuiCardMedia: {
@@ -30,31 +29,32 @@ const theme = createTheme({
 });
 
 const BaseQuestion = () => {
-    const questions = useSelector(state => state.questReducer.questions);
-
+    // Render component control
     renderCount += 1;
-    console.log(`BaseQuestion rendered:`,renderCount);
+    console.log(`BaseQuestion rendered:`, renderCount);
+    // Go to page for edit question
+    const router = useHistory();
 
-    const location = useLocation();
-    const {index,question} = (location.state);
-    /*console.log(index,question);*/
+    // Get question id from URL
+    const params = useParams();
+    console.log(params);
+// Find and get question in state
+    /*const question = useSelector(state => state.questReducer.questions.find(item => item.id === params.id));*/
+    const question = useSelector(state => state.questReducer.questions[params.index]);
+    console.log('test selector questions + params', question);
+//Destructure question for print
+    const {title, description, images, variants, id} = question;
 
-
-    const {title,description,images,variants,id} = questions[index];
 
     return (
-        <>
-           <ThemeProvider theme={theme}>
-
+        <div>
+            <ThemeProvider theme={theme}>
                 <Grid sx={{display: 'flex', justifyContent: 'space-between'}} item md={12}>
                     <Typography variant="h5">
                         {title}
                     </Typography>
                     <Button type="submit"
-                            component={NavLink} to={{
-                        pathname: '/newquestion',
-                        state: {index}
-                    }}
+                        onClick={()=>router.push(`/newquestion/${params.index}`)}
                             variant="contained"
                             size="small"
                     >
@@ -75,17 +75,14 @@ const BaseQuestion = () => {
                                     Choose one variant
                                 </Typography>
                                 <Divider sx={{mt: 2, mb: 2}} variant="middle"/>
-                                <SelectVariants  variants={variants} questId={id} />
-
+                                <SelectVariants variants={variants} questId={id}/>
                             </Paper>
                         </Grid>
                     </Grid>
                     <Grid xs={12} sm={4} md={4} lg={4} item>
                         {images.map((item) => (
-
                             <CardMedia
-                                key={item.image}
-                                height="312"
+                                key={item.image}                                height="312"
                                 component="img"
                                 image={item.image}
                                 alt="Cap image"
@@ -94,9 +91,8 @@ const BaseQuestion = () => {
                     </Grid>
                 </Grid>
             </ThemeProvider>
-
-        </>
-    )
+        </div>
+    );
 };
 
 export default BaseQuestion;

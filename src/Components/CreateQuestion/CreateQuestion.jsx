@@ -1,7 +1,8 @@
+import React from 'react';
 import {Button, Grid, Input, Paper, TextareaAutosize, TextField, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import Variant from "./Variant";
-import React from "react";
+
 import {
     addImage,
     addQuestion,
@@ -10,18 +11,19 @@ import {
     removeQuestion,
     removeVariant
 } from "../toolkitRedux/questionReducerSlice";
-import {useHistory, useLocation} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import BasicSelect from "./BasicSelect";
 import ModalSendQuest from "./ModalSendQuest";
 
 let renderCount = 0;
 
 const CreateQuestion = () => {
+    //Control render of component
     renderCount ++;
     console.log(`CreateQuestion rendered:`, renderCount);
 
     const dispatch = useDispatch();
-    const questions = useSelector(state => state.questReducer.questions);
+    /*const questions = useSelector(state => state.questReducer.questions);*/
 
 
     const addVar = (id) => {
@@ -67,19 +69,21 @@ const CreateQuestion = () => {
         let img = URL.createObjectURL(data[0]);
         dispatch(addImage({img, questId}));
     };
+// Go to page for edit question
+    const router = useHistory();
 
-
-    const location = useLocation();
-    const {index} = (location.state);
-
-
-    const {title, description, id, images, variants} = questions[index];
+    // Get question id from URL
+    const params = useParams();
+    console.log(params);
+// Find and get question in state
+    const question = useSelector(state => state.questReducer.questions[params.index]);
+    console.log('test selector questions + params', question);
+//Destructure question for print
+    const {title, description, images, index, variants, id} = question;
 
 
     return (
         <div>
-
-
             <Grid>
                 <Grid key={id}>
                     <div>
@@ -94,7 +98,7 @@ const CreateQuestion = () => {
                         <Typography
                             variant="h5"
                             sx={{flexGrow: 1}}>
-                            Edit question # {index + 1}
+                            Edit question # {index  }
                         </Typography>
                         <Button
                             onClick={() => addNewQuestion()}
@@ -203,6 +207,6 @@ const CreateQuestion = () => {
                 </Grid>
             </Grid>
         </div>
-    )
-}
+    );
+};
 export default CreateQuestion;

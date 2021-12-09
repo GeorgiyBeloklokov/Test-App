@@ -6,6 +6,7 @@ const questionReducerSlice = createSlice({
     name: "questReducer",
 
     initialState: {
+        confettiTogle:false,
         userAnswer:[
             {
                 questId: '',
@@ -161,6 +162,9 @@ const questionReducerSlice = createSlice({
                 }]
         },*/
 
+        confettiToggle(state,action) {
+          state.confettiTogle = action.payload.open
+        },
 
         addImage(state, action) {
             state.questions = state.questions.map((q) => {
@@ -213,7 +217,8 @@ const questionReducerSlice = createSlice({
                         return {
                             ...item,
                                 title:   action.payload.questTitle || action.payload.questTitle === ""  ? action.payload.questTitle : item.title ,
-                                description:  action.payload.questDesc ?? item.description
+                                description:  action.payload.questDesc || action.payload.questDesc === "" ? action.payload.questDesc : item.questDesc
+                            /*description:  action.payload.questDesc ?? item.description*/
                         }
                     }
                     return item;
@@ -337,12 +342,13 @@ const questionReducerSlice = createSlice({
 
 
     }
-})
+});
 
 export default questionReducerSlice.reducer
 
 export const {
-    addVariant, removeVariant, addImage,addUserAnswer, addTitleDescriptionQuestion,addVariantTitle, addVariantText, toggleTypeAnswer, toggleVarCheckBox, addQuestion,
+    addVariant, removeVariant, confettiToggle, addImage, addUserAnswer,
+    addTitleDescriptionQuestion,addVariantTitle, addVariantText, toggleTypeAnswer, toggleVarCheckBox, addQuestion,
     removeQuestion,
 } = questionReducerSlice.actions
 
