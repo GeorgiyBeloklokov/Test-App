@@ -58,9 +58,13 @@ const theme = createTheme({
 });
 
 
-const QuestionCard = ({question,index}) => {
+const QuestionCard = ({question,index,loading}) => {
 
     let navigate = useNavigate();
+
+    if (loading) {
+        return <h2>Loading....</h2>
+    }
 
     return (
         <div>
