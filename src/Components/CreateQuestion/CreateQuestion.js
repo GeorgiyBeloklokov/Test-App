@@ -2,18 +2,19 @@ import React from 'react';
 import {Button, Grid, Input, Paper, TextareaAutosize, TextField, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import Variant from "./Variant";
-
+import { ref, set } from "firebase/database";
 import {
     addImage,
     addQuestion,
     addTitleDescriptionQuestion,
     addVariant,
     removeQuestion,
-    removeVariant
+    removeVariant,
 } from "../Redux/questionReducerSlice";
 import {useNavigate, useParams} from "react-router-dom";
 import BasicSelect from "./BasicSelect";
 import ModalSendQuest from "./ModalSendQuest";
+import {database} from "../../firebase-config";
 
 let renderCount = 0;
 
@@ -23,7 +24,16 @@ const CreateQuestion = () => {
     console.log(`CreateQuestion rendered:`, renderCount);
 
     const dispatch = useDispatch();
-    /*const questions = useSelector(state => state.questReducer.questions);*/
+    const quest = useSelector(state => state.questReducer.questions);
+
+
+//firebase write data
+    function writeQuestionsInData () {
+        set(ref(database, "questions/" ),{
+            questions:quest
+        })
+    }
+
 
 
     const addVar = (id) => {
@@ -47,6 +57,7 @@ const CreateQuestion = () => {
     const addNewQuestion = () => {
         setOpen(true);
         dispatch(addQuestion());
+        writeQuestionsInData();
 
     };
 
@@ -74,7 +85,7 @@ const CreateQuestion = () => {
 
     // Get question id from URL
     const params = useParams();
-    console.log(params);
+
 
 //Empty object for new question button in AppBar
     const emptyQuestion = {
@@ -98,14 +109,14 @@ const CreateQuestion = () => {
 // Find and get question in state
     const newQuestion = useSelector(state => state.questReducer.questions[params.index]);
 
-//if not  index of question , make a  new empty question ( for create new question button in AppBar)
+//If not  index of question , make a  new empty question ( for create new question button in AppBar)
     const question = params ? newQuestion : emptyQuestion;
 
 
 
 //Destructure question for print
     const {title, description, images, index, variants, id} = question ? question : emptyQuestion ;
-    console.log('test  question and emptyQuestion ', question, emptyQuestion);
+    /*console.log('test  question and emptyQuestion ', question, emptyQuestion);*/
 
     return (
         <div>

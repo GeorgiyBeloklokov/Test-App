@@ -5,7 +5,7 @@ import {createTheme, ThemeProvider} from "@mui/material/styles";
 import { useNavigate, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 
-let renderCount = 0;
+/*let renderCount = 0;*/
 
 const theme = createTheme({
     components: {
@@ -31,8 +31,8 @@ const theme = createTheme({
 const BaseQuestion = () => {
 
     // Render component control
-    renderCount += 1;
-    console.log(`BaseQuestion rendered:`, renderCount);
+    /*renderCount += 1;
+    console.log(`BaseQuestion rendered:`, renderCount);*/
 
     // Go to page for edit question
     const navigate = useNavigate();
@@ -40,10 +40,11 @@ const BaseQuestion = () => {
     // Get question id from URL
     const params = useParams();
     console.log(params);
+
 // Find and get question in state
     /*const question = useSelector(state => state.questReducer.questions.find(item => item.id === params.id));*/
     const question = useSelector(state => state.questReducer.questions[params.index]);
-    console.log('test selector questions + params', question);
+    /*console.log('test selector questions + params', question);*/
 
 //Destructure question for print
     const {title, description, images, variants, id} = question;

@@ -5,9 +5,13 @@ import {Grid} from "@mui/material";
 import TestAppPagination from "../Pagination/Pagination";
 
 
-
+/*let renderCount = 0;*/
 
 const QuestionList = () => {
+
+// Render component control
+   /* renderCount += 1;
+    console.log(`QuestionList rendered:`, renderCount);*/
 
     const question = useSelector(state => state.questReducer.questions);
 
@@ -16,12 +20,13 @@ const QuestionList = () => {
     const [page, setPage] = React.useState(1);
     const [questionsPerPage] = useState(6);
 
+//Pagination control
     const handleChange = (event, value) => {
         setPage(value);
     };
 
     /*console.log(`test questions from Pagination:`, questions);*/
-
+//async get to questions from server (state)
     useEffect(() => {
         const getQuestions = async () => {
             setLoading(true);
@@ -31,9 +36,9 @@ const QuestionList = () => {
             /*console.log(`test res from Pagination:`, res);*/
         }
         getQuestions();
-    },[]);
+    },[question]);
 
-
+//Find last and first index in questions and calculate current question for print in QuestionList
 const lastQuestionsIndex = page * questionsPerPage;
 const firstQuestionsIndex = lastQuestionsIndex - questionsPerPage;
 const currentQuestion = questions.slice(firstQuestionsIndex,lastQuestionsIndex);

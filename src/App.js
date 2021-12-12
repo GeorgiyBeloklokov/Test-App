@@ -28,6 +28,16 @@ const App = () => {
   }, []);*/
 
 
+
+    useEffect(()=>{
+        console.log('mount app')
+
+
+    },[]);
+
+
+
+
   return (
       <div>
         <SearchAppBar/>

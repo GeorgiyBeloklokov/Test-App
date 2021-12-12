@@ -1,6 +1,8 @@
 import {createSlice, nanoid} from "@reduxjs/toolkit";
 
 
+
+
 const questionReducerSlice = createSlice({
 
     name: "questReducer",
@@ -216,9 +218,11 @@ const questionReducerSlice = createSlice({
                     if (item.id === action.payload.item) {
                         return {
                             ...item,
-                            title:   action.payload.questTitle || action.payload.questTitle === ""  ? action.payload.questTitle : item.title ,
-                            description:  action.payload.questDesc || action.payload.questDesc === "" ? action.payload.questDesc : item.questDesc
-                            /*description:  action.payload.questDesc ?? item.description*/
+                            /*title:   action.payload.questTitle || action.payload.questTitle === ""  ? action.payload.questTitle : item.title ,
+                            description:  action.payload.questDesc || action.payload.questDesc === "" ? action.payload.questDesc : item.questDesc*/
+                            description:  action.payload.questDesc ?? item.description,
+                            title:  action.payload.questTitle ?? item.title
+
                         }
                     }
                     return item;
@@ -344,11 +348,12 @@ const questionReducerSlice = createSlice({
     }
 });
 
-export default questionReducerSlice.reducer
+export default questionReducerSlice.reducer;
 
 export const {
     addVariant, removeVariant, confettiToggle, addImage, addUserAnswer,
     addTitleDescriptionQuestion,addVariantTitle, addVariantText, toggleTypeAnswer, toggleVarCheckBox, addQuestion,
     removeQuestion,
-} = questionReducerSlice.actions
+} = questionReducerSlice.actions;
+
 
