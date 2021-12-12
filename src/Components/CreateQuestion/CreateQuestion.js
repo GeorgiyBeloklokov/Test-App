@@ -15,16 +15,32 @@ import {useNavigate, useParams} from "react-router-dom";
 import BasicSelect from "./BasicSelect";
 import ModalSendQuest from "./ModalSendQuest";
 import {database} from "../../firebase-config";
+import { useForm, useFieldArray,FormProvider, Controller, useWatch } from "react-hook-form";
+import {blueGrey} from "@mui/material/colors";
+
+
 
 let renderCount = 0;
 
 const CreateQuestion = () => {
+
     //Control render of component
     renderCount ++;
     console.log(`CreateQuestion rendered:`, renderCount);
 
     const dispatch = useDispatch();
     const quest = useSelector(state => state.questReducer.questions);
+
+
+    //React-hook-form
+    const methods = useForm({
+        defaultValues: {
+            variants: [{ variantTitle: "Some text", checkbox: false}],
+            title:"Some text",
+            description:"Some test",
+            image:"Some image"
+        }
+    });
 
 
 //firebase write data
@@ -78,6 +94,7 @@ const CreateQuestion = () => {
     const onSubmitImage = (data, questId) => {
         let img = URL.createObjectURL(data[0]);
         dispatch(addImage({img, questId}));
+        img.onload = () => URL.revokeObjectURL(img);
     };
 
 // Navigation to page for edit question or creating new question
@@ -118,9 +135,14 @@ const CreateQuestion = () => {
     const {title, description, images, index, variants, id} = question ? question : emptyQuestion ;
     /*console.log('test  question and emptyQuestion ', question, emptyQuestion);*/
 
+
+
+
     return (
         <div>
             <Grid>
+                <FormProvider {...methods}>
+                <form onSubmit={methods.handleSubmit((data) => console.log(data))}>
                 <Grid key={id}>
                     <div>
                         <ModalSendQuest children1 = {"Our question saved ! "}
@@ -131,13 +153,15 @@ const CreateQuestion = () => {
 
                     </div>
                     <Grid sx={{display: 'flex'}} item>
+
                         <Typography
                             variant="h5"
                             sx={{flexGrow: 1}}>
                             Edit question # {params.index }
                         </Typography>
+                        <Grid item sx={{mr:8, border:2, borderRadius:1, color: "blue"}} className="counter">Render Count: {renderCount}</Grid>
                         <Button
-                            onClick={() => addNewQuestion()}
+                           /* onClick={() => addNewQuestion()}*/
 
                             type="submit"
                             variant="contained"
@@ -167,13 +191,13 @@ const CreateQuestion = () => {
                                 <TextField
                                     fullWidth
 
-                                    value={title}
+                                   /* value={title}*/
                                     sx={{mb: 2}}
                                     size="small"
                                     type="input"
                                     id="outlined-basic"
-
-                                    onChange={(e) => addQuestTitle(e.target.value, id)}
+                                    {...methods.register(`title`)}
+                                    /*onChange={(e) => addQuestTitle(e.target.value, id)}*/
                                     label='Question title'
                                     variant="outlined"
                                 />
@@ -181,12 +205,10 @@ const CreateQuestion = () => {
                                     Description
                                 </Typography>
                                 <TextareaAutosize
-
-                                    value={description}
                                     aria-label="minimum height"
                                     minRows={10}
-                                    onChange={(e) => addQuestDescription(e.target.value, id)}
-
+                                    /*onChange={(e) => addQuestDescription(e.target.value, id)}*/
+                                    {...methods.register(`description`)}
                                     placeholder="Question message"
                                     style={{width: '98%'}}
                                 />
@@ -201,17 +223,16 @@ const CreateQuestion = () => {
                                     component={"div"}>
                                     Image
                                 </Typography>
-                                <label
-                                    htmlFor="contained-button-file">
+
                                     <Input
-                                        onChange={(event) => onSubmitImage(event.target.files, id)}
-
+                                       /* onChange={(event) => onSubmitImage(event.target.files, id)}*/
+                                        {...methods.register(`image`)}
+                                        name="image"
                                         accept="image/*"
-                                        id="contained-button-file"
                                         type="file"
-
                                     />
-                                </label>
+
+
                             </Paper>
                         </Grid>
                         <Grid xs={12} sm={8} md={8} lg={8} item>
@@ -228,19 +249,12 @@ const CreateQuestion = () => {
                                 <Variant variants={variants} questId={id}
                                          removeVar={removeVar}/>
 
-                                <Button
-                                    sx={{mt: 2}}
-                                    type="submit"
-                                    onClick={() => addVar(id)}
-                                    variant="contained"
-                                    size="small"
-                                    component="span">
-                                    + Add new variant
-                                </Button>
                             </Paper>
                         </Grid>
                     </Grid>
                 </Grid>
+                </form>
+                </FormProvider>
             </Grid>
         </div>
     );

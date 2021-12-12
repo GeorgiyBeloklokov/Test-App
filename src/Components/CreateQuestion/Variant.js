@@ -1,7 +1,8 @@
 import React from 'react';
-import {Button, Checkbox, Grid, Paper, TextField, Typography} from "@mui/material";
+import {Button, Checkbox, FormControlLabel, Grid, Paper, TextField, Typography} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {addVariantText, addVariantTitle, toggleVarCheckBox} from "../Redux/questionReducerSlice";
+import {useFieldArray, useFormContext,Controller} from "react-hook-form";
 
 
 
@@ -20,11 +21,18 @@ const Variant = (data) => {
         dispatch(addVariantText({varTextArea, questId, varId}))
     };
 
+    const methods = useFormContext();
+
+
+    const { fields, append,remove, } = useFieldArray({
+        ...methods.control,
+        name: "variants"
+    });
 
 
     return (
         <div>
-            {variants.map((item, index) => (
+            {fields.map((item, index) => (
                     <Grid key={item.id} xs={12} sm={12} md={12} lg={12} item>
                         <Paper elevation={2} sx={{mt: 2, p: 1}}>
 
@@ -41,7 +49,20 @@ const Variant = (data) => {
                                     sx={{mt: 2,}}
                                 >Variant#{index + 1}</Typography>
                                 <Button
-                                    onClick={() => data.removeVar( item.id)}
+                                    sx={{mt: 2}}
+                                    type="submit"
+                                    /* onClick={() => addVar(id)}*/
+                                    onClick={() => {
+                                        append({ variantTitle: "Some text", checkbox: false });
+                                    }}
+                                    variant="contained"
+                                    size="small"
+                                    component="span">
+                                    + Add new variant
+                                </Button>
+                                <Button
+                                    /*onClick={() => data.removeVar( item.id)}*/
+                                    onClick={() => remove(index)}
 
                                     type="submit"
                                     variant="contained"
@@ -55,24 +76,26 @@ const Variant = (data) => {
                             <br/>
                             <TextField size="small"
                                        fullWidth
-                                       value={item.variantTitle}
-                                       onChange={e => addVariantTit(e.target.value, questId, item.id)}
+                                      /* value={item.variantTitle}
+                                       onChange={e => addVariantTit(e.target.value, questId, item.id)}*/
+                                       {...methods.register(`variants.${index}.variantTitle`)}
                                        sx={{mt: 1}}
                                        type="input"
                                        id="outlined-basic"
                                        label="Some variant"
                                        variant="outlined"/>
+
                             <Typography variant="body2"
                                         sx={{ml: 2}}
                                         fontWeight='light'>
                                 Variant name
                             </Typography>
-                            <Checkbox
-                                sx={{pb: 2, pt: 1, pl: 1}}
-                                onChange={(event) => toggleChekBox(event.target.checked, questId, item.id)}
-                                label="Right answer"
-                                inputProps={{'aria-label': 'controlled'}}
-                                size="small"/>
+                            <Controller
+                                name={`variants.${index}.checkbox`}
+                                control={methods.control}
+                                render={({ field
+                                              }) => <FormControlLabel   control={ <Checkbox  size="small" {...field} />} label="Right answer" />}
+                            />
                         </Paper>
                     </Grid>
                 )
@@ -82,3 +105,11 @@ const Variant = (data) => {
 };
 
 export default Variant;
+
+/*
+<Checkbox
+    sx={{pb: 2, pt: 1, pl: 1}}
+    onChange={(event) => toggleChekBox(event.target.checked, questId, item.id)}
+    label="Right answer"
+    inputProps={{'aria-label': 'controlled'}}
+    size="small"/>*/
