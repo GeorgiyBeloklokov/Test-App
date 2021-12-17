@@ -1,5 +1,5 @@
-import React, { useState} from 'react';
-import { styled, alpha } from '@mui/material/styles';
+import React, {useState} from 'react';
+import {styled, alpha} from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,7 +13,7 @@ import {Link, useNavigate, useParams} from "react-router-dom";
 import SearchPopper from "./SearchPopper";
 
 
-const Search = styled('div')(({ theme }) => ({
+const Search = styled('div')(({theme}) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -28,7 +28,7 @@ const Search = styled('div')(({ theme }) => ({
     },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+const SearchIconWrapper = styled('div')(({theme}) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
     position: 'absolute',
@@ -38,7 +38,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+const StyledInputBase = styled(InputBase)(({theme}) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
@@ -56,15 +56,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 
-
-const  SearchAppBar = () => {
+const SearchAppBar = () => {
     const index = 0;
     const question = {
         id: Date.now(),
-        mulVarQuest:'',
+        mulVarQuest: '',
         title: 'Base question',
         description: 'First question',
-        images:[{
+        images: [{
             image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
         }],
         variants: [
@@ -80,14 +79,13 @@ const  SearchAppBar = () => {
     };
 
 
-
     //Search filter
     let base = [];
     const searchHandler = (e) => {
         base.push(e.target.value);
         let examples = ["Some question", "some question", "somequestion", "question", "Question", "Somequestion"];
-        let openPopper = examples.some(el => base.includes(el) );
-        if(openPopper){
+        let openPopper = examples.some(el => base.includes(el));
+        if (openPopper) {
             setOpen(true);
             setAnchorEl(e.currentTarget);
         }
@@ -109,61 +107,77 @@ const  SearchAppBar = () => {
 
     let navigation = useNavigate();
 
+    const user = true;
+
+
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar  position="static">
-                <Toolbar sx={{justifyContent:"space-between"}} >
+        <Box sx={{flexGrow: 1}}>
+            <AppBar position="static">
+                <Toolbar sx={{justifyContent: "space-between"}} variant={"dense"}>
                     <IconButton
                         size="large"
                         edge="start"
                         color="inherit"
                         aria-label="open drawer"
-                        sx={{ mr: 2 }}
+                        sx={{mr: 2}}
                     >
-                        <MenuIcon />
+                        <MenuIcon/>
                     </IconButton>
                     <Typography
                         variant="h4"
                         noWrap
                         component="div"
-
-                        sx={{mr:2, flexGrow: 0, display: { xs: 'none', sm: 'block' } }}
+                        sx={{mr: 2, flexGrow: 0, display: {xs: 'none', sm: 'block'}}}
                     >
                         Test Application
                     </Typography>
-                    <Stack direction="row"  spacing={2}>
+                    <Stack direction="row" spacing={2}>
                         <Button color="inherit"
                                 size={'small'}
                                 component={Link}
-                                to={'/questionlist'} >Question list</Button>
+                                to={'/questionlist'}>Question list</Button>
                         <Button color="inherit"
                                 size={'small'}
                                 component={Link}
-                                to={'/newquestion'} >Create new question</Button>
+                                to={'/newquestion'}>Create new question</Button>
                         <Button disabled color="inherit"
                                 size={'small'}
                                 component={Link}
-                                to={'/disabledbutton'} >Some disabled button</Button>
+                                to={'/disabledbutton'}>Some disabled button</Button>
+
                     </Stack>
+                    <Grid item display={"flex"}>
+                        {user ?
+                            <Button color="inherit"
+                                    size={'small'}
+                                    component={Link}
+                                    to={'/questionlist'}>LogOut</Button>
+                            :
+                            <Button color="inherit"
+                                    size={'small'}
+                                    component={Link}
+                                    to={'/login'}>Login</Button>
 
-                    <Search  >
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            onChange = {searchHandler}
-                            onBlur={handleClose}
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
+                        }
+                        <Search>
+                            <SearchIconWrapper>
+                                <SearchIcon/>
+                            </SearchIconWrapper>
+                            <StyledInputBase
+                                placeholder="Search…"
+                                onChange={searchHandler}
+                                onBlur={handleClose}
+                                inputProps={{'aria-label': 'search'}}
+                            />
+                        </Search>
 
-                    <Grid item>
-                        <SearchPopper anchorEl={anchorEl}  id={id} open={open}   />
+                        <Grid item>
+                            <SearchPopper anchorEl={anchorEl} id={id} open={open}/>
+                        </Grid>
                     </Grid>
                 </Toolbar>
-            </AppBar >
-        </Box >
+            </AppBar>
+        </Box>
     )
 };
 export default SearchAppBar;
