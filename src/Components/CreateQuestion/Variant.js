@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Checkbox, FormControlLabel, Grid, Paper, TextField, Typography} from "@mui/material";
 import {useDispatch} from "react-redux";
-import {addVariantText, addVariantTitle, toggleVarCheckBox} from "../Redux/questionReducerSlice";
+import {addVariantText, addVariantTitle, toggleVarCheckBox} from "../Redux/editQuestionSlice";
 import {useFieldArray, useFormContext,Controller} from "react-hook-form";
 
 

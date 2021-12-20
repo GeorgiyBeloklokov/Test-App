@@ -7,7 +7,7 @@ import {Grid} from "@mui/material";
 
 const QuestionList = () => {
 
-    const questions = useSelector(state => state.questReducer.questions);
+    const questions = useSelector(state => state.editQuest.questions);
 
     return (
         <>

@@ -2,7 +2,7 @@
 import React, {useState} from 'react';
 import {useForm} from "react-hook-form";
 import {useDispatch} from "react-redux";
-import {confettiToggle} from "../Redux/questionReducerSlice";
+import {confettiToggle} from "../Redux/editQuestionSlice";
 import ModalSendQuest from "../CreateQuestion/ModalSendQuest";
 import {useNavigate} from "react-router-dom";
 

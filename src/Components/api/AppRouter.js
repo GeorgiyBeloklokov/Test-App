@@ -5,9 +5,15 @@ import Login from "../Login/Login";
 import QuestionList from "../Question/QuestionList";
 import CreateQuestion from "../CreateQuestion/CreateQuestion";
 import BaseQuestion from "../BaseQuestion/BaseQuestion";
+import SignUp from "../Login/SignUp";
+import {useSelector} from "react-redux";
 
 const AppRouter = () => {
-    const user = true;
+
+const user = useSelector(state => state.signin.user );
+
+    /*console.log(`Approuter,user from select`,user);*/
+    /*const user = false;*/
 
     return user ?
         //PrivateRoutes
@@ -34,6 +40,7 @@ const AppRouter = () => {
                     <Route path='/newquestion/:index' element={<CreateQuestion/>}/>
                     {/*<Route path='/newquestion' element={<CreateQuestion/>}/>*/}
                     <Route path='/basequestion/:index' element={<BaseQuestion/>}/>
+                    <Route path='/signup' element={<SignUp/>}/>
                     <Route
                         path="*"
                         element={<Login to='/login' />}

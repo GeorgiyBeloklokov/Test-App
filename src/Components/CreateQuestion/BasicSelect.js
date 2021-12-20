@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import {useDispatch} from "react-redux";
-import {toggleTypeAnswer} from "../Redux/questionReducerSlice";
+import {toggleTypeAnswer} from "../Redux/editQuestionSlice";
 
 const  BasicSelect =() => {
 

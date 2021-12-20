@@ -1,10 +1,14 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import questionReducerSlice from "./questionReducerSlice";
+import editQuestionSlice from "./editQuestionSlice";
+import signupSlice from "./signupSlice";
+import signinSlice from "./signinSlice";
 
 
 const rootReducer = combineReducers( {
 
-    questReducer: questionReducerSlice
+    editQuest: editQuestionSlice,
+    signup: signupSlice,
+    signin: signinSlice
 
 });
 

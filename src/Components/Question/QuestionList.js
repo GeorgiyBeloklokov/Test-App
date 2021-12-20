@@ -13,7 +13,7 @@ const QuestionList = () => {
    /* renderCount += 1;
     console.log(`QuestionList rendered:`, renderCount);*/
 
-    const question = useSelector(state => state.questReducer.questions);
+    const question = useSelector(state => state.editQuest.questions);
 
     const [questions, SetQuestions] = useState([]);
     const [loading, setLoading] = useState(false);

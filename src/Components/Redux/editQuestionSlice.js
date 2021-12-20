@@ -3,9 +3,9 @@ import {createSlice, nanoid} from "@reduxjs/toolkit";
 
 
 
-const questionReducerSlice = createSlice({
+const editQuestionSlice = createSlice({
 
-    name: "questReducer",
+    name: "editQuest",
 
     initialState: {
         confettiTogle:false,
@@ -348,12 +348,12 @@ const questionReducerSlice = createSlice({
     }
 });
 
-export default questionReducerSlice.reducer;
+export default editQuestionSlice.reducer;
 
 export const {
     addVariant, removeVariant, confettiToggle, addImage, addUserAnswer,
     addTitleDescriptionQuestion,addVariantTitle, addVariantText, toggleTypeAnswer, toggleVarCheckBox, addQuestion,
     removeQuestion,
-} = questionReducerSlice.actions;
+} = editQuestionSlice.actions;
 
 

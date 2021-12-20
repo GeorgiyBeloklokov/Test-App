@@ -11,6 +11,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import {Button, Grid, Stack} from "@mui/material";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import SearchPopper from "./SearchPopper";
+import {useDispatch, useSelector} from "react-redux";
+import {getAuth } from "firebase/auth";
+import {app} from "../../firebase-config";
+import {getSignIn} from "../Redux/signinSlice";
 
 
 const Search = styled('div')(({theme}) => ({
@@ -103,12 +107,11 @@ const SearchAppBar = () => {
     const canBeOpen = open && Boolean(anchorEl);
     const id = canBeOpen ? 'transition-popper' : undefined;
 
-//
 
-    let navigation = useNavigate();
+    const dispatch = useDispatch();
+    const auth = getAuth(app);
 
-    const user = true;
-
+    const user = useSelector(state => state.signin.user );
 
     return (
         <Box sx={{flexGrow: 1}}>
@@ -150,8 +153,8 @@ const SearchAppBar = () => {
                         {user ?
                             <Button color="inherit"
                                     size={'small'}
-                                    component={Link}
-                                    to={'/questionlist'}>LogOut</Button>
+                                    onClick={() => dispatch(getSignOut) }
+                                    >LogOut</Button>
                             :
                             <Button color="inherit"
                                     size={'small'}

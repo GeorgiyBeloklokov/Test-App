@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Grid, Input, Paper, TextareaAutosize, TextField, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import Variant from "./Variant";
-import { ref, set } from "firebase/database";
+import {ref, set} from "firebase/database";
 import {
     addImage,
     addQuestion,
@@ -10,14 +10,12 @@ import {
     addVariant,
     removeQuestion,
     removeVariant,
-} from "../Redux/questionReducerSlice";
+} from "../Redux/editQuestionSlice";
 import {useNavigate, useParams} from "react-router-dom";
 import BasicSelect from "./BasicSelect";
 import ModalSendQuest from "./ModalSendQuest";
 import {database} from "../../firebase-config";
-import { useForm, useFieldArray,FormProvider, Controller, useWatch } from "react-hook-form";
-import {blueGrey} from "@mui/material/colors";
-
+import {FormProvider, useForm} from "react-hook-form";
 
 
 let renderCount = 0;
@@ -29,7 +27,7 @@ const CreateQuestion = () => {
     console.log(`CreateQuestion rendered:`, renderCount);
 
     const dispatch = useDispatch();
-    const quest = useSelector(state => state.questReducer.questions);
+    const quest = useSelector(state => state.editQuest.questions);
 
 
     //React-hook-form
@@ -124,7 +122,7 @@ const CreateQuestion = () => {
 
 
 // Find and get question in state
-    const newQuestion = useSelector(state => state.questReducer.questions[params.index]);
+    const newQuestion = useSelector(state => state.editQuest.questions[params.index]);
 
 //If not  index of question , make a  new empty question ( for create new question button in AppBar)
     const question = params ? newQuestion : emptyQuestion;
