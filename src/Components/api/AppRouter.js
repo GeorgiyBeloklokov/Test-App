@@ -7,15 +7,19 @@ import CreateQuestion from "../CreateQuestion/CreateQuestion";
 import BaseQuestion from "../BaseQuestion/BaseQuestion";
 import SignUp from "../Login/SignUp";
 import {useSelector} from "react-redux";
+import {useAuth} from "../Firebase/firebase";
 
 const AppRouter = () => {
 
-const user = useSelector(state => state.signin.user );
+/*const status = useSelector(state => state.signin.status );*/
 
     /*console.log(`Approuter,user from select`,user);*/
     /*const user = false;*/
+    /*const user = false;*/
+    const currentUser = useAuth();
 
-    return user ?
+
+    return currentUser ?
         //PrivateRoutes
         (
             <Container sx={{mt: '3rem', maxWidth: '95%', minHeight: 640}} maxWidth={false}>

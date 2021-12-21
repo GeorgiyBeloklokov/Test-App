@@ -1,30 +1,19 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {createUserWithEmailAndPassword, getAuth} from "firebase/auth";
-import {app} from "../../firebase-config";
+import {signOut, getAuth} from "firebase/auth";
+import {auth} from "../Firebase/firebase";
 
 
-
-const auth = getAuth(app);
 
 export const getSignOut = createAsyncThunk (
     'signout/getSignOut',
-    async ({email,password}) => {
-        const response = await createUserWithEmailAndPassword(auth, email, password);
+    async () => {
+        const response = await signOut(auth);
         const data = await response;
         return data;
-        /*.then ((userCredential) =>{
-            const user = userCredential.user;
-
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-
-        })}*/
     })
 
 
-const signupSlice = createSlice({
+const signoutSlice = createSlice({
     name:'signout',
     initialState:{
         errorMessage: null,
@@ -37,7 +26,6 @@ const signupSlice = createSlice({
             state.status = 'loading'
         },
         [getSignOut.fulfilled]: (state, { payload }) => {
-            state.user = payload
             state.status = 'success'
         },
         [getSignOut.rejected]: (state, {payload}) => {
@@ -48,4 +36,4 @@ const signupSlice = createSlice({
     },
 })
 
-export default signupSlice.reducer
+export default signoutSlice.reducer

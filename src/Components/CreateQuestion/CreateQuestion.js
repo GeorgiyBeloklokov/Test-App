@@ -14,8 +14,9 @@ import {
 import {useNavigate, useParams} from "react-router-dom";
 import BasicSelect from "./BasicSelect";
 import ModalSendQuest from "./ModalSendQuest";
-import {database} from "../../firebase-config";
+
 import {FormProvider, useForm} from "react-hook-form";
+import {database} from "../Firebase/firebase";
 
 
 let renderCount = 0;

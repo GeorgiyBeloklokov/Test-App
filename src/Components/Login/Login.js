@@ -13,9 +13,7 @@ import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
-
 import {getSignIn} from "../Redux/signinSlice";
-
 
 
 function Copyright(props) {
@@ -36,7 +34,7 @@ const theme = createTheme();
 export default function SignIn() {
     const dispatch = useDispatch();
 
-    const handleSubmit = async (event) => {
+    const handleSubmit =  (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
             let email = data.get('email');

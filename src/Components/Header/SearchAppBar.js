@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {styled, alpha} from '@mui/material/styles';
+import {alpha, styled} from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -9,12 +9,12 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import {Button, Grid, Stack} from "@mui/material";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {Link} from "react-router-dom";
 import SearchPopper from "./SearchPopper";
 import {useDispatch, useSelector} from "react-redux";
-import {getAuth } from "firebase/auth";
-import {app} from "../../firebase-config";
-import {getSignIn} from "../Redux/signinSlice";
+import {getSignOut} from "../Redux/signoutSlice";
+import {signOut} from "firebase/auth";
+import {auth, logout, useAuth} from "../Firebase/firebase";
 
 
 const Search = styled('div')(({theme}) => ({
@@ -108,11 +108,20 @@ const SearchAppBar = () => {
     const id = canBeOpen ? 'transition-popper' : undefined;
 
 
+    const currentUser = useAuth();
+
+
     const dispatch = useDispatch();
-    const auth = getAuth(app);
 
-    const user = useSelector(state => state.signin.user );
 
+    /*const status = useSelector(state => state.signin.status );*/
+
+    async function handleLogout() {
+        await logout();
+    }
+
+
+    /*const user = false;*/
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
@@ -143,23 +152,34 @@ const SearchAppBar = () => {
                                 size={'small'}
                                 component={Link}
                                 to={'/newquestion'}>Create new question</Button>
-                        <Button disabled color="inherit"
+                        <Typography variant="body2"
+                                    noWrap
+                                    component="div"
+                                    sx={{  display: {xs: 'none', sm: 'block'}}}  >
+                            Your email:{currentUser?.email}
+                        </Typography>
+                        {/*<Button disabled color="inherit"
                                 size={'small'}
                                 component={Link}
-                                to={'/disabledbutton'}>Some disabled button</Button>
+                                to={'/disabledbutton'}>Some disabled button</Button>*/}
 
                     </Stack>
                     <Grid item display={"flex"}>
-                        {user ?
+                        { currentUser ?
+                            <Grid item>
+
                             <Button color="inherit"
                                     size={'small'}
-                                    onClick={() => dispatch(getSignOut) }
+                                    onClick={handleLogout }
                                     >LogOut</Button>
+
+                            </Grid>
                             :
                             <Button color="inherit"
                                     size={'small'}
                                     component={Link}
                                     to={'/login'}>Login</Button>
+
 
                         }
                         <Search>

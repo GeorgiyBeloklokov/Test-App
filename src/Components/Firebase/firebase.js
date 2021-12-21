@@ -1,6 +1,8 @@
 
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
+import {getAuth, onAuthStateChanged, signOut} from "firebase/auth";
+import {useEffect, useState} from "react";
 
 
 const firebaseConfig = {
@@ -14,8 +16,26 @@ const firebaseConfig = {
 };
 
 
- export const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 export const database = getDatabase(app);
+export const auth = getAuth(app);
+
+//Custom hook
+export function useAuth() {
+    const [currentUser, setCurrentUser] = useState();
+    useEffect(() => {
+       const unsub = onAuthStateChanged (auth, user => setCurrentUser(user) );
+       return unsub;
+
+    },[])
+
+    return currentUser;
+}
+
+export function logout() {
+    return signOut(auth);
+}
+
 
 
 

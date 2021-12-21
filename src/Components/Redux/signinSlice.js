@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {signInWithEmailAndPassword , getAuth} from "firebase/auth";
-import {app} from "../../firebase-config";
+import {app} from "../Firebase/firebase";
 
 
 
@@ -8,11 +8,13 @@ const auth = getAuth(app);
 
 export const getSignIn = createAsyncThunk (
     'signin/getSignIn',
-    async ({email,password}) => {
-        const response = await signInWithEmailAndPassword (auth, email, password);
-        const data = await response;
-console.log(`getSignIn`,data);
-        return data;
+     async ({email,password}) => {
+            let response =  await signInWithEmailAndPassword (auth, email, password);
+
+            console.log(`response test  getSignIn`, response);
+            return response;
+     })
+
 
             /*.then ((userCredential) =>{
                 const user = userCredential.user;
@@ -23,26 +25,26 @@ console.log(`getSignIn`,data);
                 const errorMessage = error.message;
 
             })*/
-    })
+
 const signinSlice = createSlice({
     name:'signin',
     initialState:{
         errorMessage: null,
-        errorCode: null,
         status: null,
-        user:null
+        user:{}
     },
+
     extraReducers: {
         [getSignIn.pending]: (state, action) => {
             state.status = 'loading'
         },
         [getSignIn.fulfilled]: (state, { payload }) => {
-            state.user = payload
             state.status = 'success'
         },
         [getSignIn.rejected]: (state, {payload}) => {
             state.status = 'failed'
             state.errorMessage = payload
+            console.log(`getSignIn.rejected`,payload)
             state.errorCode = payload
         },
     },
