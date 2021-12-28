@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice, nanoid} from "@reduxjs/toolkit";
 import {ref, set} from "firebase/database";
 import {database} from "../Firebase/firebase";
+import {checkboxClasses} from "@mui/material";
 
 const setQuest = createAsyncThunk(
     'editQuest/setQuest',
@@ -47,7 +48,9 @@ const editQuestionSlice = createSlice({
                 description: 'hello anywere',
                 image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg',
                 variants: [
-                    {variantTitle: "hello my friend, go to new york", checkbox: false}
+                    {variantTitle: " New york", checkbox: false},
+                    {variantTitle: "London", checkbox: true},
+                    {variantTitle: "Paris", checkbox: false}
                 ]
             },
             {
@@ -128,17 +131,19 @@ const editQuestionSlice = createSlice({
         saveQuestion(state, action) {
             if (action.payload.id) {
                 let quest = state.questions.findIndex(item => item.id === action.payload.id)
-                 state.questions.splice(quest,1,action.payload)
-            } else {state.questions.push(
+                let parsPayload = JSON.parse(JSON.stringify(action.payload))
+                state.questions.splice(quest,1,parsPayload)
+            } else{state.questions.push(
                 {
                     id: nanoid(),
                     title: action.payload.title,
                     description: action.payload.description,
                     image: action.payload.image,
-                    variants: [...action.payload.variants]
+                    variants: [...JSON.parse(JSON.stringify(action.payload.variants))]
 
                 }
             )}
+
 
 
             /*let data = action.payload;

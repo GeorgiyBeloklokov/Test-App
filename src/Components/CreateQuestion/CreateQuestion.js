@@ -60,9 +60,10 @@ const CreateQuestion = () => {
     }, 1900);
 
     const handleSubmit = (data,id) => {
-        console.log(`test data general`,data)
+        console.log(`test data general`,data);
         setOpen(true);
         dispatch(saveQuestion({...data,id}));
+
         /*writeQuestionsInData();*/
 
     };
@@ -116,14 +117,15 @@ const CreateQuestion = () => {
     /*console.log('test  question and emptyQuestion ', question, emptyQuestion);*/
 
 
-
+/*let varian = JSON.parse(JSON.stringify(variants));
+    console.log(`test varian`,varian);*/
     //React-hook-form
     const methods = useForm({
         defaultValues: {
-            title:title,
-            description:description,
-            image:image,
-            variants: [{variantTitle: "Some text from defaultValues", checkbox: true}]
+            title,
+            description,
+            image,
+            variants:[...variants]
         }
     });
 
