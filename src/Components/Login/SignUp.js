@@ -5,23 +5,24 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getSignUp} from "../Redux/signupSlice";
+import {CircularProgress} from "@mui/material";
+import {Link} from "react-router-dom";
 
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
+            {/*<Link color="inherit" href="https://mui.com/">
                 Your Website
-            </Link>{' '}
+            </Link>*/}{' '}
             {new Date().getFullYear()}
             {'.'}
         </Typography>
@@ -43,9 +44,7 @@ export default function SignUp() {
        dispatch(getSignUp({email,password}))
     };
 
-    /*const errorMess = useSelector(state => state.api.errorMessage  );
-
-    console.log(errorMess);*/
+    const {status,errorMessage} = useSelector(state => state.signup);
 
     return (
         <ThemeProvider theme={theme}>
@@ -116,6 +115,12 @@ export default function SignUp() {
                                 />
                             </Grid>
                         </Grid>
+                        <Grid item xs={12} >
+                        {status === 'loading' && <Box sx={{ display: 'flex' }}>
+                            <CircularProgress />
+                        </Box>}
+                        {errorMessage && <Typography component="h2" color="error" variant="h5">Error: {errorMessage}</Typography>  }
+                        </Grid>
                         <Button
                             type="submit"
                             fullWidth
@@ -131,9 +136,11 @@ export default function SignUp() {
                         }*/}
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link href="#" variant="body2">
-                                    Already have an account? Sign in
-                                </Link>
+                                <Button variant="text"
+                                        size={'small'}
+                                        component={Link}
+                                        to={'/login'}>Already have an account? Sign in</Button>
+
                             </Grid>
                         </Grid>
                     </Box>

@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import { useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {Grid} from "@mui/material";
 
 
@@ -58,24 +58,22 @@ const theme = createTheme({
 });
 
 
-const QuestionCard = ({question,index,loading}) => {
+const QuestionCard = ({question}) => {
 
-    let navigate = useNavigate();
+    const navigate = useNavigate();
+    const params = useParams();
 
-    if (loading) {
-        return <h2>Loading....</h2>
-    }
 
     return (
         <div>
-            {question.images.map(item => (
+
                     <ThemeProvider key={question.id} theme={theme}>
                         <Grid   item>
                             <Card elevation={3}>
 
                                 <CardMedia
                                     component="img"
-                                    image={item.image}
+                                    image={question.image}
                                     alt="Images Cap"
                                 />
                                 <CardContent>
@@ -89,7 +87,7 @@ const QuestionCard = ({question,index,loading}) => {
 
                                     <CardActions>
                                         <Button type="submit"
-                                                onClick={() => navigate(`/basequestion/${index}`) }
+                                                onClick={() => navigate(`/basequestion/${question.id}`) }
 
                                             /*component={NavLink} to={{
                                         pathname: '/basequestion',
@@ -106,8 +104,7 @@ const QuestionCard = ({question,index,loading}) => {
                             </Card>
                         </Grid>
                     </ThemeProvider>
-                )
-            )}
+
         </div>
     );
 };

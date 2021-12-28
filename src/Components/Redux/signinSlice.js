@@ -1,51 +1,47 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {signInWithEmailAndPassword , getAuth} from "firebase/auth";
-import {app} from "../Firebase/firebase";
+import {signInWithEmailAndPassword} from "firebase/auth";
+import {auth} from "../Firebase/firebase";
 
 
-
-const auth = getAuth(app);
-
-export const getSignIn = createAsyncThunk (
+export const getSignIn = createAsyncThunk(
     'signin/getSignIn',
-     async ({email,password}) => {
-            let response =  await signInWithEmailAndPassword (auth, email, password);
-
-            console.log(`response test  getSignIn`, response);
-            return response;
-     })
-
-
-            /*.then ((userCredential) =>{
-                const user = userCredential.user;
-                console.log(user);
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-
-            })*/
+    async ({email, password}, {rejectWithValue}) => {
+        try {
+            const response = await signInWithEmailAndPassword(auth, email, password);
+            const user = response.user;
+            return user;
+        } catch (error) {
+            const data = error.message;
+            let errorMessage =  data.match(/(?<=\/).+(?=\))/g) ;
+            return rejectWithValue(errorMessage);
+        }
+    })
 
 const signinSlice = createSlice({
-    name:'signin',
-    initialState:{
+    name: 'signin',
+    initialState: {
+        errorCode: null,
         errorMessage: null,
         status: null,
-        user:{}
+        user: null
     },
 
     extraReducers: {
-        [getSignIn.pending]: (state, action) => {
+        [getSignIn.pending]: (state) => {
             state.status = 'loading'
+            state.errorMessage = null
         },
-        [getSignIn.fulfilled]: (state, { payload }) => {
+        [getSignIn.fulfilled]: (state, action) => {
             state.status = 'success'
+            /*console.log(`getSignIn.fulfilled`, action.payload)*/
+            state.user = action.payload
+
         },
-        [getSignIn.rejected]: (state, {payload}) => {
+        [getSignIn.rejected]: (state, action) => {
             state.status = 'failed'
-            state.errorMessage = payload
-            console.log(`getSignIn.rejected`,payload)
-            state.errorCode = payload
+            state.errorMessage = action.payload
+            /*console.log(`getSignIn.rejected`, action.payload)*/
+            state.errorCode = action.payload
         },
     },
 })

@@ -12,8 +12,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {Link} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getSignIn} from "../Redux/signinSlice";
+import {CircularProgress} from "@mui/material";
 
 
 function Copyright(props) {
@@ -32,7 +33,10 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+
     const dispatch = useDispatch();
+
+const {status,errorMessage} = useSelector(state => state.signin);
 
     const handleSubmit =  (event) => {
         event.preventDefault();
@@ -86,12 +90,11 @@ export default function SignIn() {
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
                         />
-                        {/*{errorMessage &&
-                        <Typography>
+                        {status === 'loading' && <Box sx={{ display: 'flex' }}>
+                            <CircularProgress />
+                        </Box>}
+                        {errorMessage && <Typography component="h2" color="error" variant="h5">Error: {errorMessage}</Typography>  }
 
-                        </Typography>
-
-                        }*/}
 
                         <Button
                             type="submit"
@@ -121,7 +124,7 @@ export default function SignIn() {
                                 <Button variant="text"
                                         size={'small'}
                                         component={Link}
-                                        to={'/signup'}>Don't have an account? Sign Up</Button>
+                                        to={'/signup'} >Don't have an account? Sign Up</Button>
                             </Grid>
                         </Grid>
                     </Box>

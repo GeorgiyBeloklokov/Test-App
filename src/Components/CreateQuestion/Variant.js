@@ -93,8 +93,8 @@ const Variant = (data) => {
                             <Controller
                                 name={`variants.${index}.checkbox`}
                                 control={methods.control}
-                                render={({ field
-                                              }) => <FormControlLabel   control={ <Checkbox  size="small" {...field} />} label="Right answer" />}
+                                render={({ field:{ onChange, value },formState
+                                              }) => <FormControlLabel   control={ <Checkbox checked={value} onChange={onChange}  size="small"  />} label="Right answer" />}
                             />
                         </Paper>
                     </Grid>

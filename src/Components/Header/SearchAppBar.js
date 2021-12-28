@@ -109,6 +109,7 @@ const SearchAppBar = () => {
 
 
     const currentUser = useAuth();
+    /*console.log(`currentUser from SearchAppBar`, currentUser);*/
 
 
     const dispatch = useDispatch();
@@ -155,8 +156,8 @@ const SearchAppBar = () => {
                         <Typography variant="body2"
                                     noWrap
                                     component="div"
-                                    sx={{  display: {xs: 'none', sm: 'block'}}}  >
-                            Your email:{currentUser?.email}
+                                    sx={{display: {xs: 'none', sm: 'block'}}}  >
+                            Your email: {currentUser?.email}
                         </Typography>
                         {/*<Button disabled color="inherit"
                                 size={'small'}

@@ -1,140 +1,82 @@
-import {createSlice, nanoid} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, nanoid} from "@reduxjs/toolkit";
+import {ref, set} from "firebase/database";
+import {database} from "../Firebase/firebase";
 
+const setQuest = createAsyncThunk(
+    'editQuest/setQuest',
+    async ({data}, {rejectWithValue}) => {
+        try {
+            const response = (data) => {
+                set(ref(database, "questions/"), {
+                    data
+                })
+            }
+            return response;
+        } catch (error) {
+            const data = error.message;
+            let errorMessage = data.match(/(?<=\/).+(?=\))/g);
+            return rejectWithValue(errorMessage);
+        }
 
+    })
 
 
 const editQuestionSlice = createSlice({
 
+
     name: "editQuest",
 
     initialState: {
-        confettiTogle:false,
-        userAnswer:[
-            {
-                questId: '',
-                variantsAnswer: [
-                    {
-                        varId: '',
-                        answerCheckBox: ''
-                    }],
-            }
-        ],
-        passedQuest:[],
-        failedQuest:[],
+        confettiTogle: false,
+        userAnswer: [],
+        passedQuest: [],
+        failedQuest: [],
+
         questions: [
             {
                 id: nanoid(),
-                mulVarQuest:'',
                 title: 'Base question ',
-                description: 'First question',
-                images:[{
-                    image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
-                }],
-                variants: [
-                    {
-                        id: nanoid(),
-                        rightAnswer: false,
-                        variantTitle: '',
-                        variantTextArea: '',
-                        typeAnswerFlag: true,
-
-                    },
-                ],
+                description: 'Some our text',
+                image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg',
+                variants: [{variantTitle: "Some text from redux", checkbox: false}
+                ]
             },
             {
                 id: nanoid(),
-                mulVarQuest:'',
-                title: 'Base question ',
-                description: 'First question',
-                images:[{
-                    image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
-                }],
+                title: 'Base question test deep ',
+                description: 'hello anywere',
+                image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg',
                 variants: [
-                    {
-                        id: nanoid(),
-                        rightAnswer: false,
-                        variantTitle: '',
-                        variantTextArea: '',
-                        typeAnswerFlag: true,
-
-                    },
-                ],
+                    {variantTitle: "hello my friend, go to new york", checkbox: false}
+                ]
             },
             {
                 id: nanoid(),
-                mulVarQuest:'',
                 title: 'Base question ',
-                description: 'First question',
-                images:[{
-                    image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
-                }],
-                variants: [
-                    {
-                        id: nanoid(),
-                        rightAnswer: false,
-                        variantTitle: '',
-                        variantTextArea: '',
-                        typeAnswerFlag: true,
-
-                    },
-                ],
+                description: 'Some our text',
+                image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg',
+                variants: [{variantTitle: "Some text", checkbox: false}]
             },
             {
                 id: nanoid(),
-                mulVarQuest:'',
                 title: 'Base question ',
-                description: 'First question',
-                images:[{
-                    image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
-                }],
-                variants: [
-                    {
-                        id: nanoid(),
-                        rightAnswer: false,
-                        variantTitle: '',
-                        variantTextArea: '',
-                        typeAnswerFlag: true,
-
-                    },
-                ],
+                description: 'Some our text',
+                image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg',
+                variants: [{variantTitle: "Some text", checkbox: false}]
             },
             {
                 id: nanoid(),
-                mulVarQuest:'',
                 title: 'Base question ',
-                description: 'First question',
-                images:[{
-                    image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
-                }],
-                variants: [
-                    {
-                        id: nanoid(),
-                        rightAnswer: false,
-                        variantTitle: '',
-                        variantTextArea: '',
-                        typeAnswerFlag: true,
-
-                    },
-                ],
+                description: 'Some our text',
+                image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg',
+                variants: [{variantTitle: "Some text", checkbox: false}]
             },
             {
                 id: nanoid(),
-                mulVarQuest:'',
                 title: 'Base question ',
-                description: 'First question',
-                images:[{
-                    image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
-                }],
-                variants: [
-                    {
-                        id: nanoid(),
-                        rightAnswer: false,
-                        variantTitle: '',
-                        variantTextArea: '',
-                        typeAnswerFlag: true,
-
-                    },
-                ],
+                description: 'Some our text',
+                image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg',
+                variants: [{variantTitle: "Some text", checkbox: false}]
             },
 
 
@@ -164,7 +106,7 @@ const editQuestionSlice = createSlice({
                 }]
         },*/
 
-        confettiToggle(state,action) {
+        confettiToggle(state, action) {
             state.confettiTogle = action.payload.open
         },
 
@@ -173,7 +115,7 @@ const editQuestionSlice = createSlice({
                 if (q.id === action.payload.questId) {
                     return {
                         ...q,
-                        images:[{
+                        images: [{
                             image: action.payload.img
                         }]
                     };
@@ -183,28 +125,25 @@ const editQuestionSlice = createSlice({
         },
 
 
-        addQuestion(state) {
-            state.questions = [
-                ...state.questions, {
+        saveQuestion(state, action) {
+            if (action.payload.id) {
+                let quest = state.questions.findIndex(item => item.id === action.payload.id)
+                 state.questions.splice(quest,1,action.payload)
+            } else {state.questions.push(
+                {
                     id: nanoid(),
-                    mulVarQuest:'',
-                    title: '',
-                    description: '',
-                    images:[{
-                        image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
-                    }],
-                    variants: [
-                        {
-                            id: nanoid(),
-                            rightAnswer: false,
-                            variantTitle: null,
-                            variantTextArea: null,
-                            typeAnswerFlag: true,
+                    title: action.payload.title,
+                    description: action.payload.description,
+                    image: action.payload.image,
+                    variants: [...action.payload.variants]
 
-                        }
-                    ],
-                },
-            ]
+                }
+            )}
+
+
+            /*let data = action.payload;
+            setQuest({data});*/
+
         },
 
         removeQuestion(state, action) {
@@ -220,8 +159,8 @@ const editQuestionSlice = createSlice({
                             ...item,
                             /*title:   action.payload.questTitle || action.payload.questTitle === ""  ? action.payload.questTitle : item.title ,
                             description:  action.payload.questDesc || action.payload.questDesc === "" ? action.payload.questDesc : item.questDesc*/
-                            description:  action.payload.questDesc ?? item.description,
-                            title:  action.payload.questTitle ?? item.title
+                            description: action.payload.questDesc ?? item.description,
+                            title: action.payload.questTitle ?? item.title
 
                         }
                     }
@@ -352,7 +291,7 @@ export default editQuestionSlice.reducer;
 
 export const {
     addVariant, removeVariant, confettiToggle, addImage, addUserAnswer,
-    addTitleDescriptionQuestion,addVariantTitle, addVariantText, toggleTypeAnswer, toggleVarCheckBox, addQuestion,
+    addTitleDescriptionQuestion, addVariantTitle, addVariantText, toggleTypeAnswer, toggleVarCheckBox, saveQuestion,
     removeQuestion,
 } = editQuestionSlice.actions;
 

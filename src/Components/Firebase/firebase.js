@@ -20,18 +20,16 @@ export const app = initializeApp(firebaseConfig);
 export const database = getDatabase(app);
 export const auth = getAuth(app);
 
-//Custom hook
+//Custom hook currentUser observer
 export function useAuth() {
     const [currentUser, setCurrentUser] = useState();
     useEffect(() => {
        const unsub = onAuthStateChanged (auth, user => setCurrentUser(user) );
        return unsub;
-
     },[])
-
     return currentUser;
 }
-
+// logOut firebase
 export function logout() {
     return signOut(auth);
 }

@@ -1,22 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Button, Grid, Input, Paper, TextareaAutosize, TextField, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import Variant from "./Variant";
 import {ref, set} from "firebase/database";
 import {
     addImage,
-    addQuestion,
     addTitleDescriptionQuestion,
     addVariant,
     removeQuestion,
-    removeVariant,
+    removeVariant, saveQuestion,
 } from "../Redux/editQuestionSlice";
 import {useNavigate, useParams} from "react-router-dom";
 import BasicSelect from "./BasicSelect";
 import ModalSendQuest from "./ModalSendQuest";
-
 import {FormProvider, useForm} from "react-hook-form";
-import {database} from "../Firebase/firebase";
+import {database, logout} from "../Firebase/firebase";
 
 
 let renderCount = 0;
@@ -31,21 +29,13 @@ const CreateQuestion = () => {
     const quest = useSelector(state => state.editQuest.questions);
 
 
-    //React-hook-form
-    const methods = useForm({
-        defaultValues: {
-            variants: [{ variantTitle: "Some text", checkbox: false}],
-            title:"Some text",
-            description:"Some test",
-            image:"Some image"
-        }
-    });
+
 
 
 //firebase write data
-    function writeQuestionsInData () {
+    function writeQuestionsInData (data) {
         set(ref(database, "questions/" ),{
-            questions:quest
+            data
         })
     }
 
@@ -55,7 +45,7 @@ const CreateQuestion = () => {
         dispatch(addVariant({id}))
     };
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -69,10 +59,11 @@ const CreateQuestion = () => {
         }
     }, 1900);
 
-    const addNewQuestion = () => {
+    const handleSubmit = (data,id) => {
+        console.log(`test data general`,data)
         setOpen(true);
-        dispatch(addQuestion());
-        writeQuestionsInData();
+        dispatch(saveQuestion({...data,id}));
+        /*writeQuestionsInData();*/
 
     };
 
@@ -105,25 +96,15 @@ const CreateQuestion = () => {
 
 //Empty object for new question button in AppBar
     const emptyQuestion = {
-        title: '',
-        description:'',
-        id:Date.now(),
-        variants: [
-            {
-                id: Date.now(),
-                chekBoxFlag: true,
-                variantTitle: '',
-                variantTextArea: '',
-                typeAnswerFlag: true,
-                rightAnswer: false,
-            }
-        ],
-
+        title:'Base question ',
+        description: 'Some text from emptyQuest ' ,
+        image:"Some image",
+        variants: [{ variantTitle: "Some text", checkbox: false}]
     };
 
 
 // Find and get question in state
-    const newQuestion = useSelector(state => state.editQuest.questions[params.index]);
+    const newQuestion = useSelector(state => state.editQuest.questions.find(item => item.id === params.id));
 
 //If not  index of question , make a  new empty question ( for create new question button in AppBar)
     const question = params ? newQuestion : emptyQuestion;
@@ -131,17 +112,27 @@ const CreateQuestion = () => {
 
 
 //Destructure question for print
-    const {title, description, images, index, variants, id} = question ? question : emptyQuestion ;
+    const {title, description, image, index, variants, id} = question ? question : emptyQuestion ;
     /*console.log('test  question and emptyQuestion ', question, emptyQuestion);*/
 
 
+
+    //React-hook-form
+    const methods = useForm({
+        defaultValues: {
+            title:title,
+            description:description,
+            image:image,
+            variants: [{variantTitle: "Some text from defaultValues", checkbox: true}]
+        }
+    });
 
 
     return (
         <div>
             <Grid>
                 <FormProvider {...methods}>
-                <form onSubmit={methods.handleSubmit((data) => console.log(data))}>
+                <form onSubmit={methods.handleSubmit((data) => handleSubmit(data,id))}>
                 <Grid key={id}>
                     <div>
                         <ModalSendQuest children1 = {"Our question saved ! "}

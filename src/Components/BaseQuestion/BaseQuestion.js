@@ -39,15 +39,14 @@ const BaseQuestion = () => {
 
     // Get question id from URL
     const params = useParams();
-    console.log(params);
+
 
 // Find and get question in state
-    /*const question = useSelector(state => state.questReducer.questions.find(item => item.id === params.id));*/
-    const question = useSelector(state => state.questReducer.questions[params.index]);
+    const question = useSelector(state => state.editQuest.questions.find(item => item.id === params.id));
     /*console.log('test selector questions + params', question);*/
 
 //Destructure question for print
-    const {title, description, images, variants, id} = question;
+    const {title, description, image, variants, id} = question;
 
 
     return (
@@ -58,7 +57,7 @@ const BaseQuestion = () => {
                         {title}
                     </Typography>
                     <Button type="submit"
-                            onClick={()=>navigate(`/newquestion/${params.index}`)}
+                            onClick={()=>navigate(`/newquestion/${params.id}`)}
                             variant="contained"
                             size="small"
                     >
@@ -79,20 +78,22 @@ const BaseQuestion = () => {
                                     Choose one variant
                                 </Typography>
                                 <Divider sx={{mt: 2, mb: 2}} variant="middle"/>
+
                                 <SelectVariants variants={variants} questId={id}/>
+
                             </Paper>
                         </Grid>
                     </Grid>
                     <Grid xs={12} sm={4} md={4} lg={4} item>
-                        {images.map((item) => (
+
                             <CardMedia
-                                key={item.image}
+                                key={image}
                                 height="312"
                                 component="img"
-                                image={item.image}
+                                image={image}
                                 alt="Cap image"
                             />
-                        ))}
+
                     </Grid>
                 </Grid>
             </ThemeProvider>

@@ -1,28 +1,23 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {createUserWithEmailAndPassword, getAuth} from "firebase/auth";
-import {app} from "../Firebase/firebase";
+import {createUserWithEmailAndPassword} from "firebase/auth";
+import {auth} from "../Firebase/firebase";
 
 
 
-
-const auth = getAuth(app);
 
 export const getSignUp = createAsyncThunk (
     'signup/getSignUp',
-      async ({email,password}) => {
-          const response = await createUserWithEmailAndPassword(auth, email, password);
-           const data = await response;
-            return data;
-          /*.then ((userCredential) =>{
-              const user = userCredential.user;
-
-          })
-          .catch((error) => {
-              const errorCode = error.code;
-              const errorMessage = error.message;
-
-          })}*/
-      })
+    async ({email, password}, {rejectWithValue}) => {
+        try {
+            const response = await createUserWithEmailAndPassword(auth, email, password);
+            const user = response.user;
+            return user;
+        } catch (error) {
+            const data = error.message;
+            let errorMessage =  data.match(/(?<=\/).+(?=\))/g) ;
+            return rejectWithValue(errorMessage);
+        }
+    })
 
 
 const signupSlice = createSlice({
@@ -31,20 +26,22 @@ const signupSlice = createSlice({
         errorMessage: null,
         errorCode: null,
         status: null,
-        user:{}
+        user:null
     },
     extraReducers: {
-        [getSignUp.pending]: (state, action) => {
+        [getSignUp.pending]: (state) => {
             state.status = 'loading'
+            state.errorMessage = null
         },
-        [getSignUp.fulfilled]: (state, { payload }) => {
-            state.user = payload
+        [getSignUp.fulfilled]: (state, action) => {
             state.status = 'success'
+            state.user = action.payload
         },
-        [getSignUp.rejected]: (state, {payload}) => {
+        [getSignUp.rejected]: (state, action) => {
             state.status = 'failed'
-            state.errorMessage = payload
-            state.errorCode = payload
+            console.log(`signupSlice.rejected`, action.payload)
+            state.errorMessage = action.payload
+            state.errorCode = action.payload
         },
     },
 })

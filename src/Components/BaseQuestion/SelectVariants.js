@@ -1,17 +1,20 @@
-
 import React, {useState} from 'react';
-import {useForm} from "react-hook-form";
+import {Controller, FormProvider, useForm} from "react-hook-form";
 import {useDispatch} from "react-redux";
 import {confettiToggle} from "../Redux/editQuestionSlice";
 import ModalSendQuest from "../CreateQuestion/ModalSendQuest";
 import {useNavigate} from "react-router-dom";
-
+import {Button, Checkbox, FormControlLabel, Grid} from "@mui/material";
 
 
 const SelectVariants = (bigData) => {
+
     const dispatch = useDispatch();
     let questId = (bigData.questId);
     let variants = bigData.variants;
+    /*console.log(`test variants from SelectVariants`,variants)*/
+
+
     const methods = useForm();
     const {handleSubmit} = methods;
 
@@ -35,8 +38,6 @@ const SelectVariants = (bigData) => {
 
 
 
-
-
     const onSubmit = (data) => {
         let answerVariant = variants.every(({id, rightAnswer}) => data[id] === rightAnswer);
         console.log(answerVariant);
@@ -47,8 +48,6 @@ const SelectVariants = (bigData) => {
         }
 
     };
-
-
 
 
     return (
@@ -72,13 +71,16 @@ const SelectVariants = (bigData) => {
                                 handleClose={handleClose} />
 
             </div>
-            {/*<FormProvider {...methods}>
+            <FormProvider {...methods}>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    {bigData.variants.map((variant) => (
-                        <Grid key={variant.id} item>
-
-                            <CheckBoxAnswer variant={variant} questId={bigData.questId}/>
-
+                    {variants.map((variant) => (
+                        <Grid key={variant} item>
+                                <Controller
+                                    name={`variants.${variant.index}.checkbox`}
+                                    control={methods.control}
+                                    render={({ field
+                                             }) => <FormControlLabel  control={ <Checkbox  size="small" {...field} />} label="Right answer" />}
+                                />
                         </Grid>
                     ))}
                     <Button type="submit" variant="contained" size="small"
@@ -86,9 +88,7 @@ const SelectVariants = (bigData) => {
                         Submit answer
                     </Button>
                 </form>
-            </FormProvider>*/}
-
-
+            </FormProvider>
         </div>
     );
 };
