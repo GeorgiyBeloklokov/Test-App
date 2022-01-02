@@ -2,19 +2,18 @@ import React, {useState} from 'react';
 import {Button, Grid, Input, Paper, TextareaAutosize, TextField, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import Variant from "./Variant";
-import {ref, set} from "firebase/database";
 import {
     addImage,
     addTitleDescriptionQuestion,
     addVariant,
     removeQuestion,
-    removeVariant, saveQuestion,
+    removeVariant,
+    setQuest,
 } from "../Redux/editQuestionSlice";
 import {useNavigate, useParams} from "react-router-dom";
 import BasicSelect from "./BasicSelect";
 import ModalSendQuest from "./ModalSendQuest";
 import {FormProvider, useForm} from "react-hook-form";
-import {database, logout} from "../Firebase/firebase";
 
 
 let renderCount = 0;
@@ -31,13 +30,6 @@ const CreateQuestion = () => {
 
 
 
-
-//firebase write data
-    function writeQuestionsInData (data) {
-        set(ref(database, "questions/" ),{
-            data
-        })
-    }
 
 
 
@@ -60,11 +52,8 @@ const CreateQuestion = () => {
     }, 1900);
 
     const handleSubmit = (data,id) => {
-        console.log(`test data general`,data);
         setOpen(true);
-        dispatch(saveQuestion({...data,id}));
-
-        /*writeQuestionsInData();*/
+        dispatch(setQuest({...data,id}));
 
     };
 

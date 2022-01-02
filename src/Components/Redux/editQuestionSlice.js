@@ -1,24 +1,23 @@
 import {createAsyncThunk, createSlice, nanoid} from "@reduxjs/toolkit";
 import {ref, set} from "firebase/database";
 import {database} from "../Firebase/firebase";
-import {checkboxClasses} from "@mui/material";
 
-const setQuest = createAsyncThunk(
+export const setQuest = createAsyncThunk(
     'editQuest/setQuest',
-    async ({data}, {rejectWithValue}) => {
+    async (data, {rejectWithValue,dispatch}) => {
+debugger;
         try {
-            const response = (data) => {
-                set(ref(database, "questions/"), {
-                    data
+                 await set(ref(database, "questions/"), {
+                     questions: data
                 })
-            }
-            return response;
+
+                dispatch(saveQuestion({...data}));
+
         } catch (error) {
             const data = error.message;
             let errorMessage = data.match(/(?<=\/).+(?=\))/g);
             return rejectWithValue(errorMessage);
         }
-
     })
 
 
@@ -129,6 +128,7 @@ const editQuestionSlice = createSlice({
 
 
         saveQuestion(state, action) {
+            debugger;
             if (action.payload.id) {
                 let quest = state.questions.findIndex(item => item.id === action.payload.id)
                 let parsPayload = JSON.parse(JSON.stringify(action.payload))
@@ -143,11 +143,6 @@ const editQuestionSlice = createSlice({
 
                 }
             )}
-
-
-
-            /*let data = action.payload;
-            setQuest({data});*/
 
         },
 
