@@ -1,17 +1,20 @@
 import {createAsyncThunk, createSlice, nanoid} from "@reduxjs/toolkit";
-import {ref, set} from "firebase/database";
-import {database} from "../Firebase/firebase";
+import {ref, update,child,push} from "firebase/database";
+import {auth, database} from "../Firebase/firebase";
+
 
 export const setQuest = createAsyncThunk(
     'editQuest/setQuest',
-    async (data, {rejectWithValue,dispatch}) => {
-debugger;
+    async (data, {rejectWithValue, dispatch}) => {
+        const userId = auth.currentUser.uid;
+        const newPostKey = push(child(ref(database), 'questions')).key;
         try {
-                 await set(ref(database, "questions/"), {
-                     questions: data
-                })
 
-                dispatch(saveQuestion({...data}));
+            await update(ref(database, 'users/' + userId + newPostKey  ), {
+                 question:data
+            })
+
+            dispatch(saveQuestion({...data}));
 
         } catch (error) {
             const data = error.message;
@@ -22,7 +25,6 @@ debugger;
 
 
 const editQuestionSlice = createSlice({
-
 
     name: "editQuest",
 
@@ -128,23 +130,26 @@ const editQuestionSlice = createSlice({
 
 
         saveQuestion(state, action) {
-            debugger;
-            if (action.payload.id) {
-                let quest = state.questions.findIndex(item => item.id === action.payload.id)
+            let quest = state.questions.findIndex(item => item.id === action.payload.id)
+            if (quest !== -1){
                 let parsPayload = JSON.parse(JSON.stringify(action.payload))
-                state.questions.splice(quest,1,parsPayload)
-            } else{state.questions.push(
-                {
-                    id: nanoid(),
-                    title: action.payload.title,
-                    description: action.payload.description,
-                    image: action.payload.image,
-                    variants: [...JSON.parse(JSON.stringify(action.payload.variants))]
+                state.questions.splice(quest, 1, parsPayload)
+            }else{
+                state.questions.push(
+                    {
+                        id: action.payload.id,
+                        title: action.payload.title,
+                        description: action.payload.description,
+                        image: action.payload.image,
+                        variants: [...JSON.parse(JSON.stringify(action.payload.variants))]
 
-                }
-            )}
+                    }
+                )
+            }
 
         },
+
+
 
         removeQuestion(state, action) {
             state.questions = state.questions.filter(item => item.id !== action.payload.id)

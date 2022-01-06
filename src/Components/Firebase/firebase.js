@@ -29,6 +29,7 @@ export function useAuth() {
     },[])
     return currentUser;
 }
+
 // logOut firebase
 export function logout() {
     return signOut(auth);

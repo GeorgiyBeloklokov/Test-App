@@ -86,9 +86,10 @@ const CreateQuestion = () => {
 
 //Empty object for new question button in AppBar
     const emptyQuestion = {
+        id: Date.now(),
         title:'Base question ',
         description: 'Some text from emptyQuest ' ,
-        image:"Some image",
+        image:'https://adrive.by/WebFiles/About/AboutImg4.jpg',
         variants: [{ variantTitle: "Some text", checkbox: false}]
     };
 
@@ -138,7 +139,7 @@ const CreateQuestion = () => {
                         <Typography
                             variant="h5"
                             sx={{flexGrow: 1}}>
-                            Edit question # {params.index }
+                            Edit question # {index }
                         </Typography>
                         <Grid item sx={{mr:8, border:2, borderRadius:1, color: "blue"}} className="counter">Render Count: {renderCount}</Grid>
                         <Button
