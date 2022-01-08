@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {Grid} from "@mui/material";
 
 
@@ -57,16 +57,10 @@ const theme = createTheme({
     },
 });
 
-
 const QuestionCard = ({question}) => {
-
     const navigate = useNavigate();
-    const params = useParams();
-
-
     return (
         <div>
-
                     <ThemeProvider key={question.id} theme={theme}>
                         <Grid   item>
                             <Card elevation={3}>
@@ -88,11 +82,6 @@ const QuestionCard = ({question}) => {
                                     <CardActions>
                                         <Button type="submit"
                                                 onClick={() => navigate(`/basequestion/${question.id}`) }
-
-                                            /*component={NavLink} to={{
-                                        pathname: '/basequestion',
-                                        state: {index,question}
-                                    }}*/
                                                 variant="contained"
                                                 size="small"
                                         >
@@ -104,7 +93,6 @@ const QuestionCard = ({question}) => {
                             </Card>
                         </Grid>
                     </ThemeProvider>
-
         </div>
     );
 };

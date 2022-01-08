@@ -26,6 +26,7 @@ const QuestionList = () => {
     };
 
     /*console.log(`test questions from Pagination:`, questions);*/
+
 //async get to questions from server (state)
     useEffect(() => {
         const getQuestions = async () => {

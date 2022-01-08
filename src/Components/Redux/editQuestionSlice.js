@@ -1,20 +1,28 @@
 import {createAsyncThunk, createSlice, nanoid} from "@reduxjs/toolkit";
-import {ref, update,child,push} from "firebase/database";
+import {ref, set, update,child,push} from "firebase/database";
 import {auth, database} from "../Firebase/firebase";
 
 
 export const setQuest = createAsyncThunk(
     'editQuest/setQuest',
-    async (data, {rejectWithValue, dispatch}) => {
+    async (data, {rejectWithValue,getState , dispatch}) => {
         const userId = auth.currentUser.uid;
         const newPostKey = push(child(ref(database), 'questions')).key;
+        const key = (child(ref(database), 'questions')).key;
+        const state = getState();
+        let isQuestionInList = state.editQuest.questions.some(item => item.id === data.id);
         try {
-
-            await update(ref(database, 'users/' + userId + newPostKey  ), {
-                 question:data
-            })
-
-            dispatch(saveQuestion({...data}));
+            if ( !isQuestionInList ) {
+                await update(ref(database, `users/userId: ${userId}/questId: ${newPostKey}`), {
+                    question:data
+                })
+                dispatch(saveQuestion({...data}));
+            }else{
+                await update(ref(database, `users/userId: ${userId}/questId: ${key}`), {
+                    question:data
+                })
+                dispatch(saveQuestion({...data}));
+            }
 
         } catch (error) {
             const data = error.message;

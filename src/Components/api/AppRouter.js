@@ -22,7 +22,7 @@ const AppRouter = () => {
                 <Routes>
                     <Route path='/questionlist' element={<QuestionList/>} />
                     <Route path='/newquestion/:id' element={<CreateQuestion/>}/>
-                    <Route path='/newquestion' element={<CreateQuestion/>}/>
+                   {/* <Route path='/newquestion' element={<CreateQuestion/>}/>*/}
                     <Route path='/basequestion/:id' element={<BaseQuestion/>}/>
 
                     <Route

@@ -2,14 +2,7 @@ import React, {useState} from 'react';
 import {Button, Grid, Input, Paper, TextareaAutosize, TextField, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import Variant from "./Variant";
-import {
-    addImage,
-    addTitleDescriptionQuestion,
-    addVariant,
-    removeQuestion,
-    removeVariant,
-    setQuest,
-} from "../Redux/editQuestionSlice";
+import {removeQuestion, removeVariant, setQuest,} from "../Redux/editQuestionSlice";
 import {useNavigate, useParams} from "react-router-dom";
 import BasicSelect from "./BasicSelect";
 import ModalSendQuest from "./ModalSendQuest";
@@ -25,17 +18,14 @@ const CreateQuestion = () => {
     console.log(`CreateQuestion rendered:`, renderCount);
 
     const dispatch = useDispatch();
-    const quest = useSelector(state => state.editQuest.questions);
+    /*const quest = useSelector(state => state.editQuest.questions);*/
 
 
 
 
-
-
-
-    const addVar = (id) => {
+    /*const addVar = (id) => {
         dispatch(addVariant({id}))
-    };
+    };*/
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -51,11 +41,12 @@ const CreateQuestion = () => {
         }
     }, 1900);
 
+//Dispatch data from form to Thunk
     const handleSubmit = (data,id) => {
         setOpen(true);
         dispatch(setQuest({...data,id}));
-
     };
+
 
     const removeVar = (varId) => {
         dispatch(removeVariant({varId}))
@@ -63,7 +54,9 @@ const CreateQuestion = () => {
     const removeQuest = (id) => {
         dispatch(removeQuestion({id}))
     };
-    const addQuestTitle = (questTitle, item) => {
+
+
+    /*const addQuestTitle = (questTitle, item) => {
         dispatch(addTitleDescriptionQuestion({questTitle, item}))
     };
 
@@ -75,7 +68,9 @@ const CreateQuestion = () => {
         let img = URL.createObjectURL(data[0]);
         dispatch(addImage({img, questId}));
         img.onload = () => URL.revokeObjectURL(img);
-    };
+    };*/
+
+
 
 // Navigation to page for edit question or creating new question
     let navigate = useNavigate();

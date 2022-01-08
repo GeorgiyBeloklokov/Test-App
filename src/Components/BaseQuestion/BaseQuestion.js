@@ -43,7 +43,7 @@ const BaseQuestion = () => {
 
 // Find and get question in state
     const question = useSelector(state => state.editQuest.questions.find(item => item.id === params.id));
-    /*console.log('test selector questions + params', question);*/
+    console.log('test selector questions + params', question);
 
 //Destructure question for print
     const {title, description, image, variants, id} = question;
