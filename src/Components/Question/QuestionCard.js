@@ -5,14 +5,13 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {useNavigate} from "react-router-dom";
 import {Grid} from "@mui/material";
 
 
-const theme = createTheme({
+/*const theme = createTheme({
     components: {
-        /*MuiTypography: {
+        /!*MuiTypography: {
             styleOverrides: {
                 root: {
                     textSize: 5,
@@ -21,7 +20,7 @@ const theme = createTheme({
 
                 },
             },
-        },*/
+        },*!/
 
         MuiCard: {
             styleOverrides: {
@@ -43,7 +42,7 @@ const theme = createTheme({
                 },
             },
         },
-        /*MuiCardContent: {
+        /!*MuiCardContent: {
             styleOverrides: {
                 root: {
 
@@ -52,17 +51,19 @@ const theme = createTheme({
 
                 },
             },
-        },*/
+        },*!/
 
     },
-});
+});*/
 
 const QuestionCard = ({question}) => {
     const navigate = useNavigate();
+
     return (
-        <div>
-                    <ThemeProvider key={question.id} theme={theme}>
-                        <Grid   item>
+        <>
+                   {/* <ThemeProvider key={question.id} theme={theme}>*/}
+                        <Grid  md={12} sm={12} xs={12} item>
+
                             <Card elevation={3}>
 
                                 <CardMedia
@@ -70,12 +71,22 @@ const QuestionCard = ({question}) => {
                                     image={question.image}
                                     alt="Images Cap"
                                 />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h6" component="div">
+                                <CardContent  >
+                                    <Typography  gutterBottom variant="h6"  component="div" sx={{
+                                        display: '-webkit-box',
+                                        overflow: 'hidden',
+                                        WebkitBoxOrient: 'vertical',
+                                        WebkitLineClamp: 3,
+                                    }}  >
                                         {question.title}
                                     </Typography>
 
-                                    <Typography variant="body4"  color="text.secondary">
+                                    <Typography variant="body4"  color="text.secondary" sx={{
+                                        display: '-webkit-box',
+                                        overflow: 'hidden',
+                                        WebkitBoxOrient: 'vertical',
+                                        WebkitLineClamp: 3,
+                                    }}   >
                                         {question.description}
                                     </Typography>
 
@@ -91,9 +102,10 @@ const QuestionCard = ({question}) => {
                                     </CardActions>
                                 </CardContent>
                             </Card>
+
                         </Grid>
-                    </ThemeProvider>
-        </div>
+                    {/*</ThemeProvider>*/}
+        </>
     );
 };
 

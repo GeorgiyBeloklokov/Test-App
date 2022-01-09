@@ -11,10 +11,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import {Button, Grid, Stack} from "@mui/material";
 import {Link} from "react-router-dom";
 import SearchPopper from "./SearchPopper";
-import {useDispatch, useSelector} from "react-redux";
-import {getSignOut} from "../Redux/signoutSlice";
-import {signOut} from "firebase/auth";
-import {auth, logout, useAuth} from "../Firebase/firebase";
+import {logout, useAuth} from "../Firebase/firebase";
+import Avatar from "@mui/material/Avatar";
 
 
 const Search = styled('div')(({theme}) => ({
@@ -61,27 +59,6 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 
 
 const SearchAppBar = () => {
-    const index = 0;
-    const question = {
-        id: Date.now(),
-        mulVarQuest: '',
-        title: 'Base question',
-        description: 'First question',
-        images: [{
-            image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg'
-        }],
-        variants: [
-            {
-                id: Date.now(),
-                chekBoxFlag: true,
-                variantTitle: '',
-                variantTextArea: '',
-                typeAnswerFlag: true,
-                rightAnswer: false,
-            }
-        ],
-    };
-
 
     //Search filter
     let base = [];
@@ -95,7 +72,7 @@ const SearchAppBar = () => {
         }
 
     };
-//
+
 
 //SearchPopper control
 
@@ -109,24 +86,15 @@ const SearchAppBar = () => {
 
 
     const currentUser = useAuth();
-    /*console.log(`currentUser from SearchAppBar`, currentUser);*/
-
-
-    const dispatch = useDispatch();
-
-
-    /*const status = useSelector(state => state.signin.status );*/
 
     async function handleLogout() {
         await logout();
     }
 
-
-    /*const user = false;*/
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
-                <Toolbar sx={{justifyContent: "space-between"}} variant={"dense"}>
+                <Toolbar sx={{ justifyContent: "space-between"}} variant={"dense"}>
                     <IconButton
                         size="large"
                         edge="start"
@@ -140,7 +108,6 @@ const SearchAppBar = () => {
                         variant="h4"
                         noWrap
                         component="div"
-                        sx={{mr: 2, flexGrow: 0, display: {xs: 'none', sm: 'block'}}}
                     >
                         Test Application
                     </Typography>
@@ -153,28 +120,30 @@ const SearchAppBar = () => {
                                 size={'small'}
                                 component={Link}
                                 to={'/newquestion'}>Create new question</Button>
-                        <Typography variant="body2"
+                        <Typography variant="h6"
                                     noWrap
                                     component="div"
                                     sx={{display: {xs: 'none', sm: 'block'}}}  >
-                            Your email: {currentUser?.email}
+                             {currentUser?.email}
                         </Typography>
+                        <Avatar
+                            sx={{display: {xs: 'none', sm: 'block'}}}
+                            alt="Your avatar"
+                            src="https://citaty.info/files/posters/150855.jpg" />
                         {/*<Button disabled color="inherit"
                                 size={'small'}
                                 component={Link}
                                 to={'/disabledbutton'}>Some disabled button</Button>*/}
 
-                    </Stack>
-                    <Grid item display={"flex"}>
                         { currentUser ?
-                            <Grid item>
+
 
                             <Button color="inherit"
                                     size={'small'}
                                     onClick={handleLogout }
                                     >LogOut</Button>
 
-                            </Grid>
+
                             :
                             <Button color="inherit"
                                     size={'small'}
@@ -194,11 +163,11 @@ const SearchAppBar = () => {
                                 inputProps={{'aria-label': 'search'}}
                             />
                         </Search>
-
+                </Stack>
                         <Grid item>
                             <SearchPopper anchorEl={anchorEl} id={id} open={open}/>
                         </Grid>
-                    </Grid>
+
                 </Toolbar>
             </AppBar>
         </Box>

@@ -2,8 +2,9 @@ import React from 'react';
 import {Button, CardMedia, Divider, Grid, Paper, Typography} from "@mui/material";
 import SelectVariants from "./SelectVariants";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
-import { useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
+import {logout} from "../Firebase/firebase";
 
 /*let renderCount = 0;*/
 
@@ -41,9 +42,10 @@ const BaseQuestion = () => {
     const params = useParams();
 
 
+
 // Find and get question in state
     const question = useSelector(state => state.editQuest.questions.find(item => item.id === params.id));
-    console.log('test selector questions + params', question);
+
 
 //Destructure question for print
     const {title, description, image, variants, id} = question;
@@ -57,7 +59,7 @@ const BaseQuestion = () => {
                         {title}
                     </Typography>
                     <Button type="submit"
-                            onClick={()=>navigate(`/newquestion/${params.id}`)}
+                            onClick={() => navigate(`/newquestion/${params.id}`)}
                             variant="contained"
                             size="small"
                     >
@@ -86,13 +88,13 @@ const BaseQuestion = () => {
                     </Grid>
                     <Grid xs={12} sm={4} md={4} lg={4} item>
 
-                            <CardMedia
-                                key={image}
-                                height="312"
-                                component="img"
-                                image={image}
-                                alt="Cap image"
-                            />
+                        <CardMedia
+                            key={image}
+                            height="312"
+                            component="img"
+                            image={image}
+                            alt="Cap image"
+                        />
 
                     </Grid>
                 </Grid>

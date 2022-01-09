@@ -28,7 +28,7 @@ const SelectVariants = (bigData) => {
         if (open) {
             setOpen(false);
             setTimeout(()=>{
-                navigate('/questionslist');
+                navigate('/questionlist');
             },450);
         }
         if (open2) {

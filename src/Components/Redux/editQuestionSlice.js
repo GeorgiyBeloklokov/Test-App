@@ -37,7 +37,7 @@ const editQuestionSlice = createSlice({
     name: "editQuest",
 
     initialState: {
-        confettiTogle: false,
+        confettiToggle: false,
         userAnswer: [],
         passedQuest: [],
         failedQuest: [],
@@ -48,18 +48,16 @@ const editQuestionSlice = createSlice({
                 title: 'Base question ',
                 description: 'Some our text',
                 image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg',
-                variants: [{variantTitle: "Some text from redux", checkbox: false}
+                variants: [{variantTitle: "Some text", checkbox: false}
                 ]
             },
             {
                 id: nanoid(),
-                title: 'Base question test deep ',
-                description: 'hello anywere',
+                title: 'Base question ',
+                description: 'Some our text',
                 image: 'https://adrive.by/WebFiles/About/AboutImg4.jpg',
                 variants: [
-                    {variantTitle: " New york", checkbox: false},
-                    {variantTitle: "London", checkbox: true},
-                    {variantTitle: "Paris", checkbox: false}
+                    {variantTitle: "Some text", checkbox: false}
                 ]
             },
             {
