@@ -1,62 +1,66 @@
-import React, {useState} from 'react';
-import {Button, Grid, Input, Paper, TextareaAutosize, TextField, Typography} from "@mui/material";
-import {useDispatch, useSelector} from "react-redux";
+import React, { useState } from "react";
+import {
+  Button,
+  Grid,
+  Input,
+  Paper,
+  TextareaAutosize,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import Variant from "./Variant";
-import {removeQuestion, removeVariant, setQuest,} from "../Redux/editQuestionSlice";
-import {useNavigate, useParams} from "react-router-dom";
+import {
+  removeQuestion,
+  removeVariant,
+  setQuest,
+} from "../Redux/editQuestionSlice";
+import { useNavigate, useParams } from "react-router-dom";
 import BasicSelect from "./BasicSelect";
 import ModalSendQuest from "./ModalSendQuest";
-import {FormProvider, useForm} from "react-hook-form";
-
+import { FormProvider, useForm } from "react-hook-form";
 
 let renderCount = 0;
 
 const CreateQuestion = () => {
+  //Control render of component
+  renderCount++;
+  console.log(`CreateQuestion rendered:`, renderCount);
 
-    //Control render of component
-    renderCount ++;
-    console.log(`CreateQuestion rendered:`, renderCount);
+  const dispatch = useDispatch();
+  /*const quest = useSelector(state => state.editQuest.questions);*/
 
-    const dispatch = useDispatch();
-    /*const quest = useSelector(state => state.editQuest.questions);*/
-
-
-
-
-    /*const addVar = (id) => {
+  /*const addVar = (id) => {
         dispatch(addVariant({id}))
     };*/
 
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
+  setTimeout(() => {
+    if (open) {
+      setOpen(false);
+      setTimeout(() => {
+        navigate("/questionslist");
+      }, 490);
+    }
+  }, 1900);
 
-    setTimeout(() => {
-        if (open) {
-            setOpen(false);
-            setTimeout(()=>{
-                navigate('/questionslist');
-            },490);
-        }
-    }, 1900);
+  //Dispatch data from form to Thunk
+  const handleSubmit = (data, id) => {
+    setOpen(true);
+    dispatch(setQuest({ ...data, id }));
+  };
 
-//Dispatch data from form to Thunk
-    const handleSubmit = (data,id) => {
-        setOpen(true);
-        dispatch(setQuest({...data,id}));
-    };
+  const removeVar = (varId) => {
+    dispatch(removeVariant({ varId }));
+  };
+  const removeQuest = (id) => {
+    dispatch(removeQuestion({ id }));
+  };
 
-
-    const removeVar = (varId) => {
-        dispatch(removeVariant({varId}))
-    };
-    const removeQuest = (id) => {
-        dispatch(removeQuestion({id}))
-    };
-
-
-    /*const addQuestTitle = (questTitle, item) => {
+  /*const addQuestTitle = (questTitle, item) => {
         dispatch(addTitleDescriptionQuestion({questTitle, item}))
     };
 
@@ -70,170 +74,162 @@ const CreateQuestion = () => {
         img.onload = () => URL.revokeObjectURL(img);
     };*/
 
+  // Navigation to page for edit question or creating new question
+  let navigate = useNavigate();
 
+  // Get question id from URL
+  const params = useParams();
 
-// Navigation to page for edit question or creating new question
-    let navigate = useNavigate();
+  //Empty object for new question button in AppBar
+  const emptyQuestion = {
+    id: Date.now().toString(),
+    title: "Base question ",
+    description: "Some text from emptyQuest ",
+    image: "https://adrive.by/WebFiles/About/AboutImg4.jpg",
+    variants: [{ variantTitle: "Some text", checkbox: false }],
+  };
 
-    // Get question id from URL
-    const params = useParams();
+  // Find and get question in state
+  const newQuestion = useSelector((state) =>
+    state.editQuest.questions.find((item) => item.id === params.id)
+  );
 
+  //If not  index of question , make a  new empty question ( for create new question button in AppBar)
+  const question = params ? newQuestion : emptyQuestion;
 
-//Empty object for new question button in AppBar
-    const emptyQuestion = {
-        id: Date.now().toString(),
-        title:'Base question ',
-        description: 'Some text from emptyQuest ' ,
-        image:'https://adrive.by/WebFiles/About/AboutImg4.jpg',
-        variants: [{ variantTitle: "Some text", checkbox: false}]
-    };
+  //Destructure question for print
+  const { title, description, image, index, variants, id } = question
+    ? question
+    : emptyQuestion;
+  /*console.log('test  question and emptyQuestion ', question, emptyQuestion);*/
 
-
-// Find and get question in state
-    const newQuestion = useSelector(state => state.editQuest.questions.find(item => item.id === params.id));
-
-//If not  index of question , make a  new empty question ( for create new question button in AppBar)
-    const question = params ? newQuestion : emptyQuestion;
-
-
-
-//Destructure question for print
-    const {title, description, image, index, variants, id} = question ? question : emptyQuestion ;
-    /*console.log('test  question and emptyQuestion ', question, emptyQuestion);*/
-
-
-/*let varian = JSON.parse(JSON.stringify(variants));
+  /*let varian = JSON.parse(JSON.stringify(variants));
     console.log(`test varian`,varian);*/
-    //React-hook-form
-    const methods = useForm({
-        defaultValues: {
-            title,
-            description,
-            image,
-            variants:[...variants]
-        }
-    });
+  //React-hook-form
+  const methods = useForm({
+    defaultValues: {
+      title,
+      description,
+      image,
+      variants: [...variants],
+    },
+  });
 
-
-    return (
-        <div>
-            <Grid>
-                <FormProvider {...methods}>
-                <form onSubmit={methods.handleSubmit((data) => handleSubmit(data,id))}>
-                <Grid key={id}>
-                    <div>
-                        <ModalSendQuest children1 = {"Our question saved ! "}
-                                        children2={"Let`s go to Question List ..."}
-                                        open={open}
-                                        handleOpen={handleOpen}
-                                        handleClose={handleClose} />
-
-                    </div>
-                    <Grid sx={{display: 'flex'}} item>
-
-                        <Typography
-                            variant="h5"
-                            sx={{flexGrow: 1}}>
-                            Edit question # {index}
-                        </Typography>
-                        <Grid item sx={{mr:8, border:2, borderRadius:1, color: "blue"}} className="counter">Render Count: {renderCount}</Grid>
-                        <Button
-                           /* onClick={() => addNewQuestion()}*/
-
-                            type="submit"
-                            variant="contained"
-                            size="small"
-                        >
-                            Save question
-                        </Button>
-                        <Button
-                            onClick={() => removeQuest(id)}
-                            type="submit"
-                            size='small'
-                            color="error"
-                            component="span"
-                            variant="contained">Remove question</Button>
-                    </Grid>
-                    <Grid container sx={{mt: 2, justifyContent: 'space-between'}}>
-                        <Grid xs={12} sm={3.8} md={3.8} lg={3.8} item>
-                            <Paper sx={{p: 2}} elevation={3}>
-                                <Typography
-                                    variant="h5"
-                                    sx={{mb: 2}}>
-                                    General information
-                                </Typography>
-                                <Typography variant="h7">
-                                    Title
-                                </Typography>
-                                <TextField
-                                    fullWidth
-
-                                   /* value={title}*/
-                                    sx={{mb: 2}}
-                                    size="small"
-                                    type="input"
-                                    id="outlined-basic"
-                                    {...methods.register(`title`)}
-                                    /*onChange={(e) => addQuestTitle(e.target.value, id)}*/
-                                    label='Question title'
-                                    variant="outlined"
-                                />
-                                <Typography variant="h7">
-                                    Description
-                                </Typography>
-                                <TextareaAutosize
-                                    aria-label="minimum height"
-                                    minRows={10}
-                                    /*onChange={(e) => addQuestDescription(e.target.value, id)}*/
-                                    {...methods.register(`description`)}
-                                    placeholder="Question message"
-                                    style={{width: '98%'}}
-                                />
-                                <Typography
-                                    variant="body2"
-                                    fontWeight='light'
-                                    sx={{mb: 2}}>
-                                    Question message
-                                </Typography>
-                                <Typography
-                                    variant="h7"
-                                    component={"div"}>
-                                    Image
-                                </Typography>
-
-                                    <Input
-                                       /* onChange={(event) => onSubmitImage(event.target.files, id)}*/
-                                        {...methods.register(`image`)}
-                                        name="image"
-                                        accept="image/*"
-                                        type="file"
-                                    />
-
-
-                            </Paper>
-                        </Grid>
-                        <Grid xs={12} sm={8} md={8} lg={8} item>
-                            <Paper sx={{p: 2}} elevation={3}>
-                                <Typography variant="h5">
-                                    Answer
-                                </Typography>
-                                <Typography
-                                    variant="h7">
-                                    Question type
-                                </Typography>
-
-                                <BasicSelect/>
-                                <Variant variants={variants} questId={id}
-                                         removeVar={removeVar}/>
-
-                            </Paper>
-                        </Grid>
-                    </Grid>
+  return (
+    <div>
+      <Grid>
+        <FormProvider {...methods}>
+          <form
+            onSubmit={methods.handleSubmit((data) => handleSubmit(data, id))}
+          >
+            <Grid key={id}>
+              <div>
+                <ModalSendQuest
+                  children1={"Our question saved ! "}
+                  children2={"Let`s go to Question List ..."}
+                  open={open}
+                  handleOpen={handleOpen}
+                  handleClose={handleClose}
+                />
+              </div>
+              <Grid sx={{ display: "flex" }} item>
+                <Typography variant="h5" sx={{ flexGrow: 1 }}>
+                  Edit question # {index}
+                </Typography>
+                <Grid
+                  item
+                  sx={{ mr: 8, border: 2, borderRadius: 1, color: "blue" }}
+                  className="counter"
+                >
+                  Render Count: {renderCount}
                 </Grid>
-                </form>
-                </FormProvider>
+                <Button
+                  /* onClick={() => addNewQuestion()}*/
+
+                  type="submit"
+                  variant="contained"
+                  size="small"
+                >
+                  Save question
+                </Button>
+                <Button
+                  onClick={() => removeQuest(id)}
+                  type="submit"
+                  size="small"
+                  color="error"
+                  component="span"
+                  variant="contained"
+                >
+                  Remove question
+                </Button>
+              </Grid>
+              <Grid container sx={{ mt: 2, justifyContent: "space-between" }}>
+                <Grid xs={12} sm={3.8} md={3.8} lg={3.8} item>
+                  <Paper sx={{ p: 2 }} elevation={3}>
+                    <Typography variant="h5" sx={{ mb: 2 }}>
+                      General information
+                    </Typography>
+                    <Typography variant="h7">Title</Typography>
+                    <TextField
+                      fullWidth
+                      /* value={title}*/
+                      sx={{ mb: 2 }}
+                      size="small"
+                      type="input"
+                      id="outlined-basic"
+                      {...methods.register(`title`)}
+                      /*onChange={(e) => addQuestTitle(e.target.value, id)}*/
+                      label="Question title"
+                      variant="outlined"
+                    />
+                    <Typography variant="h7">Description</Typography>
+                    <TextareaAutosize
+                      aria-label="minimum height"
+                      minRows={10}
+                      /*onChange={(e) => addQuestDescription(e.target.value, id)}*/
+                      {...methods.register(`description`)}
+                      placeholder="Question message"
+                      style={{ width: "98%" }}
+                    />
+                    <Typography
+                      variant="body2"
+                      fontWeight="light"
+                      sx={{ mb: 2 }}
+                    >
+                      Question message
+                    </Typography>
+                    <Typography variant="h7" component={"div"}>
+                      Image
+                    </Typography>
+
+                    <Input
+                      /* onChange={(event) => onSubmitImage(event.target.files, id)}*/
+                      {...methods.register(`image`)}
+                      name="image"
+                      accept="image/*"
+                      type="file"
+                    />
+                  </Paper>
+                </Grid>
+                <Grid xs={12} sm={8} md={8} lg={8} item>
+                  <Paper sx={{ p: 2 }} elevation={3}>
+                    <Typography variant="h5">Answer</Typography>
+                    <Typography variant="h7">Question type</Typography>
+
+                    <BasicSelect />
+                    <Variant
+                      variants={variants}
+                      questId={id}
+                      removeVar={removeVar}
+                    />
+                  </Paper>
+                </Grid>
+              </Grid>
             </Grid>
-        </div>
-    );
+          </form>
+        </FormProvider>
+      </Grid>
+    </div>
+  );
 };
 export default CreateQuestion;

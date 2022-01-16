@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, nanoid} from "@reduxjs/toolkit";
-import {ref, set, update,child,push} from "firebase/database";
+import {ref,update,child,push} from "firebase/database";
 import {auth, database} from "../Firebase/firebase";
 
 
